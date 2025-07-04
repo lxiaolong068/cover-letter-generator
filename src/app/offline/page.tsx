@@ -1,13 +1,8 @@
-import { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-
-export const metadata: Metadata = {
-  title: '离线模式 - 求职信生成器',
-  description: '您当前处于离线状态，部分功能可能受限。',
-  robots: 'noindex, nofollow',
-};
 
 export default function OfflinePage() {
   return (
