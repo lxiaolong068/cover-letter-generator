@@ -61,9 +61,9 @@ export function SEOHead({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={fullOgImage} />
-      <meta property="og:image:alt" content={title} />
-      <meta property="og:site_name" content="Cover Letter Generator" />
-      <meta property="og:locale" content="zh_CN" />
+      <meta property="og:image:alt" content={`${title} - AI Cover Letter Generator Interface Screenshot`} />
+      <meta property="og:site_name" content="AI Cover Letter Generator" />
+      <meta property="og:locale" content="en_US" />
       {fullCanonical && <meta property="og:url" content={fullCanonical} />}
 
       {/* Article specific Open Graph tags */}
@@ -80,7 +80,7 @@ export function SEOHead({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullOgImage} />
-      <meta name="twitter:image:alt" content={title} />
+      <meta name="twitter:image:alt" content={`${title} - AI Cover Letter Generator Interface Screenshot`} />
 
       {/* Alternate Language Links */}
       {alternateLanguages.map(lang => (

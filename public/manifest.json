@@ -1,7 +1,7 @@
 {
-  "name": "Cover Letter Generator - AI-Powered Cover Letter Tool",
-  "short_name": "Cover Letter Generator",
-  "description": "Generate professional, personalized cover letters using AI technology. Multiple templates, ATS optimization, helping you stand out in your job search.",
+  "name": "AI Cover Letter Generator - Create Professional Cover Letters with AI",
+  "short_name": "AI Cover Letter Generator",
+  "description": "Create professional, personalized cover letters instantly with our AI Cover Letter Generator. Multiple templates, ATS optimization, and expert-quality results to help you land your dream job.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

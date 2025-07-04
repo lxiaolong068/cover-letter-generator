@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
+import { ContextualNav } from '@/components/seo/InternalLinks';
 
 const navigationItems = [
   { href: '/dashboard', label: 'Dashboard' },
@@ -14,29 +15,29 @@ const breadcrumbItems = [{ href: '/', label: 'Home' }, { label: 'Dashboard' }];
 
 const quickActions = [
   {
-    title: 'Create New Cover Letter',
-    description: 'Use AI to quickly generate personalized cover letters',
+    title: 'Generate AI Cover Letter',
+    description: 'Create professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator',
     href: '/dashboard/generate',
     icon: '✨',
     color: 'bg-primary-500',
   },
   {
-    title: 'Choose Template',
-    description: 'Select from multiple professional templates',
+    title: 'Browse Cover Letter Templates',
+    description: 'Select from professional cover letter templates designed for different industries and roles',
     href: '/dashboard/templates',
     icon: '📄',
     color: 'bg-secondary-500',
   },
   {
-    title: 'View History',
-    description: 'Manage generated cover letters',
+    title: 'View Cover Letter History',
+    description: 'Manage and edit your AI-generated cover letters, download PDFs, and track applications',
     href: '/dashboard/history',
     icon: '📚',
     color: 'bg-success-500',
   },
   {
-    title: 'Personal Settings',
-    description: 'Update personal information and preferences',
+    title: 'Profile & Preferences',
+    description: 'Update personal information, job preferences, and AI Cover Letter Generator settings',
     href: '/dashboard/settings',
     icon: '⚙️',
     color: 'bg-warning-500',
@@ -116,9 +117,9 @@ export default function DashboardPage() {
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-on-surface text-3xl font-bold">Dashboard</h1>
+            <h1 className="text-on-surface text-3xl font-bold">AI Cover Letter Dashboard</h1>
             <p className="text-on-surface-variant mt-2">
-              Welcome back! Manage your cover letters and view statistics.
+              Welcome back! Manage your AI-generated cover letters, view statistics, and create new professional cover letters.
             </p>
           </div>
 
@@ -230,6 +231,9 @@ export default function DashboardPage() {
               </Card>
             </div>
           </div>
+
+          {/* Contextual Navigation */}
+          <ContextualNav currentPage="dashboard" />
         </div>
       </div>
     </>

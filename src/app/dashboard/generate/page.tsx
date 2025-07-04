@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
+import { ContextualNav } from '@/components/seo/InternalLinks';
 
 const navigationItems = [
   { href: '/dashboard', label: 'Dashboard' },
@@ -23,27 +24,27 @@ const breadcrumbItems = [
 const templates = [
   {
     id: 'professional',
-    name: 'Professional Template',
-    description: 'Classic professional template suitable for most positions',
-    preview: 'Formal, concise, highlighting professional skills',
+    name: 'Professional Cover Letter Template',
+    description: 'Classic professional cover letter template suitable for most corporate positions and industries',
+    preview: 'Formal, ATS-optimized format highlighting professional skills and experience',
   },
   {
     id: 'creative',
-    name: 'Creative Template',
-    description: 'Suitable for design, marketing and other creative positions',
-    preview: 'Creative, personalized expression',
+    name: 'Creative Cover Letter Template',
+    description: 'Dynamic cover letter template perfect for design, marketing, and creative industry positions',
+    preview: 'Creative layout with personalized expression and visual appeal',
   },
   {
     id: 'technical',
-    name: 'Technical Template',
-    description: 'Template designed specifically for technical positions',
-    preview: 'Highlighting technical skills and project experience',
+    name: 'Technical Cover Letter Template',
+    description: 'Specialized cover letter template designed for software engineering, IT, and technical roles',
+    preview: 'Emphasizes technical skills, programming languages, and project experience',
   },
   {
     id: 'executive',
-    name: 'Executive Template',
-    description: 'Suitable for management and senior positions',
-    preview: 'Emphasizing leadership and strategic thinking',
+    name: 'Executive Cover Letter Template',
+    description: 'Premium cover letter template tailored for C-level, management, and senior leadership positions',
+    preview: 'Executive format emphasizing leadership achievements and strategic thinking',
   },
 ];
 
@@ -97,10 +98,10 @@ export default function GeneratePage() {
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-on-surface text-3xl font-bold">Generate Cover Letter</h1>
+            <h1 className="text-on-surface text-3xl font-bold">Generate Professional Cover Letter with AI</h1>
             <p className="text-on-surface-variant mt-2">
-              Fill in the relevant information and AI will generate a personalized cover letter for
-              you
+              Fill in your job details and our AI Cover Letter Generator will create a personalized,
+              ATS-optimized cover letter tailored to your target position.
             </p>
           </div>
 
@@ -247,6 +248,9 @@ export default function GeneratePage() {
               </Card>
             </div>
           </div>
+
+          {/* Contextual Navigation */}
+          <ContextualNav currentPage="generate" />
         </div>
       </div>
     </>

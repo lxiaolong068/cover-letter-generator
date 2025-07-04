@@ -1,11 +1,18 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Navigation } from '@/components/ui/Navigation';
+import { ContextualNav } from '@/components/seo/InternalLinks';
 import { Suspense, lazy } from 'react';
 
 const FeatureSection = lazy(() =>
   import('@/components/HomePage/FeatureSection').then(module => ({
     default: module.FeatureSection,
+  }))
+);
+
+const FAQSection = lazy(() =>
+  import('@/components/HomePage/FAQSection').then(module => ({
+    default: module.FAQSection,
   }))
 );
 
@@ -39,11 +46,11 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-on-surface text-4xl font-bold tracking-tight sm:text-6xl">
-              AI-Powered Cover Letter Generator
+              AI Cover Letter Generator
             </h1>
             <p className="text-on-surface-variant mx-auto mt-6 max-w-2xl text-lg leading-8">
-              Generate professional, personalized cover letters using advanced AI technology.
-              Multiple templates, ATS optimization, helping you stand out in your job search.
+              Create professional, personalized cover letters instantly with our AI Cover Letter Generator.
+              Multiple templates, ATS optimization, and expert-quality results to help you land your dream job.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button size="lg" asChild>
@@ -72,16 +79,38 @@ export default function HomePage() {
         <FeatureSection />
       </Suspense>
 
+      {/* FAQ Section */}
+      <Suspense
+        fallback={
+          <section className="py-20 sm:py-32">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-center">
+                <div className="border-primary-500 h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
+              </div>
+            </div>
+          </section>
+        }
+      >
+        <FAQSection />
+      </Suspense>
+
+      {/* Contextual Navigation */}
+      <section className="py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <ContextualNav currentPage="home" />
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-primary-600 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Ready to Start Your Job Search Journey?
+              Start Creating Professional Cover Letters with AI
             </h2>
             <p className="text-primary-100 mx-auto mt-6 max-w-xl text-lg leading-8">
-              Sign up now and experience our AI cover letter generation service for free. Make your
-              job search more efficient.
+              Join thousands of job seekers using our AI Cover Letter Generator. Create professional,
+              ATS-optimized cover letters in minutes and boost your job search success.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button variant="secondary" size="lg" asChild>

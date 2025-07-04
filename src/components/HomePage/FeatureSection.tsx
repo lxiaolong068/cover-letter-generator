@@ -5,39 +5,39 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 const features = [
   {
-    title: 'AI-Powered Generation',
+    title: 'AI-Powered Cover Letter Generation',
     description:
-      'Generate personalized cover letters using advanced AI technology based on your background and target position',
+      'Our AI Cover Letter Generator creates personalized, professional cover letters using advanced artificial intelligence. Input your job details and get expert-quality results instantly.',
     icon: '🤖',
   },
   {
-    title: 'Multiple Templates',
+    title: 'Professional Cover Letter Templates',
     description:
-      'Professional, creative, technical, and executive templates to suit different industries and roles',
+      'Choose from multiple professionally designed cover letter templates including creative, technical, executive, and entry-level formats optimized for different industries.',
     icon: '📄',
   },
   {
-    title: 'ATS Optimized',
+    title: 'ATS-Optimized Cover Letters',
     description:
-      'Optimized for Applicant Tracking Systems to improve resume pass rates and interview opportunities',
+      'All generated cover letters are optimized for Applicant Tracking Systems (ATS) to ensure your application passes automated screening and reaches human recruiters.',
     icon: '🎯',
   },
   {
-    title: 'One-Click Export',
+    title: 'Instant PDF Export',
     description:
-      'Export to PDF format while maintaining formatting integrity for easy submission and printing',
+      'Export your AI-generated cover letters to professional PDF format with one click. Maintain perfect formatting for job applications and printing.',
     icon: '📥',
   },
   {
-    title: 'Secure & Reliable',
+    title: 'Secure & Reliable AI Technology',
     description:
-      'Enterprise-grade security standards to protect your personal information and job search data',
+      'Enterprise-grade security standards protect your personal information and job search data. Our AI Cover Letter Generator ensures complete privacy and data protection.',
     icon: '🔒',
   },
   {
-    title: 'Fast & Efficient',
+    title: 'Fast Cover Letter Creation',
     description:
-      'Complete cover letter generation in minutes, dramatically improving your job search efficiency',
+      'Generate professional cover letters in minutes, not hours. Our AI technology dramatically improves your job search efficiency and application speed.',
     icon: '⚡',
   },
 ];
@@ -63,11 +63,11 @@ export const FeatureSection = React.memo(() => (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-on-surface text-3xl font-bold tracking-tight sm:text-4xl">
-          Why Choose Us?
+          Why Choose Our AI Cover Letter Generator?
         </h2>
         <p className="text-on-surface-variant mt-4 text-lg leading-8">
-          We provide the most advanced AI technology and thoughtful user experience to make job
-          searching simpler and more efficient.
+          Our AI Cover Letter Generator combines advanced artificial intelligence with professional
+          templates to create compelling, ATS-optimized cover letters that help you stand out.
         </p>
       </div>
       <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
