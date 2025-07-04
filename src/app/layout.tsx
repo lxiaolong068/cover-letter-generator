@@ -24,15 +24,23 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: '求职信生成器 - AI智能求职信生成工具',
-    template: '%s | 求职信生成器',
+    default: 'Cover Letter Generator - AI-Powered Cover Letter Tool',
+    template: '%s | Cover Letter Generator',
   },
   description:
-    '使用AI技术快速生成专业、个性化的求职信。支持多种模板，ATS优化，助您在求职路上脱颖而出。',
-  keywords: ['求职信生成器', 'AI求职信', '简历', '求职', '职业发展', 'ATS优化', '求职工具'],
-  authors: [{ name: '求职信生成器团队' }],
-  creator: '求职信生成器',
-  publisher: '求职信生成器',
+    'Generate professional, personalized cover letters using AI technology. Multiple templates, ATS optimization, helping you stand out in your job search.',
+  keywords: [
+    'cover letter generator',
+    'AI cover letter',
+    'resume',
+    'job search',
+    'career development',
+    'ATS optimization',
+    'job tools',
+  ],
+  authors: [{ name: 'Cover Letter Generator Team' }],
+  creator: 'Cover Letter Generator',
+  publisher: 'Cover Letter Generator',
   formatDetection: {
     email: false,
     address: false,
@@ -44,12 +52,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    locale: 'zh_CN',
+    locale: 'en_US',
     url: '/',
-    title: '求职信生成器 - AI智能求职信生成工具',
+    title: 'Cover Letter Generator - AI-Powered Cover Letter Tool',
     description:
-      '使用AI技术快速生成专业、个性化的求职信。支持多种模板，ATS优化，助您在求职路上脱颖而出。',
-    siteName: '求职信生成器',
+      'Generate professional, personalized cover letters using AI technology. Multiple templates, ATS optimization, helping you stand out in your job search.',
+    siteName: 'Cover Letter Generator',
   },
   twitter: {
     card: 'summary_large_image',

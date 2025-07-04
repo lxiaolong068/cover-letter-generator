@@ -6,8 +6,8 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Container, Grid, Flex, Stack } from '@/components/ui/Container';
 
 export const metadata: Metadata = {
-  title: '组件展示 - 求职信生成器',
-  description: '展示求职信生成器项目中使用的所有UI组件',
+  title: 'Component Showcase - Cover Letter Generator',
+  description: 'Showcase of all UI components used in the Cover Letter Generator project',
   robots: 'noindex, nofollow',
 };
 
@@ -15,60 +15,61 @@ export default function ComponentsPage() {
   return (
     <Container size="xl" padding="lg" className="py-12">
       <div className="mb-12 text-center">
-        <h1 className="text-on-surface mb-4 text-4xl font-bold">UI组件展示</h1>
+        <h1 className="text-on-surface mb-4 text-4xl font-bold">UI Component Showcase</h1>
         <p className="text-on-surface-variant mx-auto max-w-2xl text-lg">
-          这里展示了求职信生成器项目中使用的所有UI组件，包括不同的变体和状态。
+          This showcases all UI components used in the Cover Letter Generator project, including
+          different variants and states.
         </p>
       </div>
 
       <Stack spacing="2xl">
         {/* Buttons Section */}
         <section>
-          <h2 className="text-on-surface mb-6 text-2xl font-bold">按钮组件</h2>
+          <h2 className="text-on-surface mb-6 text-2xl font-bold">Button Components</h2>
           <Grid cols={1} gap="lg">
             <Card>
               <CardHeader>
-                <CardTitle>按钮变体</CardTitle>
-                <CardDescription>不同样式的按钮组件</CardDescription>
+                <CardTitle>Button Variants</CardTitle>
+                <CardDescription>Different styles of button components</CardDescription>
               </CardHeader>
               <CardContent>
                 <Flex wrap gap="md">
-                  <Button variant="primary">主要按钮</Button>
-                  <Button variant="secondary">次要按钮</Button>
-                  <Button variant="outline">轮廓按钮</Button>
-                  <Button variant="ghost">幽灵按钮</Button>
-                  <Button variant="destructive">危险按钮</Button>
-                  <Button variant="link">链接按钮</Button>
+                  <Button variant="primary">Primary Button</Button>
+                  <Button variant="secondary">Secondary Button</Button>
+                  <Button variant="outline">Outline Button</Button>
+                  <Button variant="ghost">Ghost Button</Button>
+                  <Button variant="destructive">Destructive Button</Button>
+                  <Button variant="link">Link Button</Button>
                 </Flex>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>按钮尺寸</CardTitle>
-                <CardDescription>不同大小的按钮</CardDescription>
+                <CardTitle>Button Sizes</CardTitle>
+                <CardDescription>Different sizes of buttons</CardDescription>
               </CardHeader>
               <CardContent>
                 <Flex align="center" gap="md">
-                  <Button size="sm">小按钮</Button>
-                  <Button size="md">中按钮</Button>
-                  <Button size="lg">大按钮</Button>
-                  <Button size="xl">超大按钮</Button>
+                  <Button size="sm">Small Button</Button>
+                  <Button size="md">Medium Button</Button>
+                  <Button size="lg">Large Button</Button>
+                  <Button size="xl">Extra Large Button</Button>
                 </Flex>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>按钮状态</CardTitle>
-                <CardDescription>不同状态的按钮</CardDescription>
+                <CardTitle>Button States</CardTitle>
+                <CardDescription>Different states of buttons</CardDescription>
               </CardHeader>
               <CardContent>
                 <Flex wrap gap="md">
-                  <Button>正常状态</Button>
-                  <Button loading>加载中</Button>
-                  <Button disabled>禁用状态</Button>
-                  <Button fullWidth>全宽按钮</Button>
+                  <Button>Normal State</Button>
+                  <Button loading>Loading</Button>
+                  <Button disabled>Disabled State</Button>
+                  <Button fullWidth>Full Width Button</Button>
                 </Flex>
               </CardContent>
             </Card>
@@ -77,7 +78,7 @@ export default function ComponentsPage() {
 
         {/* Cards Section */}
         <section>
-          <h2 className="text-on-surface mb-6 text-2xl font-bold">卡片组件</h2>
+          <h2 className="text-on-surface mb-6 text-2xl font-bold">Card Components</h2>
           <Grid cols={1} responsive={{ md: 2, lg: 3 }} gap="lg">
             <Card variant="default">
               <CardHeader>
@@ -147,15 +148,15 @@ export default function ComponentsPage() {
           <Grid cols={1} responsive={{ lg: 2 }} gap="lg">
             <Card>
               <CardHeader>
-                <CardTitle>输入框组件</CardTitle>
-                <CardDescription>各种样式的输入框</CardDescription>
+                <CardTitle>Input Components</CardTitle>
+                <CardDescription>Various styles of input fields</CardDescription>
               </CardHeader>
               <CardContent>
                 <Stack spacing="md">
-                  <Input label="默认输入框" placeholder="请输入内容..." />
+                  <Input label="Default Input" placeholder="Enter content..." />
                   <Input
-                    label="带图标的输入框"
-                    placeholder="搜索..."
+                    label="Input with Icon"
+                    placeholder="Search..."
                     leftIcon={
                       <svg
                         className="h-4 w-4"
@@ -172,11 +173,15 @@ export default function ComponentsPage() {
                       </svg>
                     }
                   />
-                  <Input label="错误状态" placeholder="输入内容..." error="这是一个错误信息" />
                   <Input
-                    label="带帮助文本"
-                    placeholder="输入内容..."
-                    helperText="这是帮助文本，用于说明输入要求"
+                    label="Error State"
+                    placeholder="Enter content..."
+                    error="This is an error message"
+                  />
+                  <Input
+                    label="With Helper Text"
+                    placeholder="Enter content..."
+                    helperText="This is helper text to explain input requirements"
                   />
                 </Stack>
               </CardContent>
@@ -184,19 +189,23 @@ export default function ComponentsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>文本域组件</CardTitle>
-                <CardDescription>多行文本输入</CardDescription>
+                <CardTitle>Textarea Components</CardTitle>
+                <CardDescription>Multi-line text input</CardDescription>
               </CardHeader>
               <CardContent>
                 <Stack spacing="md">
-                  <Textarea label="默认文本域" placeholder="请输入多行内容..." />
+                  <Textarea label="Default Textarea" placeholder="Enter multi-line content..." />
                   <Textarea
-                    label="带字符计数"
-                    placeholder="输入内容..."
+                    label="With Character Count"
+                    placeholder="Enter content..."
                     maxLength={200}
                     showCount
                   />
-                  <Textarea label="错误状态" placeholder="输入内容..." error="内容不能为空" />
+                  <Textarea
+                    label="Error State"
+                    placeholder="Enter content..."
+                    error="Content cannot be empty"
+                  />
                 </Stack>
               </CardContent>
             </Card>
@@ -205,12 +214,12 @@ export default function ComponentsPage() {
 
         {/* Layout Components Section */}
         <section>
-          <h2 className="text-on-surface mb-6 text-2xl font-bold">布局组件</h2>
+          <h2 className="text-on-surface mb-6 text-2xl font-bold">Layout Components</h2>
           <Stack spacing="lg">
             <Card>
               <CardHeader>
-                <CardTitle>网格布局</CardTitle>
-                <CardDescription>响应式网格系统</CardDescription>
+                <CardTitle>Grid Layout</CardTitle>
+                <CardDescription>Responsive grid system</CardDescription>
               </CardHeader>
               <CardContent>
                 <Grid cols={1} responsive={{ sm: 2, md: 3, lg: 4 }} gap="md">

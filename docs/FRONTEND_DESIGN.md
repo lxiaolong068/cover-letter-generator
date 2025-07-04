@@ -1,206 +1,206 @@
-# 求职信生成器前端界面设计方案
+# Cover Letter Generator Frontend Design System
 
-## 📋 项目概述
+## 📋 Project Overview
 
-本文档详细描述了求职信生成器项目的现代化前端界面设计方案，包括设计系统、组件架构、响应式设计、SEO优化和PWA功能实现。
+This document details the modern frontend interface design system for the Cover Letter Generator project, including design system, component architecture, responsive design, SEO optimization, and PWA functionality implementation.
 
-## 🎨 设计系统
+## 🎨 Design System
 
-### 色彩方案
+### Color Scheme
 
-采用Material Design 3.0风格的专业色彩系统：
+Professional color system inspired by Material Design 3.0:
 
-- **主色调（Primary）**: 专业蓝色 (#2563eb)
-- **次要色调（Secondary）**: 优雅紫色 (#9333ea)
-- **中性色（Neutral）**: 灰色系列 (#f8fafc - #020617)
-- **功能色**: 成功绿色、警告橙色、错误红色
+- **Primary**: Professional blue (#2563eb)
+- **Secondary**: Elegant purple (#9333ea)
+- **Neutral**: Gray scale (#f8fafc - #020617)
+- **Functional Colors**: Success green, warning orange, error red
 
-### 字体系统
+### Typography System
 
-- **主字体**: Inter - 现代、清晰的无衬线字体
-- **等宽字体**: JetBrains Mono - 用于代码和数据显示
-- **字体大小**: 12px - 60px，遵循1.25倍比例
-- **行高**: 1.25 - 2.0，确保良好的可读性
+- **Primary Font**: Inter - Modern, clear sans-serif font
+- **Monospace Font**: JetBrains Mono - For code and data display
+- **Font Sizes**: 12px - 60px, following 1.25x scale
+- **Line Heights**: 1.25 - 2.0, ensuring good readability
 
-### 间距系统
+### Spacing System
 
-基于4px网格系统：
+Based on 4px grid system:
 
-- 基础单位：4px
-- 常用间距：4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px
-- 组件内边距：遵循8px倍数
-- 页面布局：使用16px和24px作为主要间距
+- Base unit: 4px
+- Common spacing: 4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px
+- Component padding: Following 8px multiples
+- Page layout: Using 16px and 24px as primary spacing
 
-### 圆角和阴影
+### Border Radius and Shadows
 
-- **圆角**: 2px - 24px，根据组件大小调整
-- **阴影**: 5个层级，从subtle到dramatic
-- **动画**: 150ms - 300ms，使用ease-out缓动
+- **Border Radius**: 2px - 24px, adjusted based on component size
+- **Shadows**: 5 levels, from subtle to dramatic
+- **Animations**: 150ms - 300ms, using ease-out easing
 
-## 🧩 组件架构
+## 🧩 Component Architecture
 
-### 基础组件
+### Base Components
 
-#### Button 组件
+#### Button Component
 
 ```typescript
-// 支持多种变体和尺寸
+// Supports multiple variants and sizes
 <Button variant="primary" size="lg" loading={isLoading}>
-  生成求职信
+  Generate Cover Letter
 </Button>
 ```
 
-特性：
+Features:
 
-- 6种变体：primary, secondary, outline, ghost, destructive, link
-- 4种尺寸：sm, md, lg, xl, icon
-- 加载状态和禁用状态
-- 完整的无障碍支持
+- 6 variants: primary, secondary, outline, ghost, destructive, link
+- 4 sizes: sm, md, lg, xl, icon
+- Loading and disabled states
+- Full accessibility support
 
-#### Card 组件
+#### Card Component
 
 ```typescript
 <Card variant="elevated" interactive>
   <CardHeader>
-    <CardTitle>标题</CardTitle>
-    <CardDescription>描述</CardDescription>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
   </CardHeader>
-  <CardContent>内容</CardContent>
-  <CardFooter>操作按钮</CardFooter>
+  <CardContent>Content</CardContent>
+  <CardFooter>Action Buttons</CardFooter>
 </Card>
 ```
 
-#### Input/Textarea 组件
+#### Input/Textarea Components
 
-- 统一的表单控件样式
-- 错误状态和帮助文本
-- 左右图标支持
-- 字符计数功能
+- Unified form control styling
+- Error states and helper text
+- Left and right icon support
+- Character count functionality
 
-### 布局组件
+### Layout Components
 
-#### Container 容器
+#### Container
 
 ```typescript
 <Container size="lg" padding="md">
   <Grid cols={3} responsive={{ sm: 1, md: 2, lg: 3 }}>
-    <Card>内容1</Card>
-    <Card>内容2</Card>
-    <Card>内容3</Card>
+    <Card>Content 1</Card>
+    <Card>Content 2</Card>
+    <Card>Content 3</Card>
   </Grid>
 </Container>
 ```
 
-#### 响应式工具
+#### Responsive Utilities
 
-- Grid: 灵活的网格系统
-- Flex: Flexbox布局工具
-- Stack: 垂直堆叠组件
-- Show: 响应式显示/隐藏
+- Grid: Flexible grid system
+- Flex: Flexbox layout tools
+- Stack: Vertical stacking component
+- Show: Responsive show/hide
 
-### 导航组件
+### Navigation Components
 
-#### Navigation 主导航
+#### Navigation
 
-- 响应式设计，移动端汉堡菜单
-- 活动状态指示
-- 徽章支持
-- 平滑动画过渡
+- Responsive design with mobile hamburger menu
+- Active state indicators
+- Badge support
+- Smooth animation transitions
 
-#### Breadcrumb 面包屑
+#### Breadcrumb
 
-- 语义化HTML结构
-- 无障碍导航支持
-- 自动生成结构化数据
+- Semantic HTML structure
+- Accessibility navigation support
+- Auto-generated structured data
 
-## 📱 响应式设计
+## 📱 Responsive Design
 
-### 断点系统
+### Breakpoint System
 
 ```css
-/* 移动端优先 */
-sm: 640px   /* 小型平板 */
-md: 768px   /* 平板 */
-lg: 1024px  /* 小型桌面 */
-xl: 1280px  /* 大型桌面 */
+/* Mobile-first */
+sm: 640px   /* Small tablets */
+md: 768px   /* Tablets */
+lg: 1024px  /* Small desktops */
+xl: 1280px  /* Large desktops */
 ```
 
-### 移动端优化
+### Mobile Optimization
 
-1. **触摸友好**: 最小点击区域44px
-2. **手势支持**: 滑动、捏合缩放
-3. **性能优化**: 懒加载、图片优化
-4. **离线支持**: Service Worker缓存
+1. **Touch Friendly**: Minimum 44px touch targets
+2. **Gesture Support**: Swipe, pinch-to-zoom
+3. **Performance**: Lazy loading, image optimization
+4. **Offline Support**: Service Worker caching
 
-### 桌面端增强
+### Desktop Enhancements
 
-1. **键盘导航**: 完整的Tab键支持
-2. **鼠标交互**: Hover状态、右键菜单
-3. **多窗口支持**: 响应窗口大小变化
-4. **高分辨率**: 支持Retina显示屏
+1. **Keyboard Navigation**: Full Tab key support
+2. **Mouse Interactions**: Hover states, context menus
+3. **Multi-window Support**: Responsive to window size changes
+4. **High Resolution**: Retina display support
 
-## 🔍 SEO优化
+## 🔍 SEO Optimization
 
-### Meta标签优化
+### Meta Tag Optimization
 
 ```typescript
 export const metadata: Metadata = {
   title: {
-    default: '求职信生成器 - AI智能求职信生成工具',
-    template: '%s | 求职信生成器',
+    default: 'Cover Letter Generator - AI-Powered Cover Letter Tool',
+    template: '%s | Cover Letter Generator',
   },
-  description: '使用AI技术快速生成专业、个性化的求职信...',
-  keywords: ['求职信生成器', 'AI求职信', '简历', '求职'],
-  // ... 更多SEO配置
+  description: 'Generate professional, personalized cover letters using AI technology...',
+  keywords: ['cover letter generator', 'AI cover letter', 'resume', 'job search'],
+  // ... more SEO configuration
 };
 ```
 
-### 结构化数据
+### Structured Data
 
-实现了多种Schema.org标记：
+Implemented multiple Schema.org markups:
 
-- WebSite: 网站基本信息
-- Organization: 组织信息
-- SoftwareApplication: 应用程序信息
-- BreadcrumbList: 导航路径
-- FAQ: 常见问题
-- HowTo: 操作指南
+- WebSite: Basic website information
+- Organization: Organization information
+- SoftwareApplication: Application information
+- BreadcrumbList: Navigation paths
+- FAQ: Frequently asked questions
+- HowTo: How-to guides
 
-### 性能优化
+### Performance Optimization
 
-1. **Core Web Vitals优化**
-   - LCP < 2.5s: 图片优化、代码分割
-   - FID < 100ms: 减少JavaScript执行时间
-   - CLS < 0.1: 固定布局尺寸
+1. **Core Web Vitals Optimization**
+   - LCP < 2.5s: Image optimization, code splitting
+   - FID < 100ms: Reduce JavaScript execution time
+   - CLS < 0.1: Fixed layout dimensions
 
-2. **资源优化**
-   - 图片: WebP格式、响应式图片
-   - 字体: 字体预加载、字体显示优化
-   - CSS: 关键CSS内联、非关键CSS延迟加载
+2. **Resource Optimization**
+   - Images: WebP format, responsive images
+   - Fonts: Font preloading, font display optimization
+   - CSS: Critical CSS inline, non-critical CSS lazy loading
 
-## ♿ 无障碍访问
+## ♿ Accessibility
 
-### WCAG 2.1 AA标准
+### WCAG 2.1 AA Standards
 
-1. **感知性**
-   - 颜色对比度 ≥ 4.5:1
-   - 文本可缩放至200%
-   - 图片提供alt属性
+1. **Perceivable**
+   - Color contrast ratio ≥ 4.5:1
+   - Text scalable to 200%
+   - Images provide alt attributes
 
-2. **可操作性**
-   - 键盘完全可访问
-   - 焦点指示器清晰可见
-   - 无闪烁内容
+2. **Operable**
+   - Fully keyboard accessible
+   - Clear visible focus indicators
+   - No flashing content
 
-3. **可理解性**
-   - 语言标记正确
-   - 错误信息清晰
-   - 导航一致性
+3. **Understandable**
+   - Correct language markup
+   - Clear error messages
+   - Consistent navigation
 
-4. **健壮性**
-   - 语义化HTML
-   - ARIA属性正确使用
-   - 兼容辅助技术
+4. **Robust**
+   - Semantic HTML
+   - Correct ARIA attribute usage
+   - Compatible with assistive technologies
 
 ### 无障碍组件
 
@@ -297,110 +297,110 @@ export const metadata: Metadata = {
 ### 开发工具
 
 - **代码质量**: ESLint + Prettier
-- **测试**: Vitest + Playwright
-- **构建**: Next.js内置构建系统
-- **部署**: Vercel
+- **Testing**: Vitest + Playwright
+- **Build**: Next.js built-in build system
+- **Deployment**: Vercel
 
-### 第三方库
+### Third-party Libraries
 
-- **图标**: Lucide React
-- **样式工具**: clsx + tailwind-merge
-- **组件变体**: class-variance-authority
-- **PDF生成**: @react-pdf/renderer
+- **Icons**: Lucide React
+- **Style Tools**: clsx + tailwind-merge
+- **Component Variants**: class-variance-authority
+- **PDF Generation**: @react-pdf/renderer
 
-## 📊 性能指标
+## 📊 Performance Metrics
 
-### 目标指标
+### Target Metrics
 
-- **首次内容绘制 (FCP)**: < 1.5s
-- **最大内容绘制 (LCP)**: < 2.5s
-- **首次输入延迟 (FID)**: < 100ms
-- **累积布局偏移 (CLS)**: < 0.1
-- **首次字节时间 (TTFB)**: < 600ms
+- **First Contentful Paint (FCP)**: < 1.5s
+- **Largest Contentful Paint (LCP)**: < 2.5s
+- **First Input Delay (FID)**: < 100ms
+- **Cumulative Layout Shift (CLS)**: < 0.1
+- **Time to First Byte (TTFB)**: < 600ms
 
-### 优化策略
+### Optimization Strategies
 
-1. **代码分割**: 路由级别和组件级别
-2. **资源预加载**: 关键资源preload
-3. **图片优化**: Next.js Image组件
-4. **字体优化**: 字体子集化和预加载
+1. **Code Splitting**: Route and component level
+2. **Resource Preloading**: Critical resource preload
+3. **Image Optimization**: Next.js Image component
+4. **Font Optimization**: Font subsetting and preloading
 
-## 🚀 部署和维护
+## 🚀 Deployment and Maintenance
 
-### 部署流程
+### Deployment Process
 
-1. **自动化部署**: Git push触发Vercel部署
-2. **环境管理**: 开发、测试、生产环境
-3. **回滚机制**: 快速回滚到稳定版本
+1. **Automated Deployment**: Git push triggers Vercel deployment
+2. **Environment Management**: Development, testing, production environments
+3. **Rollback Mechanism**: Quick rollback to stable version
 
-### 监控和维护
+### Monitoring and Maintenance
 
-1. **性能监控**: Vercel Analytics
-2. **错误追踪**: 集成错误监控服务
-3. **用户反馈**: 内置反馈收集机制
+1. **Performance Monitoring**: Vercel Analytics
+2. **Error Tracking**: Integrated error monitoring service
+3. **User Feedback**: Built-in feedback collection mechanism
 
-## 📝 开发规范
+## 📝 Development Standards
 
-### 代码规范
+### Code Standards
 
-1. **组件命名**: PascalCase
-2. **文件结构**: 功能模块化组织
-3. **类型定义**: 严格的TypeScript类型
-4. **注释规范**: JSDoc格式
+1. **Component Naming**: PascalCase
+2. **File Structure**: Functional modular organization
+3. **Type Definitions**: Strict TypeScript types
+4. **Comment Standards**: JSDoc format
 
-### 设计规范
+### Design Standards
 
-1. **组件复用**: 优先使用设计系统组件
-2. **响应式**: 移动端优先设计
-3. **无障碍**: 每个组件都考虑无障碍访问
-4. **性能**: 避免不必要的重渲染
+1. **Component Reuse**: Prioritize design system components
+2. **Responsive**: Mobile-first design
+3. **Accessibility**: Consider accessibility for every component
+4. **Performance**: Avoid unnecessary re-renders
 
-## 🔮 未来规划
+## 🔮 Future Planning
 
-### 短期目标 (1-3个月)
+### Short-term Goals (1-3 months)
 
-- [ ] 完善组件库文档
-- [ ] 添加更多动画效果
-- [ ] 优化移动端体验
-- [ ] 集成用户反馈系统
+- [ ] Complete component library documentation
+- [ ] Add more animation effects
+- [ ] Optimize mobile experience
+- [ ] Integrate user feedback system
 
-### 中期目标 (3-6个月)
+### Medium-term Goals (3-6 months)
 
-- [ ] 多语言支持
-- [ ] 主题切换功能
-- [ ] 高级自定义选项
-- [ ] 性能进一步优化
+- [ ] Multi-language support
+- [ ] Theme switching functionality
+- [ ] Advanced customization options
+- [ ] Further performance optimization
 
-### 长期目标 (6-12个月)
+### Long-term Goals (6-12 months)
 
-- [ ] 桌面应用版本
-- [ ] 浏览器扩展
-- [ ] API开放平台
-- [ ] 企业级功能
+- [ ] Desktop application version
+- [ ] Browser extension
+- [ ] Open API platform
+- [ ] Enterprise-level features
 
-## 🎯 快速开始
+## 🎯 Quick Start
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
-# 使用pnpm安装依赖（推荐）
+# Install dependencies using pnpm (recommended)
 pnpm install
 
-# 或使用npm
+# Or use npm
 npm install
 ```
 
-### 开发服务器
+### Development Server
 
 ```bash
-# 启动开发服务器
+# Start development server
 pnpm dev
 
-# 访问组件展示页面
+# Access component showcase page
 http://localhost:3000/components
 ```
 
-### 使用组件
+### Using Components
 
 ```typescript
 import { Button, Card, Input } from '@/components/ui';
@@ -408,17 +408,17 @@ import { Button, Card, Input } from '@/components/ui';
 export function MyComponent() {
   return (
     <Card>
-      <Input label="姓名" placeholder="请输入姓名" />
-      <Button variant="primary">提交</Button>
+      <Input label="Name" placeholder="Enter your name" />
+      <Button variant="primary">Submit</Button>
     </Card>
   );
 }
 ```
 
-### 自定义主题
+### Custom Theme
 
 ```css
-/* 在globals.css中覆盖CSS变量 */
+/* Override CSS variables in globals.css */
 :root {
   --color-primary-500: #your-color;
   --color-secondary-500: #your-color;

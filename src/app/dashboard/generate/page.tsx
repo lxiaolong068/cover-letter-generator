@@ -8,42 +8,42 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
 
 const navigationItems = [
-  { href: '/dashboard', label: '仪表板' },
-  { href: '/dashboard/generate', label: '生成求职信' },
-  { href: '/dashboard/templates', label: '我的模板' },
-  { href: '/dashboard/history', label: '历史记录' },
+  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/dashboard/generate', label: 'Generate Cover Letter' },
+  { href: '/dashboard/templates', label: 'My Templates' },
+  { href: '/dashboard/history', label: 'History' },
 ];
 
 const breadcrumbItems = [
-  { href: '/', label: '首页' },
-  { href: '/dashboard', label: '仪表板' },
-  { label: '生成求职信' },
+  { href: '/', label: 'Home' },
+  { href: '/dashboard', label: 'Dashboard' },
+  { label: 'Generate Cover Letter' },
 ];
 
 const templates = [
   {
     id: 'professional',
-    name: '专业模板',
-    description: '适合大多数职位的经典专业模板',
-    preview: '正式、简洁、突出专业技能',
+    name: 'Professional Template',
+    description: 'Classic professional template suitable for most positions',
+    preview: 'Formal, concise, highlighting professional skills',
   },
   {
     id: 'creative',
-    name: '创意模板',
-    description: '适合设计、营销等创意类职位',
-    preview: '富有创意、个性化表达',
+    name: 'Creative Template',
+    description: 'Suitable for design, marketing and other creative positions',
+    preview: 'Creative, personalized expression',
   },
   {
     id: 'technical',
-    name: '技术模板',
-    description: '专为技术岗位设计的模板',
-    preview: '突出技术能力和项目经验',
+    name: 'Technical Template',
+    description: 'Template designed specifically for technical positions',
+    preview: 'Highlighting technical skills and project experience',
   },
   {
     id: 'executive',
-    name: '高管模板',
-    description: '适合管理层和高级职位',
-    preview: '强调领导力和战略思维',
+    name: 'Executive Template',
+    description: 'Suitable for management and senior positions',
+    preview: 'Emphasizing leadership and strategic thinking',
   },
 ];
 
@@ -67,7 +67,7 @@ export default function GeneratePage() {
 
   const handleGenerate = async () => {
     setIsGenerating(true);
-    // TODO: 实现AI生成逻辑
+    // TODO: Implement AI generation logic
     setTimeout(() => {
       setIsGenerating(false);
     }, 3000);
@@ -81,10 +81,10 @@ export default function GeneratePage() {
         actions={
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm">
-              帮助
+              Help
             </Button>
             <Button variant="outline" size="sm">
-              退出登录
+              Logout
             </Button>
           </div>
         }
@@ -97,8 +97,11 @@ export default function GeneratePage() {
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-on-surface text-3xl font-bold">生成求职信</h1>
-            <p className="text-on-surface-variant mt-2">填写相关信息，AI将为您生成个性化的求职信</p>
+            <h1 className="text-on-surface text-3xl font-bold">Generate Cover Letter</h1>
+            <p className="text-on-surface-variant mt-2">
+              Fill in the relevant information and AI will generate a personalized cover letter for
+              you
+            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -107,8 +110,10 @@ export default function GeneratePage() {
               {/* Template Selection */}
               <Card>
                 <CardHeader>
-                  <CardTitle>选择模板</CardTitle>
-                  <CardDescription>选择最适合您目标职位的求职信模板</CardDescription>
+                  <CardTitle>Choose Template</CardTitle>
+                  <CardDescription>
+                    Select the cover letter template that best fits your target position
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

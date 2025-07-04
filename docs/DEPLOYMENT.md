@@ -1,29 +1,29 @@
-# 部署指南
+# Deployment Guide
 
-本指南介绍如何将求职信生成器部署到各种平台。
+This guide covers how to deploy the Cover Letter Generator to various platforms.
 
-## 前置条件
+## Prerequisites
 
-在部署之前，请确保您拥有：
+Before deploying, ensure you have:
 
-1. **OpenRouter API 密钥** - 在 [OpenRouter](https://openrouter.ai/) 注册
-2. **Neon 数据库** - 在 [Neon](https://neon.tech/) 创建数据库
-3. **域名**（用于生产环境）- 可选但建议使用
+1. **OpenRouter API Key** - Register at [OpenRouter](https://openrouter.ai/)
+2. **Neon Database** - Create database at [Neon](https://neon.tech/)
+3. **Domain Name** (for production) - Optional but recommended
 
-## Vercel 部署（推荐）
+## Vercel Deployment (Recommended)
 
-Vercel 为 Next.js 应用程序提供最佳体验，支持自动部署和边缘函数。
+Vercel provides the best experience for Next.js applications with automatic deployments and edge functions.
 
-### 1. 连接仓库
+### 1. Connect Repository
 
-1. 前往 [Vercel 控制台](https://vercel.com/dashboard)
-2. 点击 "New Project"
-3. 导入您的 GitHub 仓库
-4. 选择仓库并点击 "Import"
+1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+2. Click "New Project"
+3. Import your GitHub repository
+4. Select repository and click "Import"
 
-### 2. 配置环境变量
+### 2. Configure Environment Variables
 
-在 Vercel 控制台中，添加以下环境变量：
+In the Vercel dashboard, add the following environment variables:
 
 ```env
 OPENROUTER_API_KEY=your_openrouter_api_key
@@ -33,54 +33,54 @@ NEXTAUTH_SECRET=your_secure_random_string
 NEXTAUTH_URL=https://your-domain.vercel.app
 ```
 
-### 3. 部署
+### 3. Deploy
 
-1. 点击 "Deploy"
-2. 等待构建完成
-3. 您的应用将在 `https://your-project.vercel.app` 上可用
+1. Click "Deploy"
+2. Wait for build to complete
+3. Your app will be available at `https://your-project.vercel.app`
 
-### 4. 运行数据库迁移
+### 4. Run Database Migrations
 
-部署后，使用 Vercel CLI 运行迁移：
+After deployment, run migrations using Vercel CLI:
 
 ```bash
-# 安装 Vercel CLI
+# Install Vercel CLI
 npm install -g vercel
 
-# 登录到 Vercel
+# Login to Vercel
 vercel login
 
-# 链接项目
+# Link project
 vercel link
 
-# 运行迁移
+# Run migrations
 vercel env pull .env.local
 pnpm migrate
 ```
 
-### 5. 自定义域名（可选）
+### 5. Custom Domain (Optional)
 
-1. 前往 Vercel 项目设置
-2. 导航到 "Domains"
-3. 添加自定义域名
-4. 更新 `NEXTAUTH_URL` 环境变量
+1. Go to Vercel project settings
+2. Navigate to "Domains"
+3. Add custom domain
+4. Update `NEXTAUTH_URL` environment variable
 
-## Railway 部署
+## Railway Deployment
 
-Railway 提供简单的部署体验，内置 PostgreSQL 数据库。
+Railway provides a simple deployment experience with built-in PostgreSQL database.
 
-### 1. 设置 Railway
+### 1. Setup Railway
 
-1. 前往 [Railway](https://railway.app/)
-2. 连接您的 GitHub 账户
-3. 从仓库创建新项目
+1. Go to [Railway](https://railway.app/)
+2. Connect your GitHub account
+3. Create new project from repository
 
-### 2. 添加 PostgreSQL
+### 2. Add PostgreSQL
 
-1. 点击 "New" → "Database" → "PostgreSQL"
-2. 记录连接详情
+1. Click "New" → "Database" → "PostgreSQL"
+2. Note connection details
 
-### 3. 配置环境变量
+### 3. Configure Environment Variables
 
 ```env
 OPENROUTER_API_KEY=your_openrouter_api_key
@@ -89,20 +89,20 @@ NEXTAUTH_SECRET=your_secure_random_string
 NEXTAUTH_URL=https://your-app.railway.app
 ```
 
-### 4. 部署
+### 4. Deploy
 
-当您推送到主分支时，Railway 将自动部署。
+Railway will automatically deploy when you push to the main branch.
 
-## Docker 部署
+## Docker Deployment
 
-适用于自托管或自定义基础设施。
+Suitable for self-hosting or custom infrastructure.
 
-### 1. 创建 Dockerfile
+### 1. Create Dockerfile
 
 ```dockerfile
 FROM node:20-alpine AS base
 
-# 仅在需要时安装依赖
+# Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -110,7 +110,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* ./
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
-# 仅在需要时重新构建源代码
+# Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -118,7 +118,7 @@ COPY . .
 
 RUN corepack enable pnpm && pnpm run build
 
-# 生产镜像，复制所有文件并运行 next
+# Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
 
@@ -129,7 +129,7 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
-# 为预渲染缓存设置正确权限
+# Set the correct permission for prerender cache
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
@@ -146,13 +146,13 @@ ENV HOSTNAME "0.0.0.0"
 CMD ["node", "server.js"]
 ```
 
-### 2. 构建和运行
+### 2. Build and Run
 
 ```bash
-# 构建镜像
+# Build image
 docker build -t cover-letter-generator .
 
-# 运行容器
+# Run container
 docker run -p 3000:3000 \
   -e OPENROUTER_API_KEY=your_key \
   -e NEON_DATABASE_URL=your_db_url \
@@ -193,80 +193,80 @@ volumes:
   postgres_data:
 ```
 
-## AWS 部署
+## AWS Deployment
 
-使用各种 AWS 服务进行部署。
+Deploy using various AWS services.
 
-### 选项 1: AWS Amplify
+### Option 1: AWS Amplify
 
-1. 前往 [AWS Amplify 控制台](https://console.aws.amazon.com/amplify/)
-2. 连接您的仓库
-3. 配置构建设置
-4. 添加环境变量
-5. 部署
+1. Go to [AWS Amplify Console](https://console.aws.amazon.com/amplify/)
+2. Connect your repository
+3. Configure build settings
+4. Add environment variables
+5. Deploy
 
-### 选项 2: AWS ECS 配合 Fargate
+### Option 2: AWS ECS with Fargate
 
-1. 构建并推送 Docker 镜像到 ECR
-2. 创建 ECS 集群
-3. 定义任务定义
-4. 创建服务
-5. 配置负载均衡器
+1. Build and push Docker image to ECR
+2. Create ECS cluster
+3. Define task definition
+4. Create service
+5. Configure load balancer
 
-### 选项 3: AWS Lambda（无服务器）
+### Option 3: AWS Lambda (Serverless)
 
-使用 Serverless Framework 或 AWS SAM 进行无服务器部署。
+Use Serverless Framework or AWS SAM for serverless deployment.
 
-## 环境变量参考
+## Environment Variables Reference
 
-### 必需变量
+### Required Variables
 
-| 变量名               | 描述                  | 示例                             |
-| -------------------- | --------------------- | -------------------------------- |
-| `OPENROUTER_API_KEY` | OpenRouter API 密钥   | `sk-or-v1-...`                   |
-| `NEON_DATABASE_URL`  | Neon 数据库连接字符串 | `postgresql://user:pass@host/db` |
-| `NEXTAUTH_SECRET`    | JWT 签名密钥          | `your-secret-key`                |
-| `NEXTAUTH_URL`       | 应用程序 URL          | `https://yourdomain.com`         |
+| Variable Name        | Description        | Example                          |
+| -------------------- | ------------------ | -------------------------------- |
+| `OPENROUTER_API_KEY` | OpenRouter API key | `sk-or-v1-...`                   |
+| `NEON_DATABASE_URL`  | Neon database URL  | `postgresql://user:pass@host/db` |
+| `NEXTAUTH_SECRET`    | JWT signing secret | `your-secret-key`                |
+| `NEXTAUTH_URL`       | Application URL    | `https://yourdomain.com`         |
 
-### 可选变量
+### Optional Variables
 
-| 变量名                       | 描述             | 默认值                      |
-| ---------------------------- | ---------------- | --------------------------- |
-| `NEON_DATABASE_URL_UNPOOLED` | 非池化数据库连接 | 与 `NEON_DATABASE_URL` 相同 |
-| `NODE_ENV`                   | 环境模式         | `production`                |
-| `PORT`                       | 服务器端口       | `3000`                      |
+| Variable Name                | Description           | Default                     |
+| ---------------------------- | --------------------- | --------------------------- |
+| `NEON_DATABASE_URL_UNPOOLED` | Unpooled database URL | Same as `NEON_DATABASE_URL` |
+| `NODE_ENV`                   | Environment mode      | `production`                |
+| `PORT`                       | Server port           | `3000`                      |
 
-## 数据库设置
+## Database Setup
 
-### 1. 创建 Neon 数据库
+### 1. Create Neon Database
 
-1. 前往 [Neon 控制台](https://console.neon.tech/)
-2. 创建新项目
-3. 记录连接字符串
-4. 为测试环境创建单独分支（可选）
+1. Go to [Neon Console](https://console.neon.tech/)
+2. Create new project
+3. Note connection string
+4. Create separate branch for testing (optional)
 
-### 2. 运行迁移
+### 2. Run Migrations
 
 ```bash
-# 设置环境变量
+# Set environment variable
 export NEON_DATABASE_URL="your_connection_string"
 
-# 运行迁移
+# Run migrations
 pnpm migrate
 ```
 
-### 3. 验证数据库
+### 3. Verify Database
 
 ```bash
-# 检查数据库健康状态
+# Check database health
 pnpm db:health
 ```
 
-## 性能优化
+## Performance Optimization
 
-### 1. 启用缓存
+### 1. Enable Caching
 
-在 `next.config.js` 中配置缓存头：
+Configure cache headers in `next.config.js`:
 
 ```javascript
 module.exports = {
@@ -286,12 +286,12 @@ module.exports = {
 };
 ```
 
-### 2. 数据库连接池
+### 2. Database Connection Pooling
 
-Neon 自动处理连接池，但对于其他数据库：
+Neon handles connection pooling automatically, but for other databases:
 
 ```typescript
-// 配置连接池
+// Configure connection pool
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   max: 20,
@@ -300,9 +300,9 @@ const pool = new Pool({
 });
 ```
 
-### 3. CDN 配置
+### 3. CDN Configuration
 
-为静态资源配置 CDN：
+Configure CDN for static assets:
 
 ```javascript
 module.exports = {
@@ -310,11 +310,11 @@ module.exports = {
 };
 ```
 
-## 监控和日志
+## Monitoring and Logging
 
-### 1. Vercel 分析
+### 1. Vercel Analytics
 
-在 `app/layout.tsx` 中启用：
+Enable in `app/layout.tsx`:
 
 ```typescript
 import { Analytics } from '@vercel/analytics/react';
@@ -331,9 +331,9 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### 2. 错误跟踪
+### 2. Error Tracking
 
-配置 Sentry 或类似服务：
+Configure Sentry or similar service:
 
 ```typescript
 import * as Sentry from '@sentry/nextjs';
@@ -344,35 +344,35 @@ Sentry.init({
 });
 ```
 
-## 安全考虑
+## Security Considerations
 
-1. **环境变量**: 不要将密钥提交到版本控制系统
-2. **HTTPS**: 生产环境中始终使用 HTTPS
-3. **限率控制**: 为 API 端点实施限率控制
-4. **输入验证**: 验证所有用户输入
-5. **数据库安全**: 使用连接池和预编译语句
+1. **Environment Variables**: Never commit secrets to version control
+2. **HTTPS**: Always use HTTPS in production
+3. **Rate Limiting**: Implement rate limiting for API endpoints
+4. **Input Validation**: Validate all user inputs
+5. **Database Security**: Use connection pooling and prepared statements
 
-## 故障排除
+## Troubleshooting
 
-### 常见问题
+### Common Issues
 
-1. **构建失败**: 检查 Node.js 版本兼容性
-2. **数据库连接**: 验证连接字符串格式
-3. **API 错误**: 检查 OpenRouter API 密钥有效性
-4. **内存问题**: 为大型部署增加内存限制
+1. **Build Failures**: Check Node.js version compatibility
+2. **Database Connection**: Verify connection string format
+3. **API Errors**: Check OpenRouter API key validity
+4. **Memory Issues**: Increase memory limits for large deployments
 
-### 调试命令
+### Debug Commands
 
 ```bash
-# 本地检查构建
+# Check build locally
 pnpm build
 
-# 测试生产构建
+# Test production build
 pnpm start
 
-# 检查数据库连接
+# Check database connection
 pnpm db:health
 
-# 查看日志 (Vercel)
+# View logs (Vercel)
 vercel logs
 ```

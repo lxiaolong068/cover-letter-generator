@@ -1,66 +1,66 @@
-# 求职信生成器
+# Cover Letter Generator
 
-基于 Next.js 15、OpenRouter API 和 Neon Database 构建的 AI 求职信生成器。在几秒钟内创建定制化、ATS 优化的求职信。
+AI-powered cover letter generator built with Next.js 15, OpenRouter API, and Neon Database. Create customized, ATS-optimized cover letters in seconds.
 
-## ✨ 特性
+## ✨ Features
 
-- 🤖 **AI 驱动生成**: 使用 OpenRouter API，支持多种模型选择（GPT-4、Claude、Llama 等）
-- 📄 **多种模板**: 专业、创意、技术和高管求职信样式
-- 🎯 **ATS 优化**: 针对申请人跟踪系统的关键词优化
-- 💾 **保存和导出**: 保存求职信并导出为 PDF 格式
-- 🔒 **安全**: 内置身份验证和会话管理
-- ⚡ **快速**: 无服务器架构和边缘函数
-- 📱 **响应式**: 移动优先设计，现代 UI 组件
-- 🎨 **现代设计**: 受 Material Design 3.0 启发的界面
-- ♿ **无障碍**: 符合 WCAG 2.1 AA 标准，支持完整键盘导航
-- 🌐 **PWA 就绪**: 可安装应用，支持离线使用
-- 🔍 **SEO 优化**: 结构化数据和元标签，提升搜索可见性
+- 🤖 **AI-Powered Generation**: Uses OpenRouter API with multiple model options (GPT-4, Claude, Llama, etc.)
+- 📄 **Multiple Templates**: Professional, creative, technical, and executive cover letter styles
+- 🎯 **ATS Optimized**: Keyword optimization for Applicant Tracking Systems
+- 💾 **Save & Export**: Save cover letters and export to PDF format
+- 🔒 **Secure**: Built-in authentication and session management
+- ⚡ **Fast**: Serverless architecture with edge functions
+- 📱 **Responsive**: Mobile-first design with modern UI components
+- 🎨 **Modern Design**: Interface inspired by Material Design 3.0
+- ♿ **Accessible**: WCAG 2.1 AA compliant with full keyboard navigation
+- 🌐 **PWA Ready**: Installable app with offline support
+- 🔍 **SEO Optimized**: Structured data and meta tags for search visibility
 
-## 🛠️ 技术栈
+## 🛠️ Tech Stack
 
-- **前端**: Next.js 15 (App Router), React 19, TypeScript
-- **样式**: Tailwind CSS 4.0, 自定义设计系统
-- **UI 组件**: 使用 CVA (Class Variance Authority) 的自定义组件库
-- **AI**: OpenRouter API 配合 Vercel AI SDK
-- **数据库**: Neon PostgreSQL (无服务器)
-- **身份验证**: 自定义 JWT 认证
+- **Frontend**: Next.js 15 (App Router), React 19, TypeScript
+- **Styling**: Tailwind CSS 4.0, Custom Design System
+- **UI Components**: Custom component library with CVA (Class Variance Authority)
+- **AI**: OpenRouter API with Vercel AI SDK
+- **Database**: Neon PostgreSQL (Serverless)
+- **Authentication**: Custom JWT authentication
 - **PWA**: Service Worker, Web App Manifest
-- **SEO**: 结构化数据，元标签优化
-- **无障碍**: WCAG 2.1 AA 合规
-- **测试**: Vitest, Playwright, React Testing Library
-- **部署**: Vercel
+- **SEO**: Structured data, meta tag optimization
+- **Accessibility**: WCAG 2.1 AA compliance
+- **Testing**: Vitest, Playwright, React Testing Library
+- **Deployment**: Vercel
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 前置条件
+### Prerequisites
 
 - Node.js 20+
-- pnpm (推荐)
-- OpenRouter API 密钥
-- Neon 数据库
+- pnpm (recommended)
+- OpenRouter API key
+- Neon database
 
-### 安装步骤
+### Installation Steps
 
-1. **克隆仓库**
+1. **Clone the repository**
 
    ```bash
    git clone <repository-url>
    cd cover-letter-generator
    ```
 
-2. **安装依赖**
+2. **Install dependencies**
 
    ```bash
    pnpm install
    ```
 
-3. **设置环境变量**
+3. **Set up environment variables**
 
    ```bash
    cp .env.example .env.local
    ```
 
-   填写您的环境变量：
+   Fill in your environment variables:
 
    ```env
    OPENROUTER_API_KEY=your_openrouter_api_key
@@ -70,71 +70,71 @@
    NEXTAUTH_URL=http://localhost:3000
    ```
 
-4. **运行数据库迁移**
+4. **Run database migrations**
 
    ```bash
    pnpm migrate
    ```
 
-5. **启动开发服务器**
+5. **Start the development server**
 
    ```bash
    pnpm dev
    ```
 
-6. **打开浏览器**
-   访问 [http://localhost:3000](http://localhost:3000)
+6. **Open your browser**
+   Visit [http://localhost:3000](http://localhost:3000)
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 src/
 ├── app/                    # Next.js App Router
-│   ├── (marketing)/       # 公开页面 (SSG)
-│   ├── dashboard/         # 受保护页面 (SSR)
-│   ├── components/        # 组件展示页面
-│   ├── offline/           # PWA 离线页面
-│   └── api/               # API 路由 (边缘函数)
-├── components/            # 可复用 UI 组件
-│   ├── ui/                # 核心 UI 组件
-│   ├── seo/               # SEO 组件
-│   ├── accessibility/     # 无障碍组件
-│   └── pwa/               # PWA 组件
-├── lib/                   # 工具函数
-│   ├── openrouter.ts     # OpenRouter API 配置
-│   ├── neon.ts           # Neon 数据库工具
-│   ├── ai.ts             # AI 生成函数
-│   └── utils.ts          # 通用工具
-├── styles/               # 全局样式和设计令牌
-├── content/              # MDX 博客文章
-└── test/                 # 测试设置和工具
+│   ├── (marketing)/       # Public pages (SSG)
+│   ├── dashboard/         # Protected pages (SSR)
+│   ├── components/        # Component showcase pages
+│   ├── offline/           # PWA offline pages
+│   └── api/               # API routes (edge functions)
+├── components/            # Reusable UI components
+│   ├── ui/                # Core UI components
+│   ├── seo/               # SEO components
+│   ├── accessibility/     # Accessibility components
+│   └── pwa/               # PWA components
+├── lib/                   # Utility functions
+│   ├── openrouter.ts     # OpenRouter API configuration
+│   ├── neon.ts           # Neon database utilities
+│   ├── ai.ts             # AI generation functions
+│   └── utils.ts          # Common utilities
+├── styles/               # Global styles and design tokens
+├── content/              # MDX blog posts
+└── test/                 # Test setup and utilities
 
 scripts/
-└── migrate.ts            # 数据库迁移脚本
+└── migrate.ts            # Database migration script
 
-public/                   # 静态资源
-├── manifest.json         # PWA 清单
+public/                   # Static assets
+├── manifest.json         # PWA manifest
 ├── sw.js                 # Service Worker
-└── icons/                # 应用图标
+└── icons/                # App icons
 ```
 
-## 🎨 前端设计系统
+## 🎨 Frontend Design System
 
-### 现代 UI 组件
+### Modern UI Components
 
-我们的设计系统基于 Material Design 3.0 原则构建：
+Our design system is built on Material Design 3.0 principles:
 
-- **色彩系统**: 专业的蓝色主色调，优雅的紫色辅助色
-- **排版**: Inter 字体族，10 个尺寸等级
-- **间距**: 4px 网格系统，一致的间距
-- **组件**: 20+ 个可复用的 UI 组件及其变体
+- **Color System**: Professional blue primary, elegant purple secondary
+- **Typography**: Inter font family, 10 size scales
+- **Spacing**: 4px grid system, consistent spacing
+- **Components**: 20+ reusable UI components with variants
 
-### 组件库
+### Component Library
 
 ```typescript
 import { Button, Card, Input, Navigation } from '@/components/ui';
 
-// 使用示例
+// Usage example
 <Card variant="elevated">
   <Input label="Email" error="Required field" />
   <Button variant="primary" size="lg" loading>
@@ -143,130 +143,130 @@ import { Button, Card, Input, Navigation } from '@/components/ui';
 </Card>
 ```
 
-### 响应式设计
+### Responsive Design
 
-- **移动优先**: 为触摸界面优化
-- **断点**: sm(640px), md(768px), lg(1024px), xl(1280px)
-- **网格系统**: 灵活的 CSS Grid 和 Flexbox 工具
-- **触摸友好**: 44px 最小触摸目标
+- **Mobile First**: Optimized for touch interfaces
+- **Breakpoints**: sm(640px), md(768px), lg(1024px), xl(1280px)
+- **Grid System**: Flexible CSS Grid and Flexbox utilities
+- **Touch Friendly**: 44px minimum touch targets
 
-### 无障碍特性
+### Accessibility Features
 
-- **WCAG 2.1 AA**: 完全符合无障碍标准
-- **键盘导航**: 完整的键盘支持
-- **屏幕阅读器**: 适当的 ARIA 标签和语义化 HTML
-- **焦点管理**: 可见的焦点指示器和焦点陷阱
-- **色彩对比**: 4.5:1 最小对比度
+- **WCAG 2.1 AA**: Fully compliant with accessibility standards
+- **Keyboard Navigation**: Complete keyboard support
+- **Screen Readers**: Proper ARIA labels and semantic HTML
+- **Focus Management**: Visible focus indicators and focus traps
+- **Color Contrast**: 4.5:1 minimum contrast ratio
 
-### PWA 能力
+### PWA Capabilities
 
-- **离线支持**: 核心功能支持离线使用
-- **应用安装**: 原生应用体验
-- **后台同步**: 连接恢复时数据同步
-- **推送通知**: 实时更新（可选）
+- **Offline Support**: Core functionality works offline
+- **App Installation**: Native app experience
+- **Background Sync**: Data sync when connection restored
+- **Push Notifications**: Real-time updates (optional)
 
-### 性能优化
+### Performance Optimization
 
-- **核心 Web 指标**: LCP < 2.5s, FID < 100ms, CLS < 0.1
-- **代码分割**: 路由和组件级别分割
-- **图像优化**: WebP 格式和响应式图像
-- **缓存策略**: 使用 Service Worker 的智能缓存
+- **Core Web Vitals**: LCP < 2.5s, FID < 100ms, CLS < 0.1
+- **Code Splitting**: Route and component level splitting
+- **Image Optimization**: WebP format and responsive images
+- **Caching Strategy**: Smart caching with Service Worker
 
-查看所有组件：[http://localhost:3000/components](http://localhost:3000/components)
+View all components: [http://localhost:3000/components](http://localhost:3000/components)
 
-## 🔧 可用脚本
+## 🔧 Available Scripts
 
-- `pnpm dev` - 启动开发服务器
-- `pnpm build` - 构建生产版本
-- `pnpm start` - 启动生产服务器
-- `pnpm lint` - 运行 ESLint
-- `pnpm type-check` - 运行 TypeScript 类型检查
-- `pnpm format` - 使用 Prettier 格式化代码
-- `pnpm test` - 运行单元测试
-- `pnpm test:e2e` - 运行端到端测试
-- `pnpm migrate` - 运行数据库迁移
-- `pnpm db:health` - 检查数据库连接
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm lint` - Run ESLint
+- `pnpm type-check` - Run TypeScript type checking
+- `pnpm format` - Format code with Prettier
+- `pnpm test` - Run unit tests
+- `pnpm test:e2e` - Run end-to-end tests
+- `pnpm migrate` - Run database migrations
+- `pnpm db:health` - Check database connection
 
-## 🗄️ 数据库管理
+## 🗄️ Database Management
 
-### 运行迁移
+### Running Migrations
 
 ```bash
-# 运行所有待处理迁移
+# Run all pending migrations
 pnpm migrate
 
-# 列出已应用的迁移
+# List applied migrations
 pnpm migrate list
 
-# 回滚特定迁移
+# Rollback specific migration
 pnpm migrate rollback <migration_id>
 ```
 
-### 数据库架构
+### Database Schema
 
-应用程序使用以下主要表：
+The application uses the following main tables:
 
-- `users` - 用户账户和个人资料
-- `user_sessions` - 身份验证会话
-- `cover_letters` - 生成的求职信和元数据
-- `migrations` - 迁移跟踪
+- `users` - User accounts and profiles
+- `user_sessions` - Authentication sessions
+- `cover_letters` - Generated cover letters and metadata
+- `migrations` - Migration tracking
 
-## 🤖 AI 配置
+## 🤖 AI Configuration
 
-### OpenRouter 模型
+### OpenRouter Models
 
-应用程序通过 OpenRouter 支持多种 AI 模型：
+The application supports multiple AI models through OpenRouter:
 
-- **GPT-4o** - 高质量，性能均衡
-- **GPT-4o Mini** - 快速且成本效益（默认）
-- **Claude 3.5 Sonnet** - 擅长创意写作
-- **Llama 3.1** - 开源替代方案
+- **GPT-4o** - High quality, balanced performance
+- **GPT-4o Mini** - Fast and cost-effective (default)
+- **Claude 3.5 Sonnet** - Excellent for creative writing
+- **Llama 3.1** - Open source alternative
 
-### 模型选择
+### Model Selection
 
-模型根据使用场景自动选择：
+Models are automatically selected based on use case:
 
-- **求职信生成**: GPT-4o Mini（质量和成本的平衡）
-- **内容分析**: GPT-4o（分析高质量）
-- **快速响应**: GPT-3.5 Turbo（快速且价格优惠）
+- **Cover Letter Generation**: GPT-4o Mini (balance of quality and cost)
+- **Content Analysis**: GPT-4o (high-quality analysis)
+- **Quick Responses**: GPT-3.5 Turbo (fast and affordable)
 
-## 🧪 测试
+## 🧪 Testing
 
-### 单元测试
+### Unit Tests
 
 ```bash
-# 运行所有单元测试
+# Run all unit tests
 pnpm test
 
-# 在监视模式下运行测试
+# Run tests in watch mode
 pnpm test --watch
 
-# 使用 UI 运行测试
+# Run tests with UI
 pnpm test:ui
 ```
 
-### 端到端测试
+### End-to-End Tests
 
 ```bash
-# 运行 E2E 测试
+# Run E2E tests
 pnpm test:e2e
 
-# 使用 UI 运行 E2E 测试
+# Run E2E tests with UI
 pnpm test:e2e:ui
 
-# 安装 Playwright 浏览器（仅首次）
+# Install Playwright browsers (first time only)
 npx playwright install
 ```
 
-## 🚀 部署
+## 🚀 Deployment
 
-### Vercel（推荐）
+### Vercel (Recommended)
 
-1. **将您的仓库连接到 Vercel**
-2. **在 Vercel 控制台中设置环境变量**
-3. **推送到主分支时自动部署**
+1. **Connect your repository to Vercel**
+2. **Set environment variables in Vercel dashboard**
+3. **Automatic deployment on push to main branch**
 
-### 生产环境变量
+### Production Environment Variables
 
 ```env
 OPENROUTER_API_KEY=your_production_api_key
@@ -276,65 +276,61 @@ NEXTAUTH_SECRET=your_production_secret
 NEXTAUTH_URL=https://yourdomain.com
 ```
 
-### 手动部署
+### Manual Deployment
 
 ```bash
-# 构建应用程序
+# Build the application
 pnpm build
 
-# 启动生产服务器
+# Start production server
 pnpm start
 ```
 
-## 📊 性能
+## 📊 Performance
 
-- **核心 Web 指标**: 优化为 LCP < 2.5s, FID < 100ms, CLS < 0.1
-- **包大小**: 自动代码分割和 tree shaking
-- **图像**: Next.js Image 组件，支持 AVIF/WebP
-- **缓存**: 营销页面静态生成，动态内容 ISR
+- **Core Web Vitals**: Optimized for LCP < 2.5s, FID < 100ms, CLS < 0.1
+- **Bundle Size**: Automatic code splitting and tree shaking
+- **Images**: Next.js Image component with AVIF/WebP support
+- **Caching**: Static generation for marketing pages, ISR for dynamic content
 
-## 🔒 安全
+## 🔒 Security
 
-- **身份验证**: 基于 JWT 的会话，安全的 httpOnly cookies
-- **数据库**: Neon 行级安全
-- **API**: 限率控制和输入验证
-- **头部**: 安全头部和 CSP
-- **环境**: 安全的环境变量处理
+- **Authentication**: JWT-based sessions with secure httpOnly cookies
+- **Database**: Neon row-level security
+- **API**: Rate limiting and input validation
+- **Headers**: Security headers and CSP
+- **Environment**: Secure environment variable handling
 
-## 🤝 贡献
+## 🤝 Contributing
 
-1. Fork 仓库
-2. 创建功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交您的更改 (`git commit -m 'Add amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 开启 Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### 开发指南
+### Development Guidelines
 
-- 遵循 TypeScript 严格模式
-- 使用 Prettier 进行代码格式化
-- 为新功能编写测试
-- 遵循约定式提交消息
-- 根据需要更新文档
+- Follow TypeScript strict mode
+- Use Prettier for code formatting
+- Write tests for new features
+- Follow conventional commit messages
+- Update documentation as needed
 
-## 📝 许可证
+## 📝 License
 
-该项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 支持
+## 🆘 Support
 
-- **文档**: 查看 [development.md](development.md) 文件
-- **问题**: 在 GitHub 上报告 bug 和功能请求
-- **讨论**: 参与社区讨论
+- **Documentation**: Check the [development.md](development.md) file
+- **Issues**: Report bugs and feature requests on GitHub
+- **Discussions**: Join community discussions
 
-## 🙏 致谢
+## 🙏 Acknowledgments
 
-- [Next.js](https://nextjs.org/) - React 框架
-- [OpenRouter](https://openrouter.ai/) - AI 模型访问
-- [Neon](https://neon.tech/) - 无服务器 PostgreSQL
-- [Vercel](https://vercel.com/) - 部署平台
-- [Tailwind CSS](https://tailwindcss.com/) - 样式框架
-
-```
-
-```
+- [Next.js](https://nextjs.org/) - React framework
+- [OpenRouter](https://openrouter.ai/) - AI model access
+- [Neon](https://neon.tech/) - Serverless PostgreSQL
+- [Vercel](https://vercel.com/) - Deployment platform
+- [Tailwind CSS](https://tailwindcss.com/) - Styling framework

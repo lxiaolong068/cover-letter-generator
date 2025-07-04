@@ -64,11 +64,11 @@ test.describe('Components Showcase Page', () => {
 
   test('should display form components', async ({ page }) => {
     // Check form section heading
-    await expect(page.getByRole('heading', { name: /表单组件/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Form Components/i })).toBeVisible();
 
     // Check input components
-    await expect(page.getByText('输入框组件')).toBeVisible();
-    await expect(page.getByText('文本域组件')).toBeVisible();
+    await expect(page.getByText('Input Components')).toBeVisible();
+    await expect(page.getByText('Textarea Components')).toBeVisible();
 
     // Check that form inputs are present
     const inputs = page.locator('input[type="text"]');
@@ -141,7 +141,7 @@ test.describe('Components Showcase Page', () => {
 
   test('should have working interactive elements', async ({ page }) => {
     // Test that buttons are clickable (non-disabled ones)
-    const normalButton = page.getByRole('button', { name: '正常状态' });
+    const normalButton = page.getByRole('button', { name: 'Normal State' });
     await expect(normalButton).toBeEnabled();
     await normalButton.click();
 
@@ -192,7 +192,7 @@ test.describe('Components Showcase Page', () => {
 
   test('should have proper meta tags', async ({ page }) => {
     // Check title
-    await expect(page).toHaveTitle(/组件展示 - 求职信生成器/);
+    await expect(page).toHaveTitle(/Component Showcase - Cover Letter Generator/);
 
     // Check that it has noindex (since it's a development page)
     const robotsMeta = page.locator('meta[name="robots"]');

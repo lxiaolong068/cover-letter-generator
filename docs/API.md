@@ -1,298 +1,298 @@
-# API 文档
+# API Documentation
 
-本文档描述了求职信生成器应用程序中可用的 API 端点。
+This document describes the available API endpoints in the Cover Letter Generator application.
 
-## 基础 URL
+## Base URL
 
-- **开发环境**: `http://localhost:3000`
-- **生产环境**: `https://yourdomain.com`
+- **Development**: `http://localhost:3000`
+- **Production**: `https://yourdomain.com`
 
-## 身份验证
+## Authentication
 
-API 使用基于 JWT 的身份验证，采用 httpOnly cookies。在请求受保护的端点时需要包含会话 cookie。
+The API uses JWT-based authentication with httpOnly cookies. Session cookies must be included when requesting protected endpoints.
 
-## 端点说明
+## Endpoint Documentation
 
-### 求职信生成
+### Cover Letter Generation
 
 #### POST `/api/generate`
 
-使用 AI 生成新的求职信。
+Generate a new cover letter using AI.
 
-**请求体:**
+**Request Body:**
 
 ```json
 {
-  "jobDescription": "string (必需) - 职位描述",
-  "userProfile": "string (必需) - 用户简介",
-  "coverLetterType": "professional | creative | technical | executive (可选，默认: professional) - 求职信类型",
-  "additionalInstructions": "string (可选) - 额外说明"
+  "jobDescription": "string (required) - Job description",
+  "userProfile": "string (required) - User profile",
+  "coverLetterType": "professional | creative | technical | executive (optional, default: professional) - Cover letter type",
+  "additionalInstructions": "string (optional) - Additional instructions"
 }
 ```
 
-**响应:**
+**Response:**
 
 - **Content-Type**: `text/plain; charset=utf-8`
-- **Transfer-Encoding**: `chunked` (流式响应)
+- **Transfer-Encoding**: `chunked` (streaming response)
 
-**示例:**
+**Example:**
 
 ```bash
 curl -X POST http://localhost:3000/api/generate \
   -H "Content-Type: application/json" \
   -d '{
-    "jobDescription": "科技初创公司的软件工程师职位...",
-    "userProfile": "5年 React 和 Node.js 开发经验...",
+    "jobDescription": "Software engineer position at tech startup...",
+    "userProfile": "5 years of React and Node.js development experience...",
     "coverLetterType": "professional"
   }'
 ```
 
-### 用户管理
+### User Management
 
 #### POST `/api/auth/register`
 
-注册新用户账户。
+Register a new user account.
 
-**请求体:**
+**Request Body:**
 
 ```json
 {
-  "email": "string (必需) - 电子邮箱",
-  "name": "string (必需) - 用户姓名"
+  "email": "string (required) - Email address",
+  "name": "string (required) - User name"
 }
 ```
 
-**响应:**
+**Response:**
 
 ```json
 {
   "user": {
-    "id": "uuid - 用户ID",
-    "email": "string - 电子邮箱",
-    "name": "string - 用户姓名",
-    "created_at": "timestamp - 创建时间"
+    "id": "uuid - User ID",
+    "email": "string - Email address",
+    "name": "string - User name",
+    "created_at": "timestamp - Creation time"
   },
   "session": {
-    "token": "string - 会话令牌",
-    "expires_at": "timestamp - 过期时间"
+    "token": "string - Session token",
+    "expires_at": "timestamp - Expiration time"
   }
 }
 ```
 
 #### POST `/api/auth/login`
 
-用户认证并创建会话。
+Authenticate user and create session.
 
-**请求体:**
+**Request Body:**
 
 ```json
 {
-  "email": "string (必需) - 电子邮箱"
+  "email": "string (required) - Email address"
 }
 ```
 
-**响应:**
+**Response:**
 
 ```json
 {
   "user": {
-    "id": "uuid - 用户ID",
-    "email": "string - 电子邮箱",
-    "name": "string - 用户姓名"
+    "id": "uuid - User ID",
+    "email": "string - Email address",
+    "name": "string - User name"
   },
   "session": {
-    "token": "string - 会话令牌",
-    "expires_at": "timestamp - 过期时间"
+    "token": "string - Session token",
+    "expires_at": "timestamp - Expiration time"
   }
 }
 ```
 
 #### POST `/api/auth/logout`
 
-结束用户会话。
+End user session.
 
-**响应:**
+**Response:**
 
 ```json
 {
-  "message": "注销成功"
+  "message": "Logout successful"
 }
 ```
 
-### 求职信管理
+### Cover Letter Management
 
 #### GET `/api/cover-letters`
 
-获取用户保存的求职信。
+Get user's saved cover letters.
 
-**查询参数:**
+**Query Parameters:**
 
-- `limit`: number (可选，默认: 10) - 返回条目数量
-- `offset`: number (可选，默认: 0) - 偏移量
+- `limit`: number (optional, default: 10) - Number of items to return
+- `offset`: number (optional, default: 0) - Offset for pagination
 
-**响应:**
+**Response:**
 
 ```json
 {
   "coverLetters": [
     {
-      "id": "uuid - 求职信ID",
-      "title": "string - 标题",
-      "content": "string - 内容",
-      "cover_letter_type": "string - 求职信类型",
-      "model_used": "string - 使用的模型",
-      "tokens_used": "number - 使用的令牌数",
-      "generation_time": "number - 生成时间(毫秒)",
-      "created_at": "timestamp - 创建时间"
+      "id": "uuid - Cover letter ID",
+      "title": "string - Title",
+      "content": "string - Content",
+      "cover_letter_type": "string - Cover letter type",
+      "model_used": "string - Model used",
+      "tokens_used": "number - Tokens used",
+      "generation_time": "number - Generation time (ms)",
+      "created_at": "timestamp - Creation time"
     }
   ],
-  "total": "number - 总数"
+  "total": "number - Total count"
 }
 ```
 
 #### GET `/api/cover-letters/[id]`
 
-根据 ID 获取特定求职信。
+Get specific cover letter by ID.
 
-**响应:**
+**Response:**
 
 ```json
 {
-  "id": "uuid - 求职信ID",
-  "title": "string - 标题",
-  "content": "string - 内容",
-  "job_description": "string - 职位描述",
-  "user_profile": "string - 用户简介",
-  "cover_letter_type": "string - 求职信类型",
-  "model_used": "string - 使用的模型",
-  "tokens_used": "number - 使用的令牌数",
-  "generation_time": "number - 生成时间(毫秒)",
-  "created_at": "timestamp - 创建时间",
-  "updated_at": "timestamp - 更新时间"
+  "id": "uuid - Cover letter ID",
+  "title": "string - Title",
+  "content": "string - Content",
+  "job_description": "string - Job description",
+  "user_profile": "string - User profile",
+  "cover_letter_type": "string - Cover letter type",
+  "model_used": "string - Model used",
+  "tokens_used": "number - Tokens used",
+  "generation_time": "number - Generation time (ms)",
+  "created_at": "timestamp - Creation time",
+  "updated_at": "timestamp - Update time"
 }
 ```
 
 #### POST `/api/cover-letters`
 
-保存生成的求职信。
+Save generated cover letter.
 
-**请求体:**
+**Request Body:**
 
 ```json
 {
-  "title": "string (必需) - 标题",
-  "content": "string (必需) - 内容",
-  "jobDescription": "string (必需) - 职位描述",
-  "userProfile": "string (必需) - 用户简介",
-  "coverLetterType": "professional | creative | technical | executive (必需) - 求职信类型",
-  "modelUsed": "string (必需) - 使用的模型",
-  "tokensUsed": "number (可选) - 使用的令牌数",
-  "generationTime": "number (必需) - 生成时间(毫秒)"
+  "title": "string (required) - Title",
+  "content": "string (required) - Content",
+  "jobDescription": "string (required) - Job description",
+  "userProfile": "string (required) - User profile",
+  "coverLetterType": "professional | creative | technical | executive (required) - Cover letter type",
+  "modelUsed": "string (required) - Model used",
+  "tokensUsed": "number (optional) - Tokens used",
+  "generationTime": "number (required) - Generation time (ms)"
 }
 ```
 
 #### DELETE `/api/cover-letters/[id]`
 
-删除求职信。
+Delete cover letter.
 
-**响应:**
+**Response:**
 
 ```json
 {
-  "message": "求职信删除成功"
+  "message": "Cover letter deleted successfully"
 }
 ```
 
-### PDF 导出
+### PDF Export
 
 #### POST `/api/export/pdf`
 
-将求职信导出为 PDF 格式。
+Export cover letter to PDF format.
 
-**请求体:**
+**Request Body:**
 
 ```json
 {
-  "content": "string (必需) - 求职信内容",
-  "title": "string (可选) - PDF 文件标题"
+  "content": "string (required) - Cover letter content",
+  "title": "string (optional) - PDF file title"
 }
 ```
 
-**响应:**
+**Response:**
 
 - **Content-Type**: `application/pdf`
 - **Content-Disposition**: `attachment; filename="cover-letter.pdf"`
 
-### 健康检查
+### Health Check
 
 #### GET `/api/health`
 
-检查 API 和数据库健康状态。
+Check API and database health status.
 
-**响应:**
-
-```json
-{
-  "status": "ok - 状态",
-  "timestamp": "timestamp - 时间戳",
-  "database": "connected - 数据库连接状态",
-  "version": "string - 版本号"
-}
-```
-
-## 错误响应
-
-所有端点都按以下格式返回错误信息：
+**Response:**
 
 ```json
 {
-  "error": "string - 错误类型",
-  "message": "string - 错误消息",
-  "statusCode": "number - HTTP 状态码"
+  "status": "ok - Status",
+  "timestamp": "timestamp - Timestamp",
+  "database": "connected - Database connection status",
+  "version": "string - Version number"
 }
 ```
 
-### 常见错误代码
+## Error Responses
 
-- `400` - 错误请求（无效输入）
-- `401` - 未经授权（需要认证）
-- `403` - 禁止访问（权限不足）
-- `404` - 未找到（资源不存在）
-- `429` - 请求过多（超过限率）
-- `500` - 内部服务器错误
+All endpoints return error information in the following format:
 
-## 限率控制
+```json
+{
+  "error": "string - Error type",
+  "message": "string - Error message",
+  "statusCode": "number - HTTP status code"
+}
+```
 
-- **求职信生成**: 每用户每分钟 10 次请求
-- **用户认证**: 每 IP 每分钟 5 次请求
-- **通用 API**: 每用户每分钟 100 次请求
+### Common Error Codes
 
-## WebSocket 事件
+- `400` - Bad Request (invalid input)
+- `401` - Unauthorized (authentication required)
+- `403` - Forbidden (insufficient permissions)
+- `404` - Not Found (resource doesn't exist)
+- `429` - Too Many Requests (rate limit exceeded)
+- `500` - Internal Server Error
 
-### 求职信生成流
+## Rate Limiting
 
-连接到 `/api/generate` 并启用流式传输以接收实时生成更新。
+- **Cover Letter Generation**: 10 requests per user per minute
+- **User Authentication**: 5 requests per IP per minute
+- **General API**: 100 requests per user per minute
 
-**事件类型:**
+## WebSocket Events
 
-- `data` - 部分内容块
-- `done` - 生成完成
-- `error` - 生成失败
+### Cover Letter Generation Stream
 
-## SDK 使用示例
+Connect to `/api/generate` with streaming enabled to receive real-time generation updates.
+
+**Event Types:**
+
+- `data` - Partial content chunk
+- `done` - Generation complete
+- `error` - Generation failed
+
+## SDK Usage Examples
 
 ### JavaScript/TypeScript
 
 ```typescript
-// 使用流式传输生成求职信
+// Generate cover letter with streaming
 const response = await fetch('/api/generate', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    jobDescription: '您的职位描述...',
-    userProfile: '您的个人简介...',
+    jobDescription: 'Your job description...',
+    userProfile: 'Your personal profile...',
     coverLetterType: 'professional',
   }),
 });
@@ -305,7 +305,7 @@ while (true) {
   if (done) break;
 
   const chunk = decoder.decode(value);
-  console.log(chunk); // 处理流式内容
+  console.log(chunk); // Process streaming content
 }
 ```
 
@@ -314,11 +314,11 @@ while (true) {
 ```python
 import requests
 
-# 生成求职信
+# Generate cover letter
 response = requests.post('http://localhost:3000/api/generate',
   json={
-    'jobDescription': '您的职位描述...',
-    'userProfile': '您的个人简介...',
+    'jobDescription': 'Your job description...',
+    'userProfile': 'Your personal profile...',
     'coverLetterType': 'professional'
   },
   stream=True

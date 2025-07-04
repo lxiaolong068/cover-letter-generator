@@ -4,39 +4,39 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
 
 const navigationItems = [
-  { href: '/dashboard', label: '仪表板' },
-  { href: '/dashboard/generate', label: '生成求职信' },
-  { href: '/dashboard/templates', label: '我的模板' },
-  { href: '/dashboard/history', label: '历史记录' },
+  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/dashboard/generate', label: 'Generate Cover Letter' },
+  { href: '/dashboard/templates', label: 'My Templates' },
+  { href: '/dashboard/history', label: 'History' },
 ];
 
-const breadcrumbItems = [{ href: '/', label: '首页' }, { label: '仪表板' }];
+const breadcrumbItems = [{ href: '/', label: 'Home' }, { label: 'Dashboard' }];
 
 const quickActions = [
   {
-    title: '创建新求职信',
-    description: '使用AI快速生成个性化求职信',
+    title: 'Create New Cover Letter',
+    description: 'Use AI to quickly generate personalized cover letters',
     href: '/dashboard/generate',
     icon: '✨',
     color: 'bg-primary-500',
   },
   {
-    title: '选择模板',
-    description: '从多种专业模板中选择',
+    title: 'Choose Template',
+    description: 'Select from multiple professional templates',
     href: '/dashboard/templates',
     icon: '📄',
     color: 'bg-secondary-500',
   },
   {
-    title: '查看历史',
-    description: '管理已生成的求职信',
+    title: 'View History',
+    description: 'Manage generated cover letters',
     href: '/dashboard/history',
     icon: '📚',
     color: 'bg-success-500',
   },
   {
-    title: '个人设置',
-    description: '更新个人信息和偏好',
+    title: 'Personal Settings',
+    description: 'Update personal information and preferences',
     href: '/dashboard/settings',
     icon: '⚙️',
     color: 'bg-warning-500',
@@ -46,45 +46,45 @@ const quickActions = [
 const recentCoverLetters = [
   {
     id: 1,
-    title: '前端开发工程师 - 阿里巴巴',
+    title: 'Frontend Developer - Google',
     createdAt: '2024-01-15',
-    status: '已完成',
+    status: 'Completed',
   },
   {
     id: 2,
-    title: '产品经理 - 腾讯',
+    title: 'Product Manager - Microsoft',
     createdAt: '2024-01-14',
-    status: '草稿',
+    status: 'Draft',
   },
   {
     id: 3,
-    title: 'UI设计师 - 字节跳动',
+    title: 'UI Designer - Apple',
     createdAt: '2024-01-13',
-    status: '已完成',
+    status: 'Completed',
   },
 ];
 
 const stats = [
   {
-    label: '总求职信数',
+    label: 'Total Cover Letters',
     value: '12',
     change: '+2',
     changeType: 'increase' as const,
   },
   {
-    label: '本月生成',
+    label: 'Generated This Month',
     value: '5',
     change: '+1',
     changeType: 'increase' as const,
   },
   {
-    label: '成功投递',
+    label: 'Successfully Submitted',
     value: '8',
     change: '+3',
     changeType: 'increase' as const,
   },
   {
-    label: '面试邀请',
+    label: 'Interview Invitations',
     value: '3',
     change: '+1',
     changeType: 'increase' as const,
@@ -100,10 +100,10 @@ export default function DashboardPage() {
         actions={
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm">
-              帮助
+              Help
             </Button>
             <Button variant="outline" size="sm">
-              退出登录
+              Logout
             </Button>
           </div>
         }
@@ -116,8 +116,10 @@ export default function DashboardPage() {
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-on-surface text-3xl font-bold">仪表板</h1>
-            <p className="text-on-surface-variant mt-2">欢迎回来！管理您的求职信和查看统计数据。</p>
+            <h1 className="text-on-surface text-3xl font-bold">Dashboard</h1>
+            <p className="text-on-surface-variant mt-2">
+              Welcome back! Manage your cover letters and view statistics.
+            </p>
           </div>
 
           {/* Stats Grid */}

@@ -10,10 +10,10 @@ const FeatureSection = lazy(() =>
 );
 
 const navigationItems = [
-  { href: '/', label: '首页' },
-  { href: '/templates', label: '模板' },
-  { href: '/examples', label: '示例' },
-  { href: '/pricing', label: '定价' },
+  { href: '/', label: 'Home' },
+  { href: '/templates', label: 'Templates' },
+  { href: '/examples', label: 'Examples' },
+  { href: '/pricing', label: 'Pricing' },
 ];
 
 export default function HomePage() {
@@ -25,10 +25,10 @@ export default function HomePage() {
         actions={
           <div className="flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link href="/login">登录</Link>
+              <Link href="/login">Login</Link>
             </Button>
             <Button asChild>
-              <Link href="/register">注册</Link>
+              <Link href="/register">Sign Up</Link>
             </Button>
           </div>
         }
@@ -39,18 +39,18 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-on-surface text-4xl font-bold tracking-tight sm:text-6xl">
-              AI智能求职信生成器
+              AI-Powered Cover Letter Generator
             </h1>
             <p className="text-on-surface-variant mx-auto mt-6 max-w-2xl text-lg leading-8">
-              使用先进的AI技术，快速生成专业、个性化的求职信。
-              支持多种模板，ATS优化，助您在求职路上脱颖而出。
+              Generate professional, personalized cover letters using advanced AI technology.
+              Multiple templates, ATS optimization, helping you stand out in your job search.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button size="lg" asChild>
-                <Link href="/dashboard">立即开始</Link>
+                <Link href="/dashboard">Get Started</Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link href="/examples">查看示例</Link>
+                <Link href="/examples">View Examples</Link>
               </Button>
             </div>
           </div>
@@ -77,17 +77,18 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              准备好开始您的求职之旅了吗？
+              Ready to Start Your Job Search Journey?
             </h2>
             <p className="text-primary-100 mx-auto mt-6 max-w-xl text-lg leading-8">
-              立即注册，免费体验AI求职信生成服务，让您的求职更加高效。
+              Sign up now and experience our AI cover letter generation service for free. Make your
+              job search more efficient.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button variant="secondary" size="lg" asChild>
-                <Link href="/register">免费注册</Link>
+                <Link href="/register">Sign Up Free</Link>
               </Button>
               <Button variant="ghost" size="lg" className="hover:bg-primary-700 text-white" asChild>
-                <Link href="/contact">联系我们</Link>
+                <Link href="/contact">Contact Us</Link>
               </Button>
             </div>
           </div>
@@ -98,7 +99,9 @@ export default function HomePage() {
       <footer className="bg-surface-variant">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-on-surface-variant text-sm">© 2024 求职信生成器. 保留所有权利.</p>
+            <p className="text-on-surface-variant text-sm">
+              © 2024 Cover Letter Generator. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>

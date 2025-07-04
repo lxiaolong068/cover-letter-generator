@@ -1,14 +1,14 @@
 {
-  "name": "求职信生成器 - AI智能求职信生成工具",
-  "short_name": "求职信生成器",
-  "description": "使用AI技术快速生成专业、个性化的求职信。支持多种模板，ATS优化，助您在求职路上脱颖而出。",
+  "name": "Cover Letter Generator - AI-Powered Cover Letter Tool",
+  "short_name": "Cover Letter Generator",
+  "description": "Generate professional, personalized cover letters using AI technology. Multiple templates, ATS optimization, helping you stand out in your job search.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
   "orientation": "portrait-primary",
   "scope": "/",
-  "lang": "zh-CN",
+  "lang": "en-US",
   "dir": "ltr",
   "categories": ["productivity", "business", "utilities"],
   "screenshots": [
@@ -17,14 +17,14 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "桌面端主界面"
+      "label": "Desktop Main Interface"
     },
     {
       "src": "/screenshots/mobile-1.png",
       "sizes": "390x844",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "移动端主界面"
+      "label": "Mobile Main Interface"
     }
   ],
   "icons": [
@@ -79,9 +79,9 @@
   ],
   "shortcuts": [
     {
-      "name": "创建新求职信",
-      "short_name": "新建",
-      "description": "快速创建一份新的求职信",
+      "name": "Create New Cover Letter",
+      "short_name": "New",
+      "description": "Quickly create a new cover letter",
       "url": "/dashboard/generate",
       "icons": [
         {
@@ -92,9 +92,9 @@
       ]
     },
     {
-      "name": "查看历史记录",
-      "short_name": "历史",
-      "description": "查看已创建的求职信历史记录",
+      "name": "View History",
+      "short_name": "History",
+      "description": "View created cover letter history",
       "url": "/dashboard/history",
       "icons": [
         {
@@ -105,9 +105,9 @@
       ]
     },
     {
-      "name": "选择模板",
-      "short_name": "模板",
-      "description": "浏览和选择求职信模板",
+      "name": "Choose Template",
+      "short_name": "Templates",
+      "description": "Browse and select cover letter templates",
       "url": "/dashboard/templates",
       "icons": [
         {

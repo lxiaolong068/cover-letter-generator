@@ -7,38 +7,44 @@ test.describe('Homepage', () => {
 
   test('should display the main heading and description', async ({ page }) => {
     // Check main heading
-    await expect(page.getByRole('heading', { name: /AI智能求职信生成器/i })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /AI-Powered Cover Letter Generator/i })
+    ).toBeVisible();
 
     // Check description
-    await expect(page.getByText(/使用先进的AI技术，快速生成专业、个性化的求职信/)).toBeVisible();
+    await expect(
+      page.getByText(
+        /Generate professional, personalized cover letters using advanced AI technology/
+      )
+    ).toBeVisible();
   });
 
   test('should have working navigation', async ({ page }) => {
     // Check navigation items
-    await expect(page.getByRole('link', { name: '首页' })).toBeVisible();
-    await expect(page.getByRole('link', { name: '模板' })).toBeVisible();
-    await expect(page.getByRole('link', { name: '示例' })).toBeVisible();
-    await expect(page.getByRole('link', { name: '定价' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Templates' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Examples' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Pricing' })).toBeVisible();
 
     // Check action buttons
-    await expect(page.getByRole('link', { name: '登录' })).toBeVisible();
-    await expect(page.getByRole('link', { name: '注册' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Login' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Sign Up' })).toBeVisible();
   });
 
   test('should display feature cards', async ({ page }) => {
     // Check that all feature cards are visible
-    await expect(page.getByText('AI智能生成')).toBeVisible();
-    await expect(page.getByText('多种模板')).toBeVisible();
-    await expect(page.getByText('ATS优化')).toBeVisible();
-    await expect(page.getByText('一键导出')).toBeVisible();
-    await expect(page.getByText('安全可靠')).toBeVisible();
-    await expect(page.getByText('快速高效')).toBeVisible();
+    await expect(page.getByText('AI-Powered Generation')).toBeVisible();
+    await expect(page.getByText('Multiple Templates')).toBeVisible();
+    await expect(page.getByText('ATS Optimized')).toBeVisible();
+    await expect(page.getByText('One-Click Export')).toBeVisible();
+    await expect(page.getByText('Secure & Reliable')).toBeVisible();
+    await expect(page.getByText('Fast & Efficient')).toBeVisible();
   });
 
   test('should have working CTA buttons', async ({ page }) => {
     // Check main CTA buttons
-    const startButton = page.getByRole('link', { name: '立即开始' });
-    const exampleButton = page.getByRole('link', { name: '查看示例' });
+    const startButton = page.getByRole('link', { name: 'Get Started' });
+    const exampleButton = page.getByRole('link', { name: 'View Examples' });
 
     await expect(startButton).toBeVisible();
     await expect(exampleButton).toBeVisible();
@@ -50,18 +56,21 @@ test.describe('Homepage', () => {
 
   test('should have proper SEO meta tags', async ({ page }) => {
     // Check title
-    await expect(page).toHaveTitle(/求职信生成器 - AI智能求职信生成工具/);
+    await expect(page).toHaveTitle(/Cover Letter Generator - AI-Powered Cover Letter Tool/);
 
     // Check meta description
     const metaDescription = page.locator('meta[name="description"]');
     await expect(metaDescription).toHaveAttribute(
       'content',
-      /使用AI技术快速生成专业、个性化的求职信/
+      /Generate professional, personalized cover letters using AI technology/
     );
 
     // Check Open Graph tags
     const ogTitle = page.locator('meta[property="og:title"]');
-    await expect(ogTitle).toHaveAttribute('content', /求职信生成器 - AI智能求职信生成工具/);
+    await expect(ogTitle).toHaveAttribute(
+      'content',
+      /Cover Letter Generator - AI-Powered Cover Letter Tool/
+    );
   });
 
   test('should be responsive on mobile', async ({ page }) => {
@@ -69,20 +78,20 @@ test.describe('Homepage', () => {
     await page.setViewportSize({ width: 375, height: 667 });
 
     // Check that mobile navigation works
-    const mobileMenuButton = page.getByRole('button', { name: /打开菜单|关闭菜单/ });
+    const mobileMenuButton = page.getByRole('button', { name: /Open menu|Close menu/ });
     await expect(mobileMenuButton).toBeVisible();
 
     // Open mobile menu
     await mobileMenuButton.click();
 
     // Check that navigation items are visible in mobile menu
-    await expect(page.getByRole('link', { name: '首页' })).toBeVisible();
-    await expect(page.getByRole('link', { name: '模板' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Templates' })).toBeVisible();
   });
 
   test('should have accessibility features', async ({ page }) => {
     // Check for skip links
-    const skipLink = page.getByRole('link', { name: '跳转到主要内容' });
+    const skipLink = page.getByRole('link', { name: 'Skip to main content' });
     await expect(skipLink).toBeVisible();
 
     // Check that main content has proper ID
@@ -126,7 +135,7 @@ test.describe('Homepage', () => {
     const websiteSchema = structuredData.first();
     const websiteContent = await websiteSchema.textContent();
     expect(websiteContent).toContain('"@type":"WebSite"');
-    expect(websiteContent).toContain('求职信生成器');
+    expect(websiteContent).toContain('Cover Letter Generator');
   });
 
   test('should have working footer', async ({ page }) => {
@@ -134,7 +143,9 @@ test.describe('Homepage', () => {
     await page.locator('footer').scrollIntoViewIfNeeded();
 
     // Check footer content
-    await expect(page.getByText('© 2024 求职信生成器. 保留所有权利.')).toBeVisible();
+    await expect(
+      page.getByText('© 2024 Cover Letter Generator. All rights reserved.')
+    ).toBeVisible();
   });
 });
 
