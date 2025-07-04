@@ -97,7 +97,7 @@ export default function RootLayout({
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
 
   return (
-    <html lang="zh-CN" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en-US" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -113,13 +113,13 @@ export default function RootLayout({
       </head>
       <body className="bg-surface text-on-surface min-h-screen antialiased">
         {/* Skip Links for Accessibility */}
-        <SkipLink href="#main-content">跳转到主要内容</SkipLink>
-        <SkipLink href="#navigation">跳转到导航</SkipLink>
+        <SkipLink href="#main-content">Skip to main content</SkipLink>
+        <SkipLink href="#navigation">Skip to navigation</SkipLink>
 
         {/* Structured Data */}
         <WebsiteStructuredData
-          name="求职信生成器"
-          description="使用AI技术快速生成专业、个性化的求职信。支持多种模板，ATS优化，助您在求职路上脱颖而出。"
+          name="Cover Letter Generator"
+          description="Generate professional, personalized cover letters using AI technology. Multiple templates, ATS optimization, helping you stand out in your job search."
           url={baseUrl}
           logo={`${baseUrl}/logo.png`}
           sameAs={[
@@ -129,12 +129,12 @@ export default function RootLayout({
         />
 
         <OrganizationStructuredData
-          name="求职信生成器"
-          description="专业的AI求职信生成服务提供商"
+          name="Cover Letter Generator"
+          description="Professional AI cover letter generation service provider"
           url={baseUrl}
           logo={`${baseUrl}/logo.png`}
           contactPoint={{
-            telephone: '+86-400-123-4567',
+            telephone: '+1-800-123-4567',
             contactType: 'customer service',
             email: 'support@coverletter-generator.com',
           }}

@@ -62,7 +62,7 @@ export function SEOHead({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={fullOgImage} />
       <meta property="og:image:alt" content={title} />
-      <meta property="og:site_name" content="求职信生成器" />
+      <meta property="og:site_name" content="Cover Letter Generator" />
       <meta property="og:locale" content="zh_CN" />
       {fullCanonical && <meta property="og:url" content={fullCanonical} />}
 

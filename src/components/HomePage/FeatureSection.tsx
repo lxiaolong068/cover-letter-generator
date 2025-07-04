@@ -5,33 +5,39 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 const features = [
   {
-    title: 'AI智能生成',
-    description: '基于先进的AI技术，根据您的背景和目标职位智能生成个性化求职信',
+    title: 'AI-Powered Generation',
+    description:
+      'Generate personalized cover letters using advanced AI technology based on your background and target position',
     icon: '🤖',
   },
   {
-    title: '多种模板',
-    description: '提供专业、创意、技术、管理等多种风格模板，适应不同行业需求',
+    title: 'Multiple Templates',
+    description:
+      'Professional, creative, technical, and executive templates to suit different industries and roles',
     icon: '📄',
   },
   {
-    title: 'ATS优化',
-    description: '针对申请人跟踪系统优化，提高简历通过率和面试机会',
+    title: 'ATS Optimized',
+    description:
+      'Optimized for Applicant Tracking Systems to improve resume pass rates and interview opportunities',
     icon: '🎯',
   },
   {
-    title: '一键导出',
-    description: '支持PDF格式导出，保持格式完整，方便投递和打印',
+    title: 'One-Click Export',
+    description:
+      'Export to PDF format while maintaining formatting integrity for easy submission and printing',
     icon: '📥',
   },
   {
-    title: '安全可靠',
-    description: '采用企业级安全标准，保护您的个人信息和求职数据',
+    title: 'Secure & Reliable',
+    description:
+      'Enterprise-grade security standards to protect your personal information and job search data',
     icon: '🔒',
   },
   {
-    title: '快速高效',
-    description: '几分钟内完成求职信生成，大幅提升求职效率',
+    title: 'Fast & Efficient',
+    description:
+      'Complete cover letter generation in minutes, dramatically improving your job search efficiency',
     icon: '⚡',
   },
 ];
@@ -57,10 +63,11 @@ export const FeatureSection = React.memo(() => (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-on-surface text-3xl font-bold tracking-tight sm:text-4xl">
-          为什么选择我们？
+          Why Choose Us?
         </h2>
         <p className="text-on-surface-variant mt-4 text-lg leading-8">
-          我们提供最先进的AI技术和最贴心的用户体验，让求职变得更简单高效。
+          We provide the most advanced AI technology and thoughtful user experience to make job
+          searching simpler and more efficient.
         </p>
       </div>
       <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">

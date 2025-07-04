@@ -12,41 +12,43 @@ export default function OfflinePage() {
           <div className="bg-warning-100 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
             <span className="text-3xl">📱</span>
           </div>
-          <CardTitle className="text-xl">离线模式</CardTitle>
-          <CardDescription>您当前没有网络连接，部分功能可能受限</CardDescription>
+          <CardTitle className="text-xl">Offline Mode</CardTitle>
+          <CardDescription>You are currently offline, some features may be limited</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="bg-surface-container rounded-lg p-4">
-            <h3 className="text-on-surface mb-2 font-medium">离线可用功能：</h3>
+            <h3 className="text-on-surface mb-2 font-medium">Available Offline:</h3>
             <ul className="text-on-surface-variant space-y-1 text-sm">
-              <li>• 查看已缓存的求职信</li>
-              <li>• 浏览模板（已缓存）</li>
-              <li>• 编辑草稿（本地保存）</li>
-              <li>• 查看帮助文档</li>
+              <li>• View cached cover letters</li>
+              <li>• Browse templates (cached)</li>
+              <li>• Edit drafts (locally saved)</li>
+              <li>• View help documentation</li>
             </ul>
           </div>
 
           <div className="bg-warning-50 border-warning-200 rounded-lg border p-4">
-            <h3 className="text-warning-800 mb-2 font-medium">需要网络连接：</h3>
+            <h3 className="text-warning-800 mb-2 font-medium">Requires Internet Connection:</h3>
             <ul className="text-warning-700 space-y-1 text-sm">
-              <li>• 生成新的求职信</li>
-              <li>• 保存到云端</li>
-              <li>• 导出PDF</li>
-              <li>• 同步数据</li>
+              <li>• Generate new cover letters</li>
+              <li>• Save to cloud</li>
+              <li>• Export to PDF</li>
+              <li>• Sync data</li>
             </ul>
           </div>
 
           <div className="space-y-2">
             <Button fullWidth onClick={() => window.location.reload()} className="mb-2">
-              重新连接
+              Reconnect
             </Button>
             <Button variant="outline" fullWidth asChild>
-              <Link href="/dashboard">返回仪表板</Link>
+              <Link href="/dashboard">Back to Dashboard</Link>
             </Button>
           </div>
 
           <div className="text-center">
-            <p className="text-on-surface-variant text-xs">网络恢复后，您的离线更改将自动同步</p>
+            <p className="text-on-surface-variant text-xs">
+              Your offline changes will sync automatically when connection is restored
+            </p>
           </div>
         </CardContent>
       </Card>

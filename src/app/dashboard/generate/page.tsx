@@ -141,25 +141,27 @@ export default function GeneratePage() {
               {/* Job Information */}
               <Card>
                 <CardHeader>
-                  <CardTitle>职位信息</CardTitle>
-                  <CardDescription>提供您申请的职位相关信息</CardDescription>
+                  <CardTitle>Job Information</CardTitle>
+                  <CardDescription>
+                    Provide information about the position you&apos;re applying for
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Input
-                    label="职位名称"
-                    placeholder="例如：前端开发工程师"
+                    label="Job Title"
+                    placeholder="e.g., Frontend Developer"
                     value={formData.jobTitle}
                     onChange={e => handleInputChange('jobTitle', e.target.value)}
                   />
                   <Input
-                    label="公司名称"
-                    placeholder="例如：阿里巴巴"
+                    label="Company Name"
+                    placeholder="e.g., Google"
                     value={formData.companyName}
                     onChange={e => handleInputChange('companyName', e.target.value)}
                   />
                   <Textarea
-                    label="职位描述"
-                    placeholder="粘贴职位描述或主要职责要求..."
+                    label="Job Description"
+                    placeholder="Paste the job description or main responsibilities..."
                     value={formData.jobDescription}
                     onChange={e => handleInputChange('jobDescription', e.target.value)}
                     rows={6}
@@ -170,20 +172,20 @@ export default function GeneratePage() {
               {/* Personal Information */}
               <Card>
                 <CardHeader>
-                  <CardTitle>个人信息</CardTitle>
-                  <CardDescription>提供您的背景和相关经验</CardDescription>
+                  <CardTitle>Personal Information</CardTitle>
+                  <CardDescription>Provide your background and relevant experience</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Textarea
-                    label="个人背景"
-                    placeholder="简要描述您的教育背景、工作经验、技能特长等..."
+                    label="Personal Background"
+                    placeholder="Briefly describe your education, work experience, skills, etc..."
                     value={formData.personalInfo}
                     onChange={e => handleInputChange('personalInfo', e.target.value)}
                     rows={6}
                   />
                   <Textarea
-                    label="特殊要求（可选）"
-                    placeholder="如有特殊要求或想要强调的内容，请在此说明..."
+                    label="Additional Requirements (Optional)"
+                    placeholder="Any special requirements or content you want to emphasize..."
                     value={formData.additionalRequirements}
                     onChange={e => handleInputChange('additionalRequirements', e.target.value)}
                     rows={4}
@@ -199,7 +201,7 @@ export default function GeneratePage() {
                   onClick={handleGenerate}
                   disabled={!formData.jobTitle || !formData.companyName || !formData.personalInfo}
                 >
-                  {isGenerating ? '正在生成...' : '生成求职信'}
+                  {isGenerating ? 'Generating...' : 'Generate Cover Letter'}
                 </Button>
               </div>
             </div>
@@ -208,8 +210,8 @@ export default function GeneratePage() {
             <div>
               <Card className="sticky top-8">
                 <CardHeader>
-                  <CardTitle>预览</CardTitle>
-                  <CardDescription>实时预览您的求职信效果</CardDescription>
+                  <CardTitle>Preview</CardTitle>
+                  <CardDescription>Real-time preview of your cover letter</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="border-outline-variant bg-surface rounded-lg border p-6">
@@ -217,22 +219,25 @@ export default function GeneratePage() {
                       <div className="flex items-center justify-center py-12">
                         <div className="text-center">
                           <div className="border-primary-500 mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
-                          <p className="text-on-surface-variant text-sm">AI正在为您生成求职信...</p>
+                          <p className="text-on-surface-variant text-sm">
+                            AI is generating your cover letter...
+                          </p>
                         </div>
                       </div>
                     ) : (
                       <div className="space-y-4">
                         <div className="text-center">
                           <h3 className="text-on-surface font-semibold">
-                            {formData.jobTitle || '职位名称'}
+                            {formData.jobTitle || 'Job Title'}
                           </h3>
                           <p className="text-on-surface-variant text-sm">
-                            {formData.companyName || '公司名称'}
+                            {formData.companyName || 'Company Name'}
                           </p>
                         </div>
                         <div className="border-outline-variant border-t pt-4">
                           <p className="text-on-surface-variant text-sm">
-                            填写完整信息后，AI将在此处生成您的个性化求职信预览
+                            After filling in complete information, AI will generate your
+                            personalized cover letter preview here
                           </p>
                         </div>
                       </div>

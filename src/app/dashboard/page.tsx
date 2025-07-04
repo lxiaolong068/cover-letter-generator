@@ -154,8 +154,10 @@ export default function DashboardPage() {
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>快速操作</CardTitle>
-                  <CardDescription>选择下面的操作快速开始您的求职信创建流程</CardDescription>
+                  <CardTitle>Quick Actions</CardTitle>
+                  <CardDescription>
+                    Choose an action below to quickly start your cover letter creation process
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

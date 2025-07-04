@@ -129,7 +129,7 @@ export function InstallPrompt({ className, onInstall, onDismiss }: InstallPrompt
       </CardHeader>
       <CardContent className="pt-0">
         <p className="text-on-surface-variant mb-4 text-sm">
-          将求职信生成器添加到主屏幕，享受原生应用般的体验。
+          Add Cover Letter Generator to your home screen for a native app experience.
         </p>
         <div className="flex gap-2">
           <Button size="sm" onClick={handleInstallClick} className="flex-1">

@@ -37,7 +37,7 @@ export function Navigation({ items, logo, actions, className }: NavigationProps)
             <div className="flex-shrink-0">
               {logo || (
                 <Link href="/" className="text-primary-600 text-xl font-bold">
-                  求职信生成器
+                  Cover Letter Generator
                 </Link>
               )}
             </div>
