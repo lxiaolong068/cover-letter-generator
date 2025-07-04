@@ -103,15 +103,21 @@ interface SoftwareApplicationStructuredDataProps {
   applicationCategory: string;
   operatingSystem: string;
   offers?: {
+    '@type': 'Offer';
     price: string;
     priceCurrency: string;
     availability: string;
+    category?: string;
   };
   aggregateRating?: {
+    '@type': 'AggregateRating';
     ratingValue: number;
-    reviewCount: number;
+    ratingCount: number;
+    bestRating: number;
+    worstRating: number;
   };
   author: {
+    '@type': 'Organization';
     name: string;
     url: string;
   };

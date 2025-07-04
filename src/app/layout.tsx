@@ -156,23 +156,23 @@ export default function RootLayout({
           applicationCategory="BusinessApplication"
           operatingSystem="Web Browser, iOS, Android"
           author={{
-            '@type': 'Organization',
+            '@type': 'Organization' as const,
             name: 'AI Cover Letter Generator Team',
             url: baseUrl,
           }}
           offers={{
-            '@type': 'Offer',
+            '@type': 'Offer' as const,
             price: '0',
             priceCurrency: 'USD',
             availability: 'https://schema.org/InStock',
             category: 'Free with Premium Options',
           }}
           aggregateRating={{
-            '@type': 'AggregateRating',
-            ratingValue: '4.8',
-            ratingCount: '1247',
-            bestRating: '5',
-            worstRating: '1',
+            '@type': 'AggregateRating' as const,
+            ratingValue: 4.8,
+            ratingCount: 1247,
+            bestRating: 5,
+            worstRating: 1,
           }}
         />
 
