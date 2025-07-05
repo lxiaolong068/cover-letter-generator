@@ -11,6 +11,7 @@ import {
 import { InstallPrompt, IOSInstallInstructions } from '@/components/pwa/InstallPrompt';
 import { SoftwareApplicationStructuredData } from '@/components/seo/StructuredData';
 import { FooterLinks } from '@/components/seo/InternalLinks';
+import { SessionProvider } from '@/components/providers/SessionProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -176,55 +177,68 @@ export default function RootLayout({
           }}
         />
 
-        <ServiceWorkerProvider>
-          <div id="root" className="relative flex min-h-screen flex-col">
-            <main id="main-content" className="flex-1">
-              {children}
-            </main>
+        <SessionProvider>
+          <ServiceWorkerProvider>
+            <div id="root" className="relative flex min-h-screen flex-col">
+              <main id="main-content" className="flex-1">
+                {children}
+              </main>
 
-            {/* SEO-Optimized Footer */}
-            <footer className="bg-surface-variant border-t border-outline-variant">
-              <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-                <FooterLinks />
+              {/* SEO-Optimized Footer */}
+              <footer className="bg-surface-variant border-outline-variant border-t">
+                <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+                  <FooterLinks />
 
-                <div className="mt-8 pt-8 border-t border-outline-variant">
-                  <div className="flex flex-col md:flex-row justify-between items-center">
-                    <div className="text-on-surface-variant text-sm">
-                      <p>&copy; 2024 AI Cover Letter Generator. All rights reserved.</p>
-                      <p className="mt-1">Create professional, ATS-optimized cover letters with AI technology.</p>
-                    </div>
-                    <div className="mt-4 md:mt-0 flex space-x-6">
-                      <a href="/privacy" className="text-on-surface-variant hover:text-on-surface text-sm">
-                        Privacy Policy
-                      </a>
-                      <a href="/terms" className="text-on-surface-variant hover:text-on-surface text-sm">
-                        Terms of Service
-                      </a>
-                      <a href="/sitemap.xml" className="text-on-surface-variant hover:text-on-surface text-sm">
-                        Sitemap
-                      </a>
+                  <div className="border-outline-variant mt-8 border-t pt-8">
+                    <div className="flex flex-col items-center justify-between md:flex-row">
+                      <div className="text-on-surface-variant text-sm">
+                        <p>&copy; 2024 AI Cover Letter Generator. All rights reserved.</p>
+                        <p className="mt-1">
+                          Create professional, ATS-optimized cover letters with AI technology.
+                        </p>
+                      </div>
+                      <div className="mt-4 flex space-x-6 md:mt-0">
+                        <a
+                          href="/privacy"
+                          className="text-on-surface-variant hover:text-on-surface text-sm"
+                        >
+                          Privacy Policy
+                        </a>
+                        <a
+                          href="/terms"
+                          className="text-on-surface-variant hover:text-on-surface text-sm"
+                        >
+                          Terms of Service
+                        </a>
+                        <a
+                          href="/sitemap.xml"
+                          className="text-on-surface-variant hover:text-on-surface text-sm"
+                        >
+                          Sitemap
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </footer>
-          </div>
+              </footer>
+            </div>
 
-          {/* PWA Components */}
-          <InstallPrompt />
-          <IOSInstallInstructions />
-          <UpdateNotification />
-          <OfflineIndicator />
+            {/* PWA Components */}
+            <InstallPrompt />
+            <IOSInstallInstructions />
+            <UpdateNotification />
+            <OfflineIndicator />
 
-          {/* Live region for screen reader announcements */}
-          <div
-            id="live-region"
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
-            className="sr-only"
-          />
-        </ServiceWorkerProvider>
+            {/* Live region for screen reader announcements */}
+            <div
+              id="live-region"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              className="sr-only"
+            />
+          </ServiceWorkerProvider>
+        </SessionProvider>
       </body>
     </html>
   );

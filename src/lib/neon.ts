@@ -50,6 +50,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  password?: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -89,10 +90,14 @@ export async function executeTransaction<T = unknown>(
 }
 
 // User management functions
-export async function createUser(userData: { email: string; name: string }): Promise<User> {
+export async function createUser(userData: {
+  email: string;
+  name: string;
+  password?: string;
+}): Promise<User> {
   const [user] = await sql`
-    INSERT INTO users (email, name)
-    VALUES (${userData.email}, ${userData.name})
+    INSERT INTO users (email, name, password)
+    VALUES (${userData.email}, ${userData.name}, ${userData.password})
     RETURNING *
   `;
   return user as User;

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -59,18 +60,38 @@ export default function RegisterPage() {
     }
 
     try {
-      // TODO: Implement actual registration logic
-      console.log('Registration attempt:', formData);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For now, just redirect to dashboard
-      window.location.href = '/dashboard';
-    } catch {
-      setError('Registration failed. Please try again.');
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          name: `${formData.firstName} ${formData.lastName}`,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Registration failed');
+      }
+
+      // Registration successful, redirect to login
+      window.location.href = '/login?message=Registration successful. Please sign in.';
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signIn('google', { callbackUrl: '/dashboard' });
+    } catch {
+      setError('Google sign in failed. Please try again.');
     }
   };
 
@@ -92,7 +113,7 @@ export default function RegisterPage() {
       />
 
       {/* Registration Form */}
-      <div className="flex min-h-screen items-center justify-center bg-surface px-4 py-12 sm:px-6 lg:px-8">
+      <div className="bg-surface flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <h1 className="text-on-surface text-3xl font-bold">Create Your Account</h1>
@@ -104,9 +125,7 @@ export default function RegisterPage() {
           <Card>
             <CardHeader>
               <CardTitle>Sign Up</CardTitle>
-              <CardDescription>
-                Create your free account to get started
-              </CardDescription>
+              <CardDescription>Create your free account to get started</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -118,7 +137,10 @@ export default function RegisterPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="firstName" className="text-on-surface block text-sm font-medium">
+                    <label
+                      htmlFor="firstName"
+                      className="text-on-surface block text-sm font-medium"
+                    >
                       First Name
                     </label>
                     <Input
@@ -190,7 +212,10 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="confirmPassword" className="text-on-surface block text-sm font-medium">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="text-on-surface block text-sm font-medium"
+                  >
                     Confirm Password
                   </label>
                   <Input
@@ -213,10 +238,13 @@ export default function RegisterPage() {
                     type="checkbox"
                     required
                     checked={acceptTerms}
-                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                    onChange={e => setAcceptTerms(e.target.checked)}
                     className="text-primary-600 focus:ring-primary-500 border-outline-variant h-4 w-4 rounded"
                   />
-                  <label htmlFor="accept-terms" className="text-on-surface-variant ml-2 block text-sm">
+                  <label
+                    htmlFor="accept-terms"
+                    className="text-on-surface-variant ml-2 block text-sm"
+                  >
                     I agree to the{' '}
                     <Link href="/terms" className="text-primary-600 hover:text-primary-500">
                       Terms of Service
@@ -228,12 +256,7 @@ export default function RegisterPage() {
                   </label>
                 </div>
 
-                <Button
-                  type="submit"
-                  className="w-full"
-                  size="lg"
-                  disabled={isLoading}
-                >
+                <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
                   {isLoading ? 'Creating Account...' : 'Create Account'}
                 </Button>
               </form>
@@ -248,8 +271,13 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-2 gap-3">
-                  <Button variant="outline" className="w-full" disabled>
+                <div className="mt-6">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={handleGoogleSignIn}
+                    disabled={isLoading}
+                  >
                     <svg className="h-5 w-5" viewBox="0 0 24 24">
                       <path
                         fill="currentColor"
@@ -268,14 +296,7 @@ export default function RegisterPage() {
                         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                       />
                     </svg>
-                    <span className="ml-2">Google</span>
-                  </Button>
-
-                  <Button variant="outline" className="w-full" disabled>
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                    </svg>
-                    <span className="ml-2">Facebook</span>
+                    <span className="ml-2">Sign up with Google</span>
                   </Button>
                 </div>
               </div>

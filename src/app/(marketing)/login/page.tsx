@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -26,18 +27,30 @@ export default function LoginPage() {
     setError('');
 
     try {
-      // TODO: Implement actual authentication logic
-      console.log('Login attempt:', { email, password });
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For now, just redirect to dashboard
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        throw new Error('Invalid email or password');
+      }
+
+      // Redirect to dashboard on success
       window.location.href = '/dashboard';
-    } catch {
-      setError('Invalid email or password. Please try again.');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signIn('google', { callbackUrl: '/dashboard' });
+    } catch {
+      setError('Google sign in failed. Please try again.');
     }
   };
 
@@ -59,7 +72,7 @@ export default function LoginPage() {
       />
 
       {/* Login Form */}
-      <div className="flex min-h-screen items-center justify-center bg-surface px-4 py-12 sm:px-6 lg:px-8">
+      <div className="bg-surface flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <h1 className="text-on-surface text-3xl font-bold">Welcome Back</h1>
@@ -94,7 +107,7 @@ export default function LoginPage() {
                     autoComplete="email"
                     required
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     className="mt-1"
                     placeholder="Enter your email"
                   />
@@ -111,7 +124,7 @@ export default function LoginPage() {
                     autoComplete="current-password"
                     required
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value)}
                     className="mt-1"
                     placeholder="Enter your password"
                   />
@@ -125,7 +138,10 @@ export default function LoginPage() {
                       type="checkbox"
                       className="text-primary-600 focus:ring-primary-500 border-outline-variant h-4 w-4 rounded"
                     />
-                    <label htmlFor="remember-me" className="text-on-surface-variant ml-2 block text-sm">
+                    <label
+                      htmlFor="remember-me"
+                      className="text-on-surface-variant ml-2 block text-sm"
+                    >
                       Remember me
                     </label>
                   </div>
@@ -140,12 +156,7 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                <Button
-                  type="submit"
-                  className="w-full"
-                  size="lg"
-                  disabled={isLoading}
-                >
+                <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
                   {isLoading ? 'Signing in...' : 'Sign In'}
                 </Button>
               </form>
@@ -156,12 +167,19 @@ export default function LoginPage() {
                     <div className="border-outline-variant w-full border-t" />
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="text-on-surface-variant bg-surface px-2">Or continue with</span>
+                    <span className="text-on-surface-variant bg-surface px-2">
+                      Or continue with
+                    </span>
                   </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-2 gap-3">
-                  <Button variant="outline" className="w-full" disabled>
+                <div className="mt-6">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={handleGoogleSignIn}
+                    disabled={isLoading}
+                  >
                     <svg className="h-5 w-5" viewBox="0 0 24 24">
                       <path
                         fill="currentColor"
@@ -180,14 +198,7 @@ export default function LoginPage() {
                         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                       />
                     </svg>
-                    <span className="ml-2">Google</span>
-                  </Button>
-
-                  <Button variant="outline" className="w-full" disabled>
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                    </svg>
-                    <span className="ml-2">Facebook</span>
+                    <span className="ml-2">Continue with Google</span>
                   </Button>
                 </div>
               </div>
