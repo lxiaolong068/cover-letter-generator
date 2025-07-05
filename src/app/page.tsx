@@ -1,8 +1,16 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Navigation } from '@/components/ui/Navigation';
 import { ContextualNav } from '@/components/seo/InternalLinks';
 import { Suspense, lazy } from 'react';
+import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
+import Script from 'next/script';
+import {
+  generateWebsiteStructuredData,
+  generateSoftwareApplicationStructuredData,
+  generateOrganizationStructuredData
+} from '@/lib/seo';
 
 const FeatureSection = lazy(() =>
   import('@/components/HomePage/FeatureSection').then(module => ({
@@ -16,6 +24,8 @@ const FAQSection = lazy(() =>
   }))
 );
 
+export const metadata: Metadata = generateSEOMetadata('home');
+
 const navigationItems = [
   { href: '/', label: 'Home' },
   { href: '/templates', label: 'Templates' },
@@ -24,8 +34,35 @@ const navigationItems = [
 ];
 
 export default function HomePage() {
+  const websiteStructuredData = generateWebsiteStructuredData();
+  const softwareStructuredData = generateSoftwareApplicationStructuredData();
+  const organizationStructuredData = generateOrganizationStructuredData();
+
   return (
     <>
+      {/* Structured Data */}
+      <Script
+        id="website-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteStructuredData),
+        }}
+      />
+      <Script
+        id="software-application-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(softwareStructuredData),
+        }}
+      />
+      <Script
+        id="organization-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationStructuredData),
+        }}
+      />
+
       {/* Navigation */}
       <Navigation
         items={navigationItems}

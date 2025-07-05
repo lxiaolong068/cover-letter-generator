@@ -172,7 +172,7 @@ export function AccessibleButton({
   variant = 'primary',
   size = 'md',
   loading = false,
-  loadingText = '加载中...',
+  loadingText = 'Loading...',
   disabled,
   children,
   className,
@@ -270,7 +270,7 @@ export function AccessibleField({
       <label htmlFor={fieldId} className="text-on-surface block text-sm font-medium">
         {label}
         {required && (
-          <span className="text-error-500 ml-1" aria-label="必填">
+          <span className="text-error-500 ml-1" aria-label="Required">
             *
           </span>
         )}

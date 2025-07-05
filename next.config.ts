@@ -4,10 +4,12 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['lucide-react', '@tanstack/react-query'],
-    turbo: {
-      rules: {
-        '*.svg': ['@svgr/webpack'],
-      },
+  },
+
+  // Turbopack configuration (moved out of experimental)
+  turbopack: {
+    rules: {
+      '*.svg': ['@svgr/webpack'],
     },
   },
 
@@ -56,8 +58,7 @@ const nextConfig: NextConfig = {
       },
     };
 
-    // Tree shaking optimization
-    config.optimization.usedExports = true;
+    // Tree shaking optimization (removed conflicting usedExports)
     config.optimization.sideEffects = false;
 
     return config;

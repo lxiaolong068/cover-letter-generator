@@ -1,0 +1,7 @@
+Contact: security@ai-coverletter-generator.com
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://ai-coverletter-generator.com/pgp-key.txt
+Preferred-Languages: en
+Canonical: https://ai-coverletter-generator.com/.well-known/security.txt
+Policy: https://ai-coverletter-generator.com/security-policy
+Acknowledgments: https://ai-coverletter-generator.com/security-acknowledgments

@@ -81,7 +81,7 @@ export function Navigation({ items, logo, actions, className }: NavigationProps)
               variant="ghost"
               size="icon"
               onClick={toggleMobileMenu}
-              aria-label={isMobileMenuOpen ? '关闭菜单' : '打开菜单'}
+              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMobileMenuOpen}
             >
               <svg
@@ -162,15 +162,28 @@ interface BreadcrumbProps {
 
 export function Breadcrumb({ items, className }: BreadcrumbProps) {
   return (
-    <nav className={cn('flex', className)} aria-label="面包屑导航">
+    <nav
+      className={cn('flex', className)}
+      aria-label="Breadcrumb navigation"
+      itemScope
+      itemType="https://schema.org/BreadcrumbList"
+    >
       <ol className="flex items-center space-x-2">
         {items.map((item, index) => (
-          <li key={index} className="flex items-center">
+          <li
+            key={index}
+            className="flex items-center"
+            itemProp="itemListElement"
+            itemScope
+            itemType="https://schema.org/ListItem"
+          >
+            <meta itemProp="position" content={String(index + 1)} />
             {index > 0 && (
               <svg
                 className="text-on-surface-variant mx-2 h-4 w-4"
                 fill="currentColor"
                 viewBox="0 0 20 20"
+                aria-hidden="true"
               >
                 <path
                   fillRule="evenodd"
@@ -183,11 +196,17 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
               <Link
                 href={item.href}
                 className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                itemProp="item"
               >
-                {item.label}
+                <span itemProp="name">{item.label}</span>
               </Link>
             ) : (
-              <span className="text-on-surface-variant text-sm font-medium">{item.label}</span>
+              <span
+                className="text-on-surface-variant text-sm font-medium"
+                itemProp="name"
+              >
+                {item.label}
+              </span>
             )}
           </li>
         ))}
