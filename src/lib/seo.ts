@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 
 export const seoConfig = {
   siteName: 'AI Cover Letter Generator',
-  siteDescription: 'Create professional, personalized cover letters instantly with our AI Cover Letter Generator.',
+  siteDescription:
+    'Create professional, personalized cover letters instantly with our AI Cover Letter Generator.',
   siteUrl: process.env.NEXTAUTH_URL || 'http://localhost:3000',
   primaryKeyword: 'AI Cover Letter Generator',
 };
@@ -10,7 +11,8 @@ export const seoConfig = {
 export const pageConfigs = {
   home: {
     title: 'AI Cover Letter Generator - Professional Cover Letters',
-    description: 'Create professional cover letters instantly with AI. ATS-optimized templates and expert-quality results.',
+    description:
+      'Create professional cover letters instantly with AI. ATS-optimized templates and expert-quality results.',
     path: '/',
   },
   templates: {
@@ -25,7 +27,8 @@ export const pageConfigs = {
   },
   pricing: {
     title: 'Pricing Plans - AI Cover Letter Generator | Free & Pro',
-    description: 'Choose the perfect plan for your job search. Free plan with 3 cover letters/month.',
+    description:
+      'Choose the perfect plan for your job search. Free plan with 3 cover letters/month.',
     path: '/pricing',
   },
   login: {
@@ -43,7 +46,7 @@ export const pageConfigs = {
 export function generateMetadata(pageKey: keyof typeof pageConfigs): Metadata {
   const config = pageConfigs[pageKey];
   const baseUrl = seoConfig.siteUrl;
-  
+
   return {
     title: config.title,
     description: config.description,
@@ -61,5 +64,49 @@ export function generateMetadata(pageKey: keyof typeof pageConfigs): Metadata {
       title: config.title,
       description: config.description,
     },
+  };
+}
+
+export function generateWebsiteStructuredData() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: seoConfig.siteName,
+    description: seoConfig.siteDescription,
+    url: seoConfig.siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${seoConfig.siteUrl}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+export function generateSoftwareApplicationStructuredData() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: seoConfig.siteName,
+    description: seoConfig.siteDescription,
+    url: seoConfig.siteUrl,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  };
+}
+
+export function generateOrganizationStructuredData() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: seoConfig.siteName,
+    description: seoConfig.siteDescription,
+    url: seoConfig.siteUrl,
+    logo: `${seoConfig.siteUrl}/logo.png`,
+    sameAs: [],
   };
 }
