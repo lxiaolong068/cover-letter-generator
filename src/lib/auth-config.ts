@@ -1,6 +1,6 @@
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { getUserByEmail } from './neon';
+import { getUserByEmail, createUser } from './neon';
 import bcrypt from 'bcryptjs';
 
 export const authOptions = {
@@ -48,6 +48,31 @@ export const authOptions = {
   },
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async signIn({ user, account }: { user: any; account: any }) {
+      if (account?.provider === 'google' && user.email) {
+        try {
+          // Check if user already exists
+          const existingUser = await getUserByEmail(user.email);
+
+          if (!existingUser) {
+            // Create new user for Google OAuth
+            await createUser({
+              email: user.email,
+              name: user.name || user.email,
+              provider: 'google',
+            });
+          }
+
+          return true;
+        } catch (error) {
+          console.error('Google sign-in error:', error);
+          return false;
+        }
+      }
+
+      return true;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async jwt({ token, user }: { token: any; user?: any }) {
       if (user) {
         token.id = user.id;
@@ -64,5 +89,7 @@ export const authOptions = {
   },
   pages: {
     signIn: '/login',
+    error: '/login',
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };

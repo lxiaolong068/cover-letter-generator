@@ -94,6 +94,7 @@ export async function createUser(userData: {
   email: string;
   name: string;
   password?: string;
+  provider?: string;
 }): Promise<User> {
   const [user] = await sql`
     INSERT INTO users (email, name, password)
