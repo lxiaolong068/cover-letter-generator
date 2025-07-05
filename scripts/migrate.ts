@@ -15,7 +15,18 @@ const sql = neon(DATABASE_URL);
 // Migration scripts
 const migrations = [
   {
-    id: '001_create_users_table',
+    id: '001_create_migrations_table',
+    description: 'Create migrations tracking table',
+    sql: `
+      CREATE TABLE IF NOT EXISTS migrations (
+        id VARCHAR(255) PRIMARY KEY,
+        description TEXT NOT NULL,
+        executed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    `,
+  },
+  {
+    id: '002_create_users_table',
     description: 'Create users table',
     sql: `
       CREATE TABLE IF NOT EXISTS users (
@@ -30,7 +41,7 @@ const migrations = [
     `,
   },
   {
-    id: '002_create_user_sessions_table',
+    id: '003_create_user_sessions_table',
     description: 'Create user sessions table',
     sql: `
       CREATE TABLE IF NOT EXISTS user_sessions (
@@ -47,7 +58,7 @@ const migrations = [
     `,
   },
   {
-    id: '003_create_cover_letters_table',
+    id: '004_create_cover_letters_table',
     description: 'Create cover letters table',
     sql: `
       CREATE TYPE cover_letter_type AS ENUM ('professional', 'creative', 'technical', 'executive');
@@ -73,18 +84,14 @@ const migrations = [
     `,
   },
   {
-    id: '004_create_migrations_table',
-    description: 'Create migrations tracking table',
+    id: '005_add_password_to_users',
+    description: 'Add password field to users table',
     sql: `
-      CREATE TABLE IF NOT EXISTS migrations (
-        id VARCHAR(255) PRIMARY KEY,
-        description TEXT NOT NULL,
-        executed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-      );
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS password VARCHAR(255);
     `,
   },
   {
-    id: '005_create_updated_at_trigger',
+    id: '006_create_updated_at_trigger',
     description: 'Create updated_at trigger function',
     sql: `
       CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -136,6 +143,16 @@ async function recordMigration(migration: { id: string; description: string }): 
 async function runMigrations(): Promise<void> {
   console.log('Starting database migrations...');
 
+  // First, ensure migrations table exists
+  console.log("Creating migrations table if it doesn't exist...");
+  await sql`
+    CREATE TABLE IF NOT EXISTS migrations (
+      id VARCHAR(255) PRIMARY KEY,
+      description TEXT NOT NULL,
+      executed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    );
+  `;
+
   for (const migration of migrations) {
     console.log(`Checking migration: ${migration.id} - ${migration.description}`);
 
@@ -148,12 +165,10 @@ async function runMigrations(): Promise<void> {
     console.log(`  → Running migration ${migration.id}...`);
     try {
       // Execute the migration SQL
-      await sql.transaction([
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        sql.unsafe(migration.sql) as any,
-        sql`INSERT INTO migrations (id, description) VALUES (${migration.id}, ${migration.description}) ON CONFLICT (id) DO NOTHING`,
-      ]);
+      await sql.unsafe(migration.sql);
 
+      // Record the migration
+      await sql`INSERT INTO migrations (id, description) VALUES (${migration.id}, ${migration.description}) ON CONFLICT (id) DO NOTHING`;
       console.log(`  ✓ Migration ${migration.id} completed successfully`);
     } catch (error) {
       console.error(`  ✗ Migration ${migration.id} failed:`, error);

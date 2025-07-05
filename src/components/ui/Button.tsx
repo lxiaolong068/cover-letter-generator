@@ -94,6 +94,7 @@ const Button = React.memo(
         rightIcon,
         children,
         disabled,
+        asChild = false,
         ...props
       },
       ref
@@ -126,6 +127,28 @@ const Button = React.memo(
         []
       );
 
+      const content = (
+        <>
+          {loading && LoadingSpinner}
+          {!loading && leftIcon && leftIcon}
+          {children}
+          {!loading && rightIcon && rightIcon}
+        </>
+      );
+
+      if (asChild) {
+        // When asChild is true, we clone the child element and apply our styles to it
+        return React.cloneElement(
+          children as React.ReactElement,
+          {
+            className: cn(buttonVariants({ variant, size, fullWidth }), className),
+            ref,
+            disabled: isDisabled,
+            ...props,
+          } as React.HTMLAttributes<HTMLElement>
+        );
+      }
+
       return (
         <button
           className={cn(buttonVariants({ variant, size, fullWidth, className }))}
@@ -133,10 +156,7 @@ const Button = React.memo(
           disabled={isDisabled}
           {...props}
         >
-          {loading && LoadingSpinner}
-          {!loading && leftIcon && leftIcon}
-          {children}
-          {!loading && rightIcon && rightIcon}
+          {content}
         </button>
       );
     }
