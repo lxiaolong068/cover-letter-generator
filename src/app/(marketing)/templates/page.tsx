@@ -13,16 +13,14 @@ const navigationItems = [
   { href: '/pricing', label: 'Pricing' },
 ];
 
-const breadcrumbItems = [
-  { href: '/', label: 'Home' },
-  { label: 'Cover Letter Templates' },
-];
+const breadcrumbItems = [{ href: '/', label: 'Home' }, { label: 'Cover Letter Templates' }];
 
 const templates = [
   {
     id: 'professional',
     name: 'Professional Cover Letter Template',
-    description: 'Classic professional cover letter template suitable for most corporate positions and industries',
+    description:
+      'Classic professional cover letter template suitable for most corporate positions and industries',
     preview: 'Formal, ATS-optimized format highlighting professional skills and experience',
     category: 'Business',
     difficulty: 'Beginner',
@@ -31,7 +29,8 @@ const templates = [
   {
     id: 'creative',
     name: 'Creative Cover Letter Template',
-    description: 'Dynamic cover letter template perfect for design, marketing, and creative industry positions',
+    description:
+      'Dynamic cover letter template perfect for design, marketing, and creative industry positions',
     preview: 'Creative layout with personalized expression and visual appeal',
     category: 'Creative',
     difficulty: 'Intermediate',
@@ -40,7 +39,8 @@ const templates = [
   {
     id: 'executive',
     name: 'Executive Cover Letter Template',
-    description: 'Premium executive-level cover letter template for senior management and C-suite positions',
+    description:
+      'Premium executive-level cover letter template for senior management and C-suite positions',
     preview: 'Executive-focused format emphasizing leadership and strategic achievements',
     category: 'Executive',
     difficulty: 'Advanced',
@@ -81,7 +81,7 @@ export const metadata: Metadata = generateSEOMetadata('templates');
 
 export default function TemplatesPage() {
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-  
+
   const breadcrumbStructuredData = [
     { name: 'Home', url: baseUrl },
     { name: 'Cover Letter Templates', url: `${baseUrl}/templates` },
@@ -90,7 +90,7 @@ export default function TemplatesPage() {
   return (
     <>
       <BreadcrumbStructuredData items={breadcrumbStructuredData} />
-      
+
       {/* Navigation */}
       <Navigation
         items={navigationItems}
@@ -107,7 +107,7 @@ export default function TemplatesPage() {
       />
 
       {/* Breadcrumb */}
-      <div className="border-outline-variant border-b bg-surface">
+      <div className="border-outline-variant bg-surface border-b">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumb items={breadcrumbItems} />
         </div>
@@ -118,11 +118,12 @@ export default function TemplatesPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-on-surface text-4xl font-bold tracking-tight sm:text-5xl">
-              Professional Cover Letter Templates
+              AI Cover Letter Templates - Professional & ATS-Optimized
             </h1>
             <p className="text-on-surface-variant mx-auto mt-6 max-w-3xl text-lg leading-8">
-              Choose from our collection of ATS-optimized cover letter templates designed by career experts. 
-              Each template is crafted for specific industries and career levels to help you land your dream job.
+              Choose from our collection of AI-powered, ATS-optimized cover letter templates
+              designed by career experts. Each AI cover letter template is crafted for specific
+              industries and career levels to help you land your dream job.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button size="lg" asChild>
@@ -147,8 +148,8 @@ export default function TemplatesPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {templates.map((template) => (
-              <Card key={template.id} className="group hover:shadow-lg transition-shadow">
+            {templates.map(template => (
+              <Card key={template.id} className="group transition-shadow hover:shadow-lg">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <span className="bg-primary-100 text-primary-700 rounded-full px-3 py-1 text-sm font-medium">
@@ -161,13 +162,15 @@ export default function TemplatesPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="mb-4">
-                    <p className="text-on-surface-variant text-sm italic">&ldquo;{template.preview}&rdquo;</p>
+                    <p className="text-on-surface-variant text-sm italic">
+                      &ldquo;{template.preview}&rdquo;
+                    </p>
                   </div>
-                  
+
                   <div className="mb-6">
                     <h4 className="text-on-surface mb-2 font-medium">Features:</h4>
                     <div className="flex flex-wrap gap-2">
-                      {template.features.map((feature) => (
+                      {template.features.map(feature => (
                         <span
                           key={feature}
                           className="bg-surface-container text-on-surface-variant rounded-md px-2 py-1 text-xs"
@@ -180,14 +183,10 @@ export default function TemplatesPage() {
 
                   <div className="flex gap-2">
                     <Button className="flex-1" asChild>
-                      <Link href={`/dashboard/generate?template=${template.id}`}>
-                        Use Template
-                      </Link>
+                      <Link href={`/dashboard/generate?template=${template.id}`}>Use Template</Link>
                     </Button>
                     <Button variant="outline" asChild>
-                      <Link href={`/examples?template=${template.id}`}>
-                        Preview
-                      </Link>
+                      <Link href={`/examples?template=${template.id}`}>Preview</Link>
                     </Button>
                   </div>
                 </CardContent>
@@ -204,7 +203,7 @@ export default function TemplatesPage() {
             <h2 className="text-3xl font-bold text-white">
               Ready to Create Your Perfect Cover Letter?
             </h2>
-            <p className="mt-4 text-xl text-primary-100">
+            <p className="text-primary-100 mt-4 text-xl">
               Get started with our AI Cover Letter Generator and land your dream job today.
             </p>
             <div className="mt-8">

@@ -10,35 +10,39 @@ export const seoConfig = {
 
 export const pageConfigs = {
   home: {
-    title: 'AI Cover Letter Generator - Professional Cover Letters',
+    title: 'AI Cover Letter Generator - Create Professional Cover Letters Instantly',
     description:
-      'Create professional cover letters instantly with AI. ATS-optimized templates and expert-quality results.',
+      'Generate professional, ATS-optimized cover letters with our AI Cover Letter Generator. Free templates, instant creation, and expert-quality results for your job search.',
     path: '/',
   },
   templates: {
-    title: 'Professional Cover Letter Templates - AI Generator',
-    description: 'Browse professional cover letter templates. ATS-optimized for every industry.',
+    title: 'AI Cover Letter Templates - Professional & ATS-Optimized Templates',
+    description:
+      'Browse professional AI cover letter templates designed for every industry. ATS-optimized templates that help you land interviews faster.',
     path: '/templates',
   },
   examples: {
-    title: 'Cover Letter Examples - Professional Samples | AI Generator',
-    description: 'Browse real cover letter examples for different industries and career levels.',
+    title: 'AI Cover Letter Examples - Professional Samples & Templates',
+    description:
+      'Browse real AI-generated cover letter examples across industries and career levels. Get inspiration for your perfect cover letter.',
     path: '/examples',
   },
   pricing: {
-    title: 'Pricing Plans - AI Cover Letter Generator | Free & Pro',
+    title: 'AI Cover Letter Generator Pricing - Free & Premium Plans',
     description:
-      'Choose the perfect plan for your job search. Free plan with 3 cover letters/month.',
+      'Choose the perfect AI Cover Letter Generator plan for your job search. Free plan with 3 cover letters/month, Pro plan with unlimited generations.',
     path: '/pricing',
   },
   login: {
-    title: 'Login - AI Cover Letter Generator',
-    description: 'Sign in to your AI Cover Letter Generator account.',
+    title: 'Login - AI Cover Letter Generator Account Access',
+    description:
+      'Sign in to your AI Cover Letter Generator account to create professional cover letters and manage your job search.',
     path: '/login',
   },
   register: {
-    title: 'Sign Up - AI Cover Letter Generator | Free Account',
-    description: 'Create your free AI Cover Letter Generator account.',
+    title: 'Sign Up Free - AI Cover Letter Generator Account',
+    description:
+      'Create your free AI Cover Letter Generator account today. Generate professional cover letters and boost your job search success.',
     path: '/register',
   },
 };

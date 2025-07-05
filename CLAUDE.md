@@ -98,7 +98,45 @@ NEON_DATABASE_URL=postgresql://username:password@ep-xxx.neon.tech/neondb
 NEON_DATABASE_URL_UNPOOLED=postgresql://username:password@ep-xxx.neon.tech/neondb?pgbouncer=false
 NEXTAUTH_SECRET=your_secret_key
 NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 ```
+
+### Setting Up Google OAuth
+
+To enable Google OAuth authentication, you'll need to obtain credentials from Google Cloud Console:
+
+1. **Create a Google Cloud Project**
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select an existing one
+   - Enable billing if required (OAuth is free within limits)
+
+2. **Enable Google+ API**
+   - In the Google Cloud Console, navigate to "APIs & Services" → "Library"
+   - Search for "Google+ API" and enable it
+   - Alternatively, enable "Google Identity" API for newer implementations
+
+3. **Create OAuth 2.0 Credentials**
+   - Go to "APIs & Services" → "Credentials"
+   - Click "Create Credentials" → "OAuth 2.0 Client IDs"
+   - Configure the OAuth consent screen first if prompted:
+     - Choose "External" user type for public applications
+     - Fill in required fields: App name, User support email, Developer contact
+     - Add your domain to "Authorized domains" (for production)
+   - Select "Web application" as application type
+   - Add authorized redirect URIs:
+     - Development: `http://localhost:3000/api/auth/callback/google`
+     - Production: `https://yourdomain.com/api/auth/callback/google`
+
+4. **Copy Credentials**
+   - Copy the "Client ID" to `GOOGLE_CLIENT_ID`
+   - Copy the "Client Secret" to `GOOGLE_CLIENT_SECRET`
+
+5. **Security Notes**
+   - Keep your Client Secret secure and never commit it to version control
+   - Use different OAuth apps for development and production environments
+   - Regularly rotate your Client Secret for enhanced security
+   - Configure appropriate scopes (email, profile) in your OAuth consent screen
 
 ### Code Standards
 

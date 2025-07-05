@@ -27,22 +27,24 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'AI Cover Letter Generator - Create Professional Cover Letters with AI',
+    default: 'AI Cover Letter Generator - Create Professional Cover Letters Instantly',
     template: '%s | AI Cover Letter Generator',
   },
   description:
-    'Create professional, personalized cover letters instantly with our AI Cover Letter Generator. Multiple templates, ATS optimization, and expert-quality results to help you land your dream job.',
+    'Generate professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator. Free templates, multiple formats, and expert-quality results to help you land your dream job.',
   keywords: [
     'AI cover letter generator',
     'cover letter generator',
-    'AI cover letter',
-    'professional cover letter',
+    'AI cover letter builder',
+    'professional cover letter maker',
     'cover letter templates',
     'ATS optimized cover letter',
-    'job application letter',
-    'resume cover letter',
+    'job application letter generator',
+    'resume cover letter builder',
     'career tools',
     'job search tools',
+    'cover letter AI',
+    'automated cover letter',
   ],
   authors: [{ name: 'AI Cover Letter Generator Team' }],
   creator: 'AI Cover Letter Generator',
@@ -60,16 +62,25 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'AI Cover Letter Generator - Create Professional Cover Letters with AI',
+    title: 'AI Cover Letter Generator - Create Professional Cover Letters Instantly',
     description:
-      'Create professional, personalized cover letters instantly with our AI Cover Letter Generator. Multiple templates, ATS optimization, and expert-quality results to help you land your dream job.',
+      'Generate professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator. Free templates, multiple formats, and expert-quality results to help you land your dream job.',
     siteName: 'AI Cover Letter Generator',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'AI Cover Letter Generator - Create Professional Cover Letters Instantly',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Cover Letter Generator - Create Professional Cover Letters with AI',
+    title: 'AI Cover Letter Generator - Create Professional Cover Letters Instantly',
     description:
-      'Create professional, personalized cover letters instantly with our AI Cover Letter Generator. Multiple templates, ATS optimization, and expert-quality results.',
+      'Generate professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator. Free templates, multiple formats, and expert-quality results.',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -125,7 +136,7 @@ export default function RootLayout({
         {/* Structured Data */}
         <WebsiteStructuredData
           name="AI Cover Letter Generator"
-          description="Create professional, personalized cover letters instantly with our AI Cover Letter Generator. Multiple templates, ATS optimization, and expert-quality results to help you land your dream job."
+          description="Generate professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator. Free templates, multiple formats, and expert-quality results to help you land your dream job."
           url={baseUrl}
           logo={`${baseUrl}/logo.png`}
           sameAs={[
@@ -136,7 +147,7 @@ export default function RootLayout({
 
         <OrganizationStructuredData
           name="AI Cover Letter Generator"
-          description="Leading AI-powered cover letter generation service providing professional, ATS-optimized cover letters for job seekers worldwide."
+          description="Leading AI-powered cover letter generation service providing professional, ATS-optimized cover letters for job seekers worldwide. Best AI cover letter builder with instant creation."
           url={baseUrl}
           logo={`${baseUrl}/logo.png`}
           contactPoint={{
@@ -152,7 +163,7 @@ export default function RootLayout({
 
         <SoftwareApplicationStructuredData
           name="AI Cover Letter Generator"
-          description="Professional AI-powered cover letter generator that creates personalized, ATS-optimized cover letters instantly. Features multiple templates, expert-quality results, and seamless PDF export."
+          description="Professional AI Cover Letter Generator that creates personalized, ATS-optimized cover letters instantly. Best cover letter builder featuring multiple AI templates, expert-quality results, and seamless PDF export for job seekers."
           url={baseUrl}
           applicationCategory="BusinessApplication"
           operatingSystem="Web Browser, iOS, Android"
@@ -194,7 +205,8 @@ export default function RootLayout({
                       <div className="text-on-surface-variant text-sm">
                         <p>&copy; 2024 AI Cover Letter Generator. All rights reserved.</p>
                         <p className="mt-1">
-                          Create professional, ATS-optimized cover letters with AI technology.
+                          The best AI Cover Letter Generator for creating professional,
+                          ATS-optimized cover letters with artificial intelligence technology.
                         </p>
                       </div>
                       <div className="mt-4 flex space-x-6 md:mt-0">
