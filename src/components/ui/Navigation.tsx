@@ -29,14 +29,14 @@ export function Navigation({ items, logo, actions, className }: NavigationProps)
   };
 
   return (
-    <nav className={cn('bg-surface border-outline-variant border-b', className)}>
+    <nav className={cn('border-b border-outline-variant bg-surface', className)}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
               {logo || (
-                <Link href="/" className="text-primary-600 text-xl font-bold">
+                <Link href="/" className="text-fluid-xl font-bold leading-tight text-primary-600">
                   Cover Letter Generator
                 </Link>
               )}
@@ -53,7 +53,7 @@ export function Navigation({ items, logo, actions, className }: NavigationProps)
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      'flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                      'text-readable-sm flex items-center gap-2 rounded-lg px-3 py-2 font-semibold transition-colors',
                       isActive
                         ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
                         : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
@@ -62,7 +62,7 @@ export function Navigation({ items, logo, actions, className }: NavigationProps)
                     {item.icon}
                     {item.label}
                     {item.badge && (
-                      <span className="bg-primary-500 ml-1 rounded-full px-2 py-0.5 text-xs text-white">
+                      <span className="ml-1 rounded-full bg-primary-500 px-2 py-0.5 text-xs text-white">
                         {item.badge}
                       </span>
                     )}
@@ -113,7 +113,7 @@ export function Navigation({ items, logo, actions, className }: NavigationProps)
           isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
         )}
       >
-        <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+        <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
           {items.map(item => {
             const isActive = pathname === item.href;
             return (
@@ -131,7 +131,7 @@ export function Navigation({ items, logo, actions, className }: NavigationProps)
                 {item.icon}
                 {item.label}
                 {item.badge && (
-                  <span className="bg-primary-500 ml-auto rounded-full px-2 py-0.5 text-xs text-white">
+                  <span className="ml-auto rounded-full bg-primary-500 px-2 py-0.5 text-xs text-white">
                     {item.badge}
                   </span>
                 )}
@@ -140,7 +140,7 @@ export function Navigation({ items, logo, actions, className }: NavigationProps)
           })}
         </div>
         {actions && (
-          <div className="border-outline-variant border-t px-2 pt-4 pb-3">
+          <div className="border-t border-outline-variant px-2 pb-3 pt-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">{actions}</div>
           </div>
         )}
@@ -180,7 +180,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
             <meta itemProp="position" content={String(index + 1)} />
             {index > 0 && (
               <svg
-                className="text-on-surface-variant mx-2 h-4 w-4"
+                className="mx-2 h-4 w-4 text-on-surface-variant"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 aria-hidden="true"
@@ -195,16 +195,13 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
             {item.href ? (
               <Link
                 href={item.href}
-                className="text-primary-600 hover:text-primary-700 text-sm font-medium"
+                className="text-sm font-medium text-primary-600 hover:text-primary-700"
                 itemProp="item"
               >
                 <span itemProp="name">{item.label}</span>
               </Link>
             ) : (
-              <span
-                className="text-on-surface-variant text-sm font-medium"
-                itemProp="name"
-              >
+              <span className="text-sm font-medium text-on-surface-variant" itemProp="name">
                 {item.label}
               </span>
             )}

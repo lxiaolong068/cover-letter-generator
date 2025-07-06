@@ -56,19 +56,19 @@ export default function HomePage() {
               </span>
             </div>
 
-            {/* Main Heading */}
-            <h1 className="animate-slide-up text-4xl font-bold tracking-tight text-on-background sm:text-6xl lg:text-7xl">
+            {/* Main Heading - Fluid Responsive Typography */}
+            <h1 className="text-fluid-4xl animate-slide-up font-bold leading-tight tracking-tight text-on-background">
               Create Professional
-              <span className="mt-2 block animate-slide-up delay-150 gradient-text">
+              <span className="mt-2 block animate-slide-up bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text font-extrabold text-transparent delay-150">
                 Cover Letters
               </span>
-              <span className="animate-slide-up bg-gradient-to-r from-secondary-600 to-accent-600 bg-clip-text text-transparent delay-300">
+              <span className="animate-slide-up bg-gradient-to-r from-secondary-600 to-accent-600 bg-clip-text font-extrabold text-transparent delay-300">
                 with AI
               </span>
             </h1>
 
-            {/* Subtitle */}
-            <p className="mx-auto mt-6 max-w-2xl animate-slide-up text-lg font-medium leading-8 text-on-surface delay-500 sm:text-xl">
+            {/* Subtitle - Responsive and Readable */}
+            <p className="text-readable mx-auto mt-8 max-w-2xl animate-slide-up text-on-surface-variant delay-500">
               Generate ATS-optimized cover letters instantly. Our advanced AI creates personalized,
               professional cover letters that help you stand out and land your dream job.
             </p>
@@ -119,10 +119,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="mb-16 text-center">
-            <h2 className="animate-slide-up text-3xl font-bold text-on-background sm:text-4xl">
+            <h2 className="animate-slide-up text-3xl font-bold leading-tight text-on-surface sm:text-4xl">
               Why Choose Our AI Cover Letter Generator?
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl animate-slide-up text-lg font-medium text-on-surface delay-150">
+            <p className="mx-auto mt-6 max-w-2xl animate-slide-up text-lg leading-relaxed text-on-surface-variant delay-150">
               Join thousands of job seekers who have successfully landed interviews with our
               AI-powered cover letters.
             </p>
@@ -130,37 +130,43 @@ export default function HomePage() {
 
           {/* Features Grid */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {/* Feature 1 */}
-            <div className="card-modern group animate-slide-up p-8 delay-300">
+            {/* Feature 1 - Enhanced Readability */}
+            <div className="card-modern group animate-slide-up bg-surface p-8 delay-300 hover:bg-surface-container">
               <div className="group-hover:shadow-glow-primary/50 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-glow-primary transition-all duration-300">
-                <span className="animate-bounce text-2xl">🤖</span>
+                <span className="animate-bounce text-2xl text-white">🤖</span>
               </div>
-              <h3 className="mb-3 text-xl font-bold text-on-surface">AI-Powered Generation</h3>
-              <p className="font-medium leading-relaxed text-on-surface">
+              <h3 className="mb-4 text-xl font-bold leading-tight text-on-surface">
+                AI-Powered Generation
+              </h3>
+              <p className="text-base leading-relaxed text-on-surface-variant">
                 Advanced AI analyzes job descriptions and creates personalized cover letters
                 tailored to each position with professional language and industry-specific keywords.
               </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="card-modern group animate-slide-up p-8 delay-500">
+            {/* Feature 2 - Enhanced Readability */}
+            <div className="card-modern group animate-slide-up bg-surface p-8 delay-500 hover:bg-surface-container">
               <div className="group-hover:shadow-glow-secondary/50 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-secondary-500 to-secondary-600 shadow-glow-secondary transition-all duration-300">
-                <span className="animate-bounce text-2xl delay-150">⚡</span>
+                <span className="animate-bounce text-2xl text-white delay-150">⚡</span>
               </div>
-              <h3 className="mb-3 text-xl font-bold text-on-surface">Instant Results</h3>
-              <p className="font-medium leading-relaxed text-on-surface">
+              <h3 className="mb-4 text-xl font-bold leading-tight text-on-surface">
+                Instant Results
+              </h3>
+              <p className="text-base leading-relaxed text-on-surface-variant">
                 Generate professional cover letters in seconds, not hours. Save time and apply to
                 more jobs with our lightning-fast AI technology.
               </p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="card-modern group animate-slide-up p-8 delay-700">
+            {/* Feature 3 - Enhanced Readability */}
+            <div className="card-modern group animate-slide-up bg-surface p-8 delay-700 hover:bg-surface-container">
               <div className="group-hover:shadow-glow-accent/50 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-accent-500 to-accent-600 shadow-glow-accent transition-all duration-300">
-                <span className="animate-bounce text-2xl delay-300">🎯</span>
+                <span className="animate-bounce text-2xl text-white delay-300">🎯</span>
               </div>
-              <h3 className="mb-3 text-xl font-bold text-on-surface">ATS-Optimized</h3>
-              <p className="font-medium leading-relaxed text-on-surface">
+              <h3 className="mb-4 text-xl font-bold leading-tight text-on-surface">
+                ATS-Optimized
+              </h3>
+              <p className="text-base leading-relaxed text-on-surface-variant">
                 All templates are designed to pass Applicant Tracking Systems and reach human
                 recruiters with proper formatting and keyword optimization.
               </p>

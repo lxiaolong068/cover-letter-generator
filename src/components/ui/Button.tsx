@@ -8,13 +8,15 @@ const buttonVariants = cva(
   // Base styles with Material Design 3.0 principles
   [
     'inline-flex items-center justify-center gap-2',
-    'rounded-xl font-medium transition-all duration-200',
+    'rounded-xl font-semibold transition-all duration-200',
     'focus:outline-none focus:ring-2 focus:ring-offset-2',
     'disabled:pointer-events-none disabled:opacity-50',
     'active:scale-[0.98] active:transition-transform active:duration-75',
     'relative overflow-hidden',
     'before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-r before:opacity-0 before:transition-opacity before:duration-200',
     'hover:before:opacity-10',
+    // Enhanced typography for better readability
+    'text-readable-sm leading-none tracking-wide',
   ],
   {
     variants: {

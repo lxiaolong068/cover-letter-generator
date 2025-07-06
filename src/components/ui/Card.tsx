@@ -116,7 +116,7 @@ const CardTitle = React.memo(
       <h3
         ref={ref}
         className={cn(
-          'text-xl font-bold leading-tight tracking-tight text-on-surface',
+          'text-fluid-xl font-bold leading-tight tracking-tight text-on-surface',
           'relative z-10',
           className
         )}
@@ -132,11 +132,7 @@ const CardDescription = React.memo(
     ({ className, ...props }, ref) => (
       <p
         ref={ref}
-        className={cn(
-          'text-sm leading-relaxed text-on-surface-variant',
-          'relative z-10',
-          className
-        )}
+        className={cn('text-readable-sm text-on-surface-variant', 'relative z-10', className)}
         {...props}
       />
     )
