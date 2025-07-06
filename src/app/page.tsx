@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
-  title: 'AI Cover Letter Generator - Create Professional Cover Letters Instantly',
+  title: 'AI Cover Letter Generator - Professional & ATS-Optimized',
   description:
     'Generate professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator.',
 };

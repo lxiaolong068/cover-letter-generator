@@ -7,7 +7,6 @@ interface SEOHeadProps {
   ogImage?: string;
   ogType?: 'website' | 'article' | 'product';
   twitterCard?: 'summary' | 'summary_large_image' | 'app' | 'player';
-  keywords?: string[];
   author?: string;
   publishedTime?: string;
   modifiedTime?: string;
@@ -26,7 +25,6 @@ export function SEOHead({
   ogImage,
   ogType = 'website',
   twitterCard = 'summary_large_image',
-  keywords = [],
   author,
   publishedTime,
   modifiedTime,
@@ -48,7 +46,6 @@ export function SEOHead({
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
-      {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
       {author && <meta name="author" content={author} />}
       <meta name="robots" content={robotsContent} />
       <meta name="googlebot" content={robotsContent} />
@@ -61,7 +58,10 @@ export function SEOHead({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={fullOgImage} />
-      <meta property="og:image:alt" content={`${title} - AI Cover Letter Generator Interface Screenshot`} />
+      <meta
+        property="og:image:alt"
+        content={`${title} - AI Cover Letter Generator Interface Screenshot`}
+      />
       <meta property="og:site_name" content="AI Cover Letter Generator" />
       <meta property="og:locale" content="en_US" />
       {fullCanonical && <meta property="og:url" content={fullCanonical} />}
@@ -80,7 +80,10 @@ export function SEOHead({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullOgImage} />
-      <meta name="twitter:image:alt" content={`${title} - AI Cover Letter Generator Interface Screenshot`} />
+      <meta
+        name="twitter:image:alt"
+        content={`${title} - AI Cover Letter Generator Interface Screenshot`}
+      />
 
       {/* Alternate Language Links */}
       {alternateLanguages.map(lang => (
