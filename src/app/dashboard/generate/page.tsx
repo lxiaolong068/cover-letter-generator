@@ -183,25 +183,52 @@ export default function GeneratePage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Input
-                    label="Job Title"
-                    placeholder="e.g., Frontend Developer"
-                    value={formData.jobTitle}
-                    onChange={e => handleInputChange('jobTitle', e.target.value)}
-                  />
-                  <Input
-                    label="Company Name"
-                    placeholder="e.g., Google"
-                    value={formData.companyName}
-                    onChange={e => handleInputChange('companyName', e.target.value)}
-                  />
-                  <Textarea
-                    label="Job Description"
-                    placeholder="Paste the job description or main responsibilities..."
-                    value={formData.jobDescription}
-                    onChange={e => handleInputChange('jobDescription', e.target.value)}
-                    rows={6}
-                  />
+                  <div>
+                    <label
+                      htmlFor="job-title"
+                      className="block text-sm font-medium text-on-surface"
+                    >
+                      Job Title
+                    </label>
+                    <Input
+                      id="job-title"
+                      className="mt-1"
+                      placeholder="e.g., Frontend Developer"
+                      value={formData.jobTitle}
+                      onChange={e => handleInputChange('jobTitle', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="company-name"
+                      className="block text-sm font-medium text-on-surface"
+                    >
+                      Company Name
+                    </label>
+                    <Input
+                      id="company-name"
+                      className="mt-1"
+                      placeholder="e.g., Google"
+                      value={formData.companyName}
+                      onChange={e => handleInputChange('companyName', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="job-description"
+                      className="block text-sm font-medium text-on-surface"
+                    >
+                      Job Description
+                    </label>
+                    <Textarea
+                      id="job-description"
+                      className="mt-1"
+                      placeholder="Paste the job description or main responsibilities..."
+                      value={formData.jobDescription}
+                      onChange={e => handleInputChange('jobDescription', e.target.value)}
+                      rows={6}
+                    />
+                  </div>
                 </CardContent>
               </Card>
 
@@ -212,20 +239,38 @@ export default function GeneratePage() {
                   <CardDescription>Provide your background and relevant experience</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Textarea
-                    label="Personal Background"
-                    placeholder="Briefly describe your education, work experience, skills, etc..."
-                    value={formData.personalInfo}
-                    onChange={e => handleInputChange('personalInfo', e.target.value)}
-                    rows={6}
-                  />
-                  <Textarea
-                    label="Additional Requirements (Optional)"
-                    placeholder="Any special requirements or content you want to emphasize..."
-                    value={formData.additionalRequirements}
-                    onChange={e => handleInputChange('additionalRequirements', e.target.value)}
-                    rows={4}
-                  />
+                  <div>
+                    <label
+                      htmlFor="personal-background"
+                      className="block text-sm font-medium text-on-surface"
+                    >
+                      Personal Background
+                    </label>
+                    <Textarea
+                      id="personal-background"
+                      className="mt-1"
+                      placeholder="Briefly describe your education, work experience, skills, etc..."
+                      value={formData.personalInfo}
+                      onChange={e => handleInputChange('personalInfo', e.target.value)}
+                      rows={6}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="additional-requirements"
+                      className="block text-sm font-medium text-on-surface"
+                    >
+                      Additional Requirements (Optional)
+                    </label>
+                    <Textarea
+                      id="additional-requirements"
+                      className="mt-1"
+                      placeholder="Any special requirements or content you want to emphasize..."
+                      value={formData.additionalRequirements}
+                      onChange={e => handleInputChange('additionalRequirements', e.target.value)}
+                      rows={4}
+                    />
+                  </div>
                 </CardContent>
               </Card>
 

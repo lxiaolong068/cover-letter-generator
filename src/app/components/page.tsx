@@ -1,13 +1,6 @@
 import { Metadata } from 'next';
 import { Button } from '@/components/ui/Button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardActions,
-} from '@/components/ui/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 
 export const metadata: Metadata = {
   title: 'Component Showcase - Cover Letter Generator',
@@ -17,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ComponentsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background-variant to-background py-12">
+    <div className="via-background-variant min-h-screen bg-gradient-to-br from-background to-background py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
           <h1 className="mb-4 text-4xl font-bold gradient-text">Design System Demo</h1>
@@ -30,7 +23,7 @@ export default function ComponentsPage() {
         <section className="mb-16">
           <h2 className="mb-8 text-2xl font-bold text-on-surface">Button Variants</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <Card variant="elevated" className="animate-slide-up">
+            <Card className="animate-slide-up">
               <CardHeader>
                 <CardTitle>Primary Buttons</CardTitle>
                 <CardDescription>Main action buttons with gradient backgrounds</CardDescription>
@@ -39,7 +32,7 @@ export default function ComponentsPage() {
                 <Button variant="primary" size="sm">
                   Small Primary
                 </Button>
-                <Button variant="primary" size="md">
+                <Button variant="primary" size="default">
                   Medium Primary
                 </Button>
                 <Button variant="primary" size="lg">
@@ -51,43 +44,43 @@ export default function ComponentsPage() {
               </CardContent>
             </Card>
 
-            <Card variant="elevated" className="animate-slide-up delay-150">
+            <Card className="animate-slide-up delay-150">
               <CardHeader>
                 <CardTitle>Secondary & Accent</CardTitle>
                 <CardDescription>Alternative action buttons with modern styling</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button variant="secondary" size="md">
+                <Button variant="secondary" size="default">
                   Secondary
                 </Button>
-                <Button variant="accent" size="md">
+                <Button variant="accent" size="default">
                   Accent
                 </Button>
-                <Button variant="outline" size="md">
+                <Button variant="outline" size="default">
                   Outline
                 </Button>
-                <Button variant="ghost" size="md">
+                <Button variant="ghost" size="default">
                   Ghost
                 </Button>
               </CardContent>
             </Card>
 
-            <Card variant="elevated" className="animate-slide-up delay-300">
+            <Card className="animate-slide-up delay-300">
               <CardHeader>
                 <CardTitle>Special Variants</CardTitle>
                 <CardDescription>Material Design 3.0 specific button styles</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button variant="filled" size="md">
+                <Button variant="filled" size="default">
                   Filled
                 </Button>
-                <Button variant="filled-tonal" size="md">
+                <Button variant="filled-tonal" size="default">
                   Filled Tonal
                 </Button>
-                <Button variant="elevated" size="md">
+                <Button variant="elevated" size="default">
                   Elevated
                 </Button>
-                <Button variant="destructive" size="md">
+                <Button variant="destructive" size="default">
                   Destructive
                 </Button>
               </CardContent>
@@ -99,7 +92,7 @@ export default function ComponentsPage() {
         <section className="mb-16">
           <h2 className="mb-8 text-2xl font-bold text-on-surface">Card Variants</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card variant="default" className="animate-slide-up">
+            <Card className="animate-slide-up">
               <CardHeader>
                 <CardTitle>Default Card</CardTitle>
                 <CardDescription>Standard card with subtle elevation</CardDescription>
@@ -109,17 +102,19 @@ export default function ComponentsPage() {
                   This is a default card with standard styling and hover effects.
                 </p>
               </CardContent>
-              <CardActions>
-                <Button variant="ghost" size="sm">
-                  Cancel
-                </Button>
-                <Button variant="primary" size="sm">
-                  Action
-                </Button>
-              </CardActions>
+              <CardContent className="pt-0">
+                <div className="flex justify-end space-x-2">
+                  <Button variant="ghost" size="sm">
+                    Cancel
+                  </Button>
+                  <Button variant="primary" size="sm">
+                    Action
+                  </Button>
+                </div>
+              </CardContent>
             </Card>
 
-            <Card variant="elevated" className="animate-slide-up delay-150">
+            <Card className="animate-slide-up delay-150">
               <CardHeader>
                 <CardTitle>Elevated Card</CardTitle>
                 <CardDescription>Card with enhanced elevation and shadow</CardDescription>
@@ -129,14 +124,16 @@ export default function ComponentsPage() {
                   This card has more prominent elevation and enhanced hover effects.
                 </p>
               </CardContent>
-              <CardActions>
-                <Button variant="outline" size="sm">
-                  Learn More
-                </Button>
-              </CardActions>
+              <CardContent className="pt-0">
+                <div className="flex justify-end">
+                  <Button variant="outline" size="sm">
+                    Learn More
+                  </Button>
+                </div>
+              </CardContent>
             </Card>
 
-            <Card variant="filled" className="animate-slide-up delay-300">
+            <Card className="animate-slide-up delay-300">
               <CardHeader>
                 <CardTitle>Filled Card</CardTitle>
                 <CardDescription>Card with filled background container</CardDescription>
@@ -146,14 +143,16 @@ export default function ComponentsPage() {
                   This card uses a filled container background for enhanced visibility.
                 </p>
               </CardContent>
-              <CardActions>
-                <Button variant="secondary" size="sm">
-                  Explore
-                </Button>
-              </CardActions>
+              <CardContent className="pt-0">
+                <div className="flex justify-end">
+                  <Button variant="secondary" size="sm">
+                    Explore
+                  </Button>
+                </div>
+              </CardContent>
             </Card>
 
-            <Card variant="outlined" className="animate-slide-up delay-500">
+            <Card className="animate-slide-up delay-500">
               <CardHeader>
                 <CardTitle>Outlined Card</CardTitle>
                 <CardDescription>Card with prominent border styling</CardDescription>
@@ -165,7 +164,7 @@ export default function ComponentsPage() {
               </CardContent>
             </Card>
 
-            <Card variant="tonal" className="animate-slide-up delay-700">
+            <Card className="animate-slide-up delay-700">
               <CardHeader>
                 <CardTitle>Tonal Card</CardTitle>
                 <CardDescription>Card with subtle tonal background</CardDescription>
@@ -177,7 +176,7 @@ export default function ComponentsPage() {
               </CardContent>
             </Card>
 
-            <Card variant="glass" className="animate-slide-up delay-1000">
+            <Card className="animate-slide-up delay-1000">
               <CardHeader>
                 <CardTitle>Glass Card</CardTitle>
                 <CardDescription>Card with glass morphism effect</CardDescription>
@@ -195,7 +194,7 @@ export default function ComponentsPage() {
         <section className="mb-16">
           <h2 className="mb-8 text-2xl font-bold text-on-surface">Color System</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <Card variant="elevated" className="animate-slide-up">
+            <Card className="animate-slide-up">
               <CardHeader>
                 <CardTitle>Primary Colors</CardTitle>
                 <CardDescription>Professional deep blue palette</CardDescription>
@@ -215,7 +214,7 @@ export default function ComponentsPage() {
               </CardContent>
             </Card>
 
-            <Card variant="elevated" className="animate-slide-up delay-150">
+            <Card className="animate-slide-up delay-150">
               <CardHeader>
                 <CardTitle>Secondary Colors</CardTitle>
                 <CardDescription>Elegant teal accent palette</CardDescription>
@@ -235,7 +234,7 @@ export default function ComponentsPage() {
               </CardContent>
             </Card>
 
-            <Card variant="elevated" className="animate-slide-up delay-300">
+            <Card className="animate-slide-up delay-300">
               <CardHeader>
                 <CardTitle>Accent Colors</CardTitle>
                 <CardDescription>Vibrant orange highlight palette</CardDescription>
@@ -261,7 +260,7 @@ export default function ComponentsPage() {
         <section className="mb-16">
           <h2 className="mb-8 text-2xl font-bold text-on-surface">Interactive Elements</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <Card variant="elevated" interactive className="animate-slide-up cursor-pointer">
+            <Card className="animate-slide-up cursor-pointer">
               <CardHeader>
                 <CardTitle>Interactive Card</CardTitle>
                 <CardDescription>This card responds to hover and click</CardDescription>
@@ -273,7 +272,7 @@ export default function ComponentsPage() {
               </CardContent>
             </Card>
 
-            <Card variant="outlined" className="animate-slide-up delay-150">
+            <Card className="animate-slide-up delay-150">
               <CardHeader>
                 <CardTitle>Button Combinations</CardTitle>
                 <CardDescription>Various button styles working together</CardDescription>
@@ -302,7 +301,7 @@ export default function ComponentsPage() {
 
         {/* Final CTA */}
         <section className="text-center">
-          <Card variant="glass" className="animate-bounce-in p-12">
+          <Card className="animate-bounce-in p-12">
             <CardHeader>
               <CardTitle className="text-3xl">Ready to Experience the New Design?</CardTitle>
               <CardDescription className="text-lg">

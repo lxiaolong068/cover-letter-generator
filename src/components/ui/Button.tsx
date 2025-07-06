@@ -137,22 +137,36 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
         if (isDisabled) return;
-        
+
         // Ripple effect
         if (ripple) {
           const rect = e.currentTarget.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
           setRippleCoords({ x, y });
-          
+
           // Clear ripple after animation
           setTimeout(() => setRippleCoords(null), 300);
         }
-        
+
         onClick?.(e);
       },
       [isDisabled, ripple, onClick]
     );
+
+    if (asChild) {
+      return (
+        <Comp
+          className={cn(buttonVariants({ variant, size, fullWidth, className }))}
+          ref={ref}
+          disabled={isDisabled}
+          onClick={handleClick}
+          {...props}
+        >
+          {children}
+        </Comp>
+      );
+    }
 
     return (
       <Comp
@@ -165,7 +179,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {/* Ripple Effect */}
         {rippleCoords && (
           <span
-            className="absolute pointer-events-none rounded-full bg-white/30 animate-ping"
+            className="pointer-events-none absolute animate-ping rounded-full bg-white/30"
             style={{
               left: rippleCoords.x - 10,
               top: rippleCoords.y - 10,
@@ -174,28 +188,22 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             }}
           />
         )}
-        
+
         {/* Loading Spinner */}
         {loading && (
           <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
         )}
-        
+
         {/* Left Icon */}
         {leftIcon && !loading && (
-          <span className="mr-1 flex items-center justify-center">
-            {leftIcon}
-          </span>
+          <span className="mr-1 flex items-center justify-center">{leftIcon}</span>
         )}
-        
+
         {/* Content */}
         {children}
-        
+
         {/* Right Icon */}
-        {rightIcon && (
-          <span className="ml-1 flex items-center justify-center">
-            {rightIcon}
-          </span>
-        )}
+        {rightIcon && <span className="ml-1 flex items-center justify-center">{rightIcon}</span>}
       </Comp>
     );
   }
