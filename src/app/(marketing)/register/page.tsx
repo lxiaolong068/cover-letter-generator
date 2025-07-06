@@ -6,14 +6,6 @@ import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
-import { Navigation } from '@/components/ui/Navigation';
-
-const navigationItems = [
-  { href: '/', label: 'Home' },
-  { href: '/templates', label: 'Templates' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/pricing', label: 'Pricing' },
-];
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -97,27 +89,12 @@ export default function RegisterPage() {
 
   return (
     <>
-      {/* Navigation */}
-      <Navigation
-        items={navigationItems}
-        actions={
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/register">Sign Up</Link>
-            </Button>
-          </div>
-        }
-      />
-
       {/* Registration Form */}
-      <div className="bg-surface flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
-            <h1 className="text-on-surface text-3xl font-bold">Create Your Account</h1>
-            <p className="text-on-surface-variant mt-2">
+            <h1 className="text-3xl font-bold text-on-surface">Create Your Account</h1>
+            <p className="mt-2 text-on-surface-variant">
               Start creating professional cover letters with AI
             </p>
           </div>
@@ -130,7 +107,7 @@ export default function RegisterPage() {
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {error && (
-                  <div className="bg-error-50 border-error-200 text-error-700 rounded-md border p-3 text-sm">
+                  <div className="rounded-md border border-error-200 bg-error-50 p-3 text-sm text-error-700">
                     {error}
                   </div>
                 )}
@@ -139,7 +116,7 @@ export default function RegisterPage() {
                   <div>
                     <label
                       htmlFor="firstName"
-                      className="text-on-surface block text-sm font-medium"
+                      className="block text-sm font-medium text-on-surface"
                     >
                       First Name
                     </label>
@@ -157,7 +134,7 @@ export default function RegisterPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="lastName" className="text-on-surface block text-sm font-medium">
+                    <label htmlFor="lastName" className="block text-sm font-medium text-on-surface">
                       Last Name
                     </label>
                     <Input
@@ -175,7 +152,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="text-on-surface block text-sm font-medium">
+                  <label htmlFor="email" className="block text-sm font-medium text-on-surface">
                     Email Address
                   </label>
                   <Input
@@ -192,7 +169,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="text-on-surface block text-sm font-medium">
+                  <label htmlFor="password" className="block text-sm font-medium text-on-surface">
                     Password
                   </label>
                   <Input
@@ -206,7 +183,7 @@ export default function RegisterPage() {
                     className="mt-1"
                     placeholder="At least 8 characters"
                   />
-                  <p className="text-on-surface-variant mt-1 text-xs">
+                  <p className="mt-1 text-xs text-on-surface-variant">
                     Must be at least 8 characters long
                   </p>
                 </div>
@@ -214,7 +191,7 @@ export default function RegisterPage() {
                 <div>
                   <label
                     htmlFor="confirmPassword"
-                    className="text-on-surface block text-sm font-medium"
+                    className="block text-sm font-medium text-on-surface"
                   >
                     Confirm Password
                   </label>
@@ -239,11 +216,11 @@ export default function RegisterPage() {
                     required
                     checked={acceptTerms}
                     onChange={e => setAcceptTerms(e.target.checked)}
-                    className="text-primary-600 focus:ring-primary-500 border-outline-variant h-4 w-4 rounded"
+                    className="h-4 w-4 rounded border-outline-variant text-primary-600 focus:ring-primary-500"
                   />
                   <label
                     htmlFor="accept-terms"
-                    className="text-on-surface-variant ml-2 block text-sm"
+                    className="ml-2 block text-sm text-on-surface-variant"
                   >
                     I agree to the{' '}
                     <Link href="/terms" className="text-primary-600 hover:text-primary-500">
@@ -264,10 +241,10 @@ export default function RegisterPage() {
               <div className="mt-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="border-outline-variant w-full border-t" />
+                    <div className="w-full border-t border-outline-variant" />
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="text-on-surface-variant bg-surface px-2">Or sign up with</span>
+                    <span className="bg-surface px-2 text-on-surface-variant">Or sign up with</span>
                   </div>
                 </div>
 
@@ -302,11 +279,11 @@ export default function RegisterPage() {
               </div>
 
               <div className="mt-6 text-center">
-                <p className="text-on-surface-variant text-sm">
+                <p className="text-sm text-on-surface-variant">
                   Already have an account?{' '}
                   <Link
                     href="/login"
-                    className="text-primary-600 hover:text-primary-500 font-medium"
+                    className="font-medium text-primary-600 hover:text-primary-500"
                   >
                     Sign in
                   </Link>
@@ -316,7 +293,7 @@ export default function RegisterPage() {
           </Card>
 
           <div className="text-center">
-            <p className="text-on-surface-variant text-xs">
+            <p className="text-xs text-on-surface-variant">
               Free account includes 3 cover letters per month. Upgrade anytime for unlimited access.
             </p>
           </div>

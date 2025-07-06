@@ -12,30 +12,6 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center">
-              <Link
-                href="/"
-                className="text-xl font-bold text-foreground hover:text-primary transition-colors"
-              >
-                AI Cover Letter Generator
-              </Link>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/login">Login</Link>
-              </Button>
-              <Button variant="default" size="sm" asChild>
-                <Link href="/register">Sign Up</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Enhanced Background */}
@@ -98,15 +74,15 @@ export default function HomePage() {
 
             {/* Trust Indicators */}
             <div className="mt-12 flex flex-col items-center justify-center gap-6 text-sm text-muted-foreground sm:flex-row">
-              <div className="flex items-center gap-2 rounded-full bg-card px-4 py-2 shadow-sm border border-border">
+              <div className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 shadow-sm">
                 <span className="text-green-500">✓</span>
                 <span>100% Free to Start</span>
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-card px-4 py-2 shadow-sm border border-border">
+              <div className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 shadow-sm">
                 <span className="text-green-500">✓</span>
                 <span>No Credit Card Required</span>
               </div>
-              <div className="flex items-center gap-2 rounded-full bg-card px-4 py-2 shadow-sm border border-border">
+              <div className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 shadow-sm">
                 <span className="text-green-500">✓</span>
                 <span>ATS-Optimized Templates</span>
               </div>
@@ -137,14 +113,14 @@ export default function HomePage() {
               description="Advanced AI analyzes job descriptions and creates personalized cover letters tailored to each position with professional language and industry-specific keywords."
               gradient
             />
-            
+
             <FeatureCard
               icon={<span className="text-2xl">⚡</span>}
               title="Instant Results"
               description="Generate professional cover letters in seconds, not hours. Save time and apply to more jobs with our lightning-fast AI technology."
               gradient
             />
-            
+
             <FeatureCard
               icon={<span className="text-2xl">🎯</span>}
               title="ATS-Optimized"
@@ -194,7 +170,7 @@ export default function HomePage() {
       {/* How It Works Section */}
       <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="mb-16 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               How It Works
             </h2>
@@ -238,7 +214,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-card border-t border-border">
+      <section className="border-t border-border bg-card">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-card-foreground sm:text-4xl">
@@ -248,20 +224,10 @@ export default function HomePage() {
               Join thousands of successful job seekers and create your first cover letter today.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
-              <Button
-                variant="primary"
-                size="lg"
-                className="w-full sm:w-auto"
-                asChild
-              >
+              <Button variant="primary" size="lg" className="w-full sm:w-auto" asChild>
                 <Link href="/dashboard/generate">Start Creating Now</Link>
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto"
-                asChild
-              >
+              <Button variant="outline" size="lg" className="w-full sm:w-auto" asChild>
                 <Link href="/pricing">View Pricing</Link>
               </Button>
             </div>
@@ -277,10 +243,16 @@ export default function HomePage() {
               © 2024 AI Cover Letter Generator. All rights reserved.
             </p>
             <div className="mt-4 flex justify-center space-x-6">
-              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/privacy"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/terms"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
                 Terms of Service
               </Link>
             </div>

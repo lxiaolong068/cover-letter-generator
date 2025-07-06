@@ -6,14 +6,6 @@ import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
-import { Navigation } from '@/components/ui/Navigation';
-
-const navigationItems = [
-  { href: '/', label: 'Home' },
-  { href: '/templates', label: 'Templates' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/pricing', label: 'Pricing' },
-];
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -56,27 +48,12 @@ export default function LoginPage() {
 
   return (
     <>
-      {/* Navigation */}
-      <Navigation
-        items={navigationItems}
-        actions={
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/register">Sign Up</Link>
-            </Button>
-          </div>
-        }
-      />
-
       {/* Login Form */}
-      <div className="bg-surface flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
-            <h1 className="text-on-surface text-3xl font-bold">Welcome Back</h1>
-            <p className="text-on-surface-variant mt-2">
+            <h1 className="text-3xl font-bold text-on-surface">Welcome Back</h1>
+            <p className="mt-2 text-on-surface-variant">
               Sign in to your AI Cover Letter Generator account
             </p>
           </div>
@@ -91,13 +68,13 @@ export default function LoginPage() {
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {error && (
-                  <div className="bg-error-50 border-error-200 text-error-700 rounded-md border p-3 text-sm">
+                  <div className="rounded-md border border-error-200 bg-error-50 p-3 text-sm text-error-700">
                     {error}
                   </div>
                 )}
 
                 <div>
-                  <label htmlFor="email" className="text-on-surface block text-sm font-medium">
+                  <label htmlFor="email" className="block text-sm font-medium text-on-surface">
                     Email Address
                   </label>
                   <Input
@@ -114,7 +91,7 @@ export default function LoginPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="text-on-surface block text-sm font-medium">
+                  <label htmlFor="password" className="block text-sm font-medium text-on-surface">
                     Password
                   </label>
                   <Input
@@ -136,11 +113,11 @@ export default function LoginPage() {
                       id="remember-me"
                       name="remember-me"
                       type="checkbox"
-                      className="text-primary-600 focus:ring-primary-500 border-outline-variant h-4 w-4 rounded"
+                      className="h-4 w-4 rounded border-outline-variant text-primary-600 focus:ring-primary-500"
                     />
                     <label
                       htmlFor="remember-me"
-                      className="text-on-surface-variant ml-2 block text-sm"
+                      className="ml-2 block text-sm text-on-surface-variant"
                     >
                       Remember me
                     </label>
@@ -149,7 +126,7 @@ export default function LoginPage() {
                   <div className="text-sm">
                     <Link
                       href="/forgot-password"
-                      className="text-primary-600 hover:text-primary-500 font-medium"
+                      className="font-medium text-primary-600 hover:text-primary-500"
                     >
                       Forgot your password?
                     </Link>
@@ -164,10 +141,10 @@ export default function LoginPage() {
               <div className="mt-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="border-outline-variant w-full border-t" />
+                    <div className="w-full border-t border-outline-variant" />
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="text-on-surface-variant bg-surface px-2">
+                    <span className="bg-surface px-2 text-on-surface-variant">
                       Or continue with
                     </span>
                   </div>
@@ -204,11 +181,11 @@ export default function LoginPage() {
               </div>
 
               <div className="mt-6 text-center">
-                <p className="text-on-surface-variant text-sm">
+                <p className="text-sm text-on-surface-variant">
                   Don&apos;t have an account?{' '}
                   <Link
                     href="/register"
-                    className="text-primary-600 hover:text-primary-500 font-medium"
+                    className="font-medium text-primary-600 hover:text-primary-500"
                   >
                     Sign up for free
                   </Link>
@@ -218,7 +195,7 @@ export default function LoginPage() {
           </Card>
 
           <div className="text-center">
-            <p className="text-on-surface-variant text-xs">
+            <p className="text-xs text-on-surface-variant">
               By signing in, you agree to our{' '}
               <Link href="/terms" className="text-primary-600 hover:text-primary-500">
                 Terms of Service

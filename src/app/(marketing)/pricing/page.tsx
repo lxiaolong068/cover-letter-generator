@@ -2,16 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
+import { Breadcrumb } from '@/components/ui/Navigation';
 import { ContextualNav } from '@/components/seo/InternalLinks';
 import { BreadcrumbStructuredData, FAQStructuredData } from '@/components/seo/StructuredData';
-
-const navigationItems = [
-  { href: '/', label: 'Home' },
-  { href: '/templates', label: 'Templates' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/pricing', label: 'Pricing' },
-];
 
 const breadcrumbItems = [{ href: '/', label: 'Home' }, { label: 'Pricing' }];
 
@@ -126,36 +119,21 @@ export default function PricingPage() {
       <BreadcrumbStructuredData items={breadcrumbStructuredData} />
       <FAQStructuredData faqs={faqs} />
 
-      {/* Navigation */}
-      <Navigation
-        items={navigationItems}
-        actions={
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/register">Sign Up</Link>
-            </Button>
-          </div>
-        }
-      />
-
       {/* Breadcrumb */}
-      <div className="border-outline-variant bg-surface border-b">
+      <div className="border-b border-border bg-muted/50 py-4">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumb items={breadcrumbItems} />
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="from-primary-50 to-secondary-50 bg-gradient-to-br py-16">
+      <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-on-surface text-4xl font-bold tracking-tight sm:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight text-on-surface sm:text-5xl">
               Simple, Transparent Pricing
             </h1>
-            <p className="text-on-surface-variant mx-auto mt-6 max-w-3xl text-lg leading-8">
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-on-surface-variant">
               Choose the perfect plan for your job search journey. Start free and upgrade when you
               need more features. All plans include ATS-optimized templates and professional
               formatting.
@@ -171,11 +149,11 @@ export default function PricingPage() {
             {plans.map(plan => (
               <Card
                 key={plan.name}
-                className={`relative ${plan.popular ? 'ring-primary-500 shadow-lg ring-2' : ''}`}
+                className={`relative ${plan.popular ? 'shadow-lg ring-2 ring-primary-500' : ''}`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-primary-500 rounded-full px-4 py-1 text-sm font-medium text-white">
+                    <span className="rounded-full bg-primary-500 px-4 py-1 text-sm font-medium text-white">
                       Most Popular
                     </span>
                   </div>
@@ -184,9 +162,9 @@ export default function PricingPage() {
                 <CardHeader className="text-center">
                   <CardTitle className="text-2xl">{plan.name}</CardTitle>
                   <div className="mt-4">
-                    <span className="text-primary-600 text-4xl font-bold">{plan.price}</span>
+                    <span className="text-4xl font-bold text-primary-600">{plan.price}</span>
                     {plan.period && (
-                      <span className="text-on-surface-variant ml-2 text-lg">/{plan.period}</span>
+                      <span className="ml-2 text-lg text-on-surface-variant">/{plan.period}</span>
                     )}
                   </div>
                   <CardDescription className="mt-4">{plan.description}</CardDescription>
@@ -196,14 +174,14 @@ export default function PricingPage() {
                   <ul className="space-y-3">
                     {plan.features.map(feature => (
                       <li key={feature} className="flex items-center">
-                        <span className="text-success-500 mr-3 text-lg">✓</span>
-                        <span className="text-on-surface text-sm">{feature}</span>
+                        <span className="mr-3 text-lg text-success-500">✓</span>
+                        <span className="text-sm text-on-surface">{feature}</span>
                       </li>
                     ))}
                     {plan.limitations.map(limitation => (
                       <li key={limitation} className="flex items-center">
-                        <span className="text-on-surface-variant mr-3 text-lg">−</span>
-                        <span className="text-on-surface-variant text-sm">{limitation}</span>
+                        <span className="mr-3 text-lg text-on-surface-variant">−</span>
+                        <span className="text-sm text-on-surface-variant">{limitation}</span>
                       </li>
                     ))}
                   </ul>
@@ -229,51 +207,51 @@ export default function PricingPage() {
       <section className="bg-surface-container py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="text-on-surface text-3xl font-bold">
+            <h2 className="text-3xl font-bold text-on-surface">
               Why Choose Our AI Cover Letter Generator?
             </h2>
-            <p className="text-on-surface-variant mt-4 text-lg">
+            <p className="mt-4 text-lg text-on-surface-variant">
               Trusted by thousands of job seekers worldwide
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="text-center">
-              <div className="bg-primary-100 text-primary-600 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-primary-100 text-primary-600">
                 <span className="text-2xl">🤖</span>
               </div>
-              <h3 className="text-on-surface mb-2 text-lg font-semibold">AI-Powered</h3>
-              <p className="text-on-surface-variant text-sm">
+              <h3 className="mb-2 text-lg font-semibold text-on-surface">AI-Powered</h3>
+              <p className="text-sm text-on-surface-variant">
                 Advanced AI creates personalized cover letters tailored to each job application
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-secondary-100 text-secondary-600 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-secondary-100 text-secondary-600">
                 <span className="text-2xl">⚡</span>
               </div>
-              <h3 className="text-on-surface mb-2 text-lg font-semibold">Lightning Fast</h3>
-              <p className="text-on-surface-variant text-sm">
+              <h3 className="mb-2 text-lg font-semibold text-on-surface">Lightning Fast</h3>
+              <p className="text-sm text-on-surface-variant">
                 Generate professional cover letters in seconds, not hours
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-success-100 text-success-600 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-success-100 text-success-600">
                 <span className="text-2xl">✅</span>
               </div>
-              <h3 className="text-on-surface mb-2 text-lg font-semibold">ATS Optimized</h3>
-              <p className="text-on-surface-variant text-sm">
+              <h3 className="mb-2 text-lg font-semibold text-on-surface">ATS Optimized</h3>
+              <p className="text-sm text-on-surface-variant">
                 All templates pass applicant tracking systems used by employers
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-warning-100 text-warning-600 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-warning-100 text-warning-600">
                 <span className="text-2xl">🎯</span>
               </div>
-              <h3 className="text-on-surface mb-2 text-lg font-semibold">Job-Specific</h3>
-              <p className="text-on-surface-variant text-sm">
+              <h3 className="mb-2 text-lg font-semibold text-on-surface">Job-Specific</h3>
+              <p className="text-sm text-on-surface-variant">
                 Each cover letter is customized for the specific role and company
               </p>
             </div>
@@ -285,16 +263,16 @@ export default function PricingPage() {
       <section className="py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="text-on-surface text-3xl font-bold">Frequently Asked Questions</h2>
-            <p className="text-on-surface-variant mt-4 text-lg">
+            <h2 className="text-3xl font-bold text-on-surface">Frequently Asked Questions</h2>
+            <p className="mt-4 text-lg text-on-surface-variant">
               Everything you need to know about our AI Cover Letter Generator
             </p>
           </div>
 
           <div className="space-y-8">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-outline-variant border-b pb-6">
-                <h3 className="text-on-surface mb-3 text-lg font-semibold">{faq.question}</h3>
+              <div key={index} className="border-b border-outline-variant pb-6">
+                <h3 className="mb-3 text-lg font-semibold text-on-surface">{faq.question}</h3>
                 <p className="text-on-surface-variant">{faq.answer}</p>
               </div>
             ))}
@@ -307,7 +285,7 @@ export default function PricingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-white">Ready to Land Your Dream Job?</h2>
-            <p className="text-primary-100 mt-4 text-xl">
+            <p className="mt-4 text-xl text-primary-100">
               Join thousands of successful job seekers using our AI Cover Letter Generator.
             </p>
             <div className="mt-8 flex justify-center gap-4">
@@ -317,7 +295,7 @@ export default function PricingPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="hover:text-primary-600 border-white text-white hover:bg-white"
+                className="border-white text-white hover:bg-white hover:text-primary-600"
                 asChild
               >
                 <Link href="/examples">View Examples</Link>

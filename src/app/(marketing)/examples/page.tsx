@@ -2,16 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
+import { Breadcrumb } from '@/components/ui/Navigation';
 import { ContextualNav } from '@/components/seo/InternalLinks';
 import { BreadcrumbStructuredData } from '@/components/seo/StructuredData';
-
-const navigationItems = [
-  { href: '/', label: 'Home' },
-  { href: '/templates', label: 'Templates' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/pricing', label: 'Pricing' },
-];
 
 const breadcrumbItems = [{ href: '/', label: 'Home' }, { label: 'Cover Letter Examples' }];
 
@@ -104,36 +97,21 @@ export default function ExamplesPage() {
     <>
       <BreadcrumbStructuredData items={breadcrumbStructuredData} />
 
-      {/* Navigation */}
-      <Navigation
-        items={navigationItems}
-        actions={
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/register">Sign Up</Link>
-            </Button>
-          </div>
-        }
-      />
-
       {/* Breadcrumb */}
-      <div className="border-outline-variant bg-surface border-b">
+      <div className="border-b border-border bg-muted/50 py-4">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumb items={breadcrumbItems} />
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="from-primary-50 to-secondary-50 bg-gradient-to-br py-16">
+      <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-on-surface text-4xl font-bold tracking-tight sm:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight text-on-surface sm:text-5xl">
               AI Cover Letter Examples - Professional Samples & Templates
             </h1>
-            <p className="text-on-surface-variant mx-auto mt-6 max-w-3xl text-lg leading-8">
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-on-surface-variant">
               Get inspired by real AI-generated cover letter examples from successful job
               applications. Browse AI cover letter samples across different industries, career
               levels, and job roles to craft your perfect cover letter.
@@ -154,8 +132,8 @@ export default function ExamplesPage() {
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="text-on-surface text-3xl font-bold">Real Cover Letter Examples</h2>
-            <p className="text-on-surface-variant mt-4 text-lg">
+            <h2 className="text-3xl font-bold text-on-surface">Real Cover Letter Examples</h2>
+            <p className="mt-4 text-lg text-on-surface-variant">
               Learn from successful cover letters across various industries and experience levels
             </p>
           </div>
@@ -165,34 +143,34 @@ export default function ExamplesPage() {
               <Card key={example.id} className="group transition-shadow hover:shadow-lg">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <span className="bg-secondary-100 text-secondary-700 rounded-full px-3 py-1 text-sm font-medium">
+                    <span className="rounded-full bg-secondary-100 px-3 py-1 text-sm font-medium text-secondary-700">
                       {example.industry}
                     </span>
-                    <span className="text-on-surface-variant text-sm">{example.level}</span>
+                    <span className="text-sm text-on-surface-variant">{example.level}</span>
                   </div>
                   <CardTitle className="text-xl">{example.title}</CardTitle>
                   <CardDescription>{example.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="mb-4">
-                    <p className="text-on-surface-variant line-clamp-3 text-sm italic">
+                    <p className="line-clamp-3 text-sm italic text-on-surface-variant">
                       &ldquo;{example.preview}&rdquo;
                     </p>
                   </div>
 
                   <div className="mb-4">
-                    <p className="text-on-surface text-sm">
+                    <p className="text-sm text-on-surface">
                       <span className="font-medium">Target Company:</span> {example.company}
                     </p>
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="text-on-surface mb-2 font-medium">Key Skills Highlighted:</h4>
+                    <h4 className="mb-2 font-medium text-on-surface">Key Skills Highlighted:</h4>
                     <div className="flex flex-wrap gap-2">
                       {example.skills.map(skill => (
                         <span
                           key={skill}
-                          className="bg-surface-container text-on-surface-variant rounded-md px-2 py-1 text-xs"
+                          className="rounded-md bg-surface-container px-2 py-1 text-xs text-on-surface-variant"
                         >
                           {skill}
                         </span>
@@ -221,41 +199,41 @@ export default function ExamplesPage() {
       <section className="bg-surface-container py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="text-on-surface text-3xl font-bold">Cover Letter Writing Tips</h2>
-            <p className="text-on-surface-variant mt-4 text-lg">
+            <h2 className="text-3xl font-bold text-on-surface">Cover Letter Writing Tips</h2>
+            <p className="mt-4 text-lg text-on-surface-variant">
               Learn what makes these examples effective
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div className="text-center">
-              <div className="bg-primary-100 text-primary-600 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-100 text-primary-600">
                 <span className="text-xl">🎯</span>
               </div>
-              <h3 className="text-on-surface mb-2 text-lg font-semibold">Targeted Content</h3>
-              <p className="text-on-surface-variant text-sm">
+              <h3 className="mb-2 text-lg font-semibold text-on-surface">Targeted Content</h3>
+              <p className="text-sm text-on-surface-variant">
                 Each example is tailored to specific job requirements and company culture
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-secondary-100 text-secondary-600 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-secondary-100 text-secondary-600">
                 <span className="text-xl">📊</span>
               </div>
-              <h3 className="text-on-surface mb-2 text-lg font-semibold">
+              <h3 className="mb-2 text-lg font-semibold text-on-surface">
                 Quantified Achievements
               </h3>
-              <p className="text-on-surface-variant text-sm">
+              <p className="text-sm text-on-surface-variant">
                 Examples include specific metrics and measurable accomplishments
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-success-100 text-success-600 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-success-100 text-success-600">
                 <span className="text-xl">✅</span>
               </div>
-              <h3 className="text-on-surface mb-2 text-lg font-semibold">ATS Optimized</h3>
-              <p className="text-on-surface-variant text-sm">
+              <h3 className="mb-2 text-lg font-semibold text-on-surface">ATS Optimized</h3>
+              <p className="text-sm text-on-surface-variant">
                 All examples are formatted to pass applicant tracking systems
               </p>
             </div>
@@ -270,7 +248,7 @@ export default function ExamplesPage() {
             <h2 className="text-3xl font-bold text-white">
               Ready to Create Your Own Cover Letter?
             </h2>
-            <p className="text-primary-100 mt-4 text-xl">
+            <p className="mt-4 text-xl text-primary-100">
               Use our AI Cover Letter Generator to create a personalized cover letter in minutes.
             </p>
             <div className="mt-8">

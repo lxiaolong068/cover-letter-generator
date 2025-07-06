@@ -16,70 +16,27 @@ describe('Card Components', () => {
       const card = screen.getByTestId('card');
 
       expect(card).toBeInTheDocument();
-      expect(card).toHaveClass('rounded-xl', 'bg-surface', 'border');
+      expect(card).toHaveClass('rounded-lg', 'bg-card', 'border');
     });
 
-    it('renders different variants correctly', () => {
-      const { rerender } = render(
-        <Card variant="elevated" data-testid="card">
-          Content
-        </Card>
-      );
-      expect(screen.getByTestId('card')).toHaveClass('shadow-md', 'hover:shadow-lg');
-
-      rerender(
-        <Card variant="outlined" data-testid="card">
-          Content
-        </Card>
-      );
-      expect(screen.getByTestId('card')).toHaveClass('border-2', 'shadow-none');
-
-      rerender(
-        <Card variant="filled" data-testid="card">
-          Content
-        </Card>
-      );
-      expect(screen.getByTestId('card')).toHaveClass('bg-surface-container', 'border-none');
-    });
-
-    it('handles different padding options', () => {
-      const { rerender } = render(
-        <Card padding="none" data-testid="card">
-          Content
-        </Card>
-      );
-      expect(screen.getByTestId('card')).toHaveClass('p-0');
-
-      rerender(
-        <Card padding="sm" data-testid="card">
-          Content
-        </Card>
-      );
-      expect(screen.getByTestId('card')).toHaveClass('p-4');
-
-      rerender(
-        <Card padding="lg" data-testid="card">
-          Content
-        </Card>
-      );
-      expect(screen.getByTestId('card')).toHaveClass('p-8');
-    });
-
-    it('handles interactive state', () => {
-      render(
-        <Card interactive data-testid="card">
-          Interactive card
-        </Card>
-      );
+    it('renders with default styling', () => {
+      render(<Card data-testid="card">Content</Card>);
       const card = screen.getByTestId('card');
 
-      expect(card).toHaveClass('cursor-pointer', 'hover:scale-[1.02]');
+      expect(card).toHaveClass('rounded-lg', 'border', 'bg-card', 'shadow-sm');
     });
 
-    it('handles click events when interactive', () => {
+    it('applies hover effects', () => {
+      render(<Card data-testid="card">Content</Card>);
+      const card = screen.getByTestId('card');
+
+      expect(card).toHaveClass('hover:shadow-md', 'hover:border-border');
+    });
+
+    it('handles click events', () => {
       const handleClick = vi.fn();
       render(
-        <Card interactive onClick={handleClick} data-testid="card">
+        <Card onClick={handleClick} data-testid="card">
           Clickable card
         </Card>
       );

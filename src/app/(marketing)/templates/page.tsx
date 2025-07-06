@@ -2,16 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
+import { Breadcrumb } from '@/components/ui/Navigation';
 import { ContextualNav } from '@/components/seo/InternalLinks';
 import { BreadcrumbStructuredData } from '@/components/seo/StructuredData';
-
-const navigationItems = [
-  { href: '/', label: 'Home' },
-  { href: '/templates', label: 'Templates' },
-  { href: '/examples', label: 'Examples' },
-  { href: '/pricing', label: 'Pricing' },
-];
 
 const breadcrumbItems = [{ href: '/', label: 'Home' }, { label: 'Cover Letter Templates' }];
 
@@ -91,36 +84,21 @@ export default function TemplatesPage() {
     <>
       <BreadcrumbStructuredData items={breadcrumbStructuredData} />
 
-      {/* Navigation */}
-      <Navigation
-        items={navigationItems}
-        actions={
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/register">Sign Up</Link>
-            </Button>
-          </div>
-        }
-      />
-
       {/* Breadcrumb */}
-      <div className="border-outline-variant bg-surface border-b">
+      <div className="border-b border-border bg-muted/50 py-4">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumb items={breadcrumbItems} />
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="from-primary-50 to-secondary-50 bg-gradient-to-br py-16">
+      <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-on-surface text-4xl font-bold tracking-tight sm:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight text-on-surface sm:text-5xl">
               AI Cover Letter Templates - Professional & ATS-Optimized
             </h1>
-            <p className="text-on-surface-variant mx-auto mt-6 max-w-3xl text-lg leading-8">
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-on-surface-variant">
               Choose from our collection of AI-powered, ATS-optimized cover letter templates
               designed by career experts. Each AI cover letter template is crafted for specific
               industries and career levels to help you land your dream job.
@@ -141,8 +119,8 @@ export default function TemplatesPage() {
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="text-on-surface text-3xl font-bold">Choose Your Perfect Template</h2>
-            <p className="text-on-surface-variant mt-4 text-lg">
+            <h2 className="text-3xl font-bold text-on-surface">Choose Your Perfect Template</h2>
+            <p className="mt-4 text-lg text-on-surface-variant">
               All templates are ATS-optimized and designed to pass applicant tracking systems
             </p>
           </div>
@@ -152,28 +130,28 @@ export default function TemplatesPage() {
               <Card key={template.id} className="group transition-shadow hover:shadow-lg">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <span className="bg-primary-100 text-primary-700 rounded-full px-3 py-1 text-sm font-medium">
+                    <span className="rounded-full bg-primary-100 px-3 py-1 text-sm font-medium text-primary-700">
                       {template.category}
                     </span>
-                    <span className="text-on-surface-variant text-sm">{template.difficulty}</span>
+                    <span className="text-sm text-on-surface-variant">{template.difficulty}</span>
                   </div>
                   <CardTitle className="text-xl">{template.name}</CardTitle>
                   <CardDescription>{template.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="mb-4">
-                    <p className="text-on-surface-variant text-sm italic">
+                    <p className="text-sm italic text-on-surface-variant">
                       &ldquo;{template.preview}&rdquo;
                     </p>
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="text-on-surface mb-2 font-medium">Features:</h4>
+                    <h4 className="mb-2 font-medium text-on-surface">Features:</h4>
                     <div className="flex flex-wrap gap-2">
                       {template.features.map(feature => (
                         <span
                           key={feature}
-                          className="bg-surface-container text-on-surface-variant rounded-md px-2 py-1 text-xs"
+                          className="rounded-md bg-surface-container px-2 py-1 text-xs text-on-surface-variant"
                         >
                           {feature}
                         </span>
@@ -203,7 +181,7 @@ export default function TemplatesPage() {
             <h2 className="text-3xl font-bold text-white">
               Ready to Create Your Perfect Cover Letter?
             </h2>
-            <p className="text-primary-100 mt-4 text-xl">
+            <p className="mt-4 text-xl text-primary-100">
               Get started with our AI Cover Letter Generator and land your dream job today.
             </p>
             <div className="mt-8">
