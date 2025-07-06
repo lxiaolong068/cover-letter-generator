@@ -36,11 +36,11 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
-        }
-      }
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
     }),
     CredentialsProvider({
       name: 'credentials',
@@ -90,7 +90,7 @@ export const authOptions = {
       console.log('SignIn callback triggered:', {
         provider: account?.provider,
         userEmail: user.email,
-        userName: user.name
+        userName: user.name,
       });
 
       if (account?.provider === 'google') {
@@ -120,7 +120,7 @@ export const authOptions = {
           console.error('Error during Google sign-in:', error);
           console.error('Error details:', {
             message: error instanceof Error ? error.message : 'Unknown error',
-            stack: error instanceof Error ? error.stack : undefined
+            stack: error instanceof Error ? error.stack : undefined,
           });
 
           // Return false to trigger AccessDenied, but with better logging
@@ -155,13 +155,13 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',
   logger: {
-    error(code: any, metadata: any) {
+    error(code: string, metadata?: unknown) {
       console.error('NextAuth Error:', code, metadata);
     },
-    warn(code: any) {
+    warn(code: string) {
       console.warn('NextAuth Warning:', code);
     },
-    debug(code: any, metadata: any) {
+    debug(code: string, metadata?: unknown) {
       if (process.env.NODE_ENV === 'development') {
         console.log('NextAuth Debug:', code, metadata);
       }

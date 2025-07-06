@@ -26,7 +26,7 @@ const errorMessages = {
   },
   Configuration: {
     title: 'Configuration Error',
-    description: 'There\'s an issue with our authentication setup.',
+    description: "There's an issue with our authentication setup.",
     reasons: [
       'OAuth client configuration error',
       'Invalid redirect URI',
@@ -36,7 +36,7 @@ const errorMessages = {
   },
   Verification: {
     title: 'Verification Error',
-    description: 'We couldn\'t verify your identity.',
+    description: "We couldn't verify your identity.",
     reasons: [
       'Invalid or expired verification token',
       'Email verification required',
@@ -59,7 +59,7 @@ const errorMessages = {
 export default function AuthErrorPage() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error') || 'Default';
-  
+
   const errorInfo = errorMessages[error as keyof typeof errorMessages] || errorMessages.Default;
 
   return (
@@ -80,7 +80,7 @@ export default function AuthErrorPage() {
       />
 
       {/* Error Content */}
-      <div className="bg-surface flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-screen items-center justify-center bg-surface px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
@@ -98,8 +98,8 @@ export default function AuthErrorPage() {
                 />
               </svg>
             </div>
-            <h1 className="text-on-surface mt-4 text-3xl font-bold">{errorInfo.title}</h1>
-            <p className="text-on-surface-variant mt-2">{errorInfo.description}</p>
+            <h1 className="mt-4 text-3xl font-bold text-on-surface">{errorInfo.title}</h1>
+            <p className="mt-2 text-on-surface-variant">{errorInfo.description}</p>
           </div>
 
           <Card>
@@ -108,7 +108,7 @@ export default function AuthErrorPage() {
               <CardDescription>Possible reasons for this error:</CardDescription>
             </CardHeader>
             <CardContent>
-              <ul className="text-on-surface-variant space-y-2 text-sm">
+              <ul className="space-y-2 text-sm text-on-surface-variant">
                 {errorInfo.reasons.map((reason, index) => (
                   <li key={index} className="flex items-start">
                     <span className="mr-2">•</span>
@@ -118,8 +118,8 @@ export default function AuthErrorPage() {
               </ul>
 
               <div className="mt-6 space-y-3">
-                <p className="text-on-surface text-sm">{errorInfo.action}</p>
-                
+                <p className="text-sm text-on-surface">{errorInfo.action}</p>
+
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button asChild className="flex-1">
                     <Link href="/login">Try Again</Link>
@@ -131,11 +131,12 @@ export default function AuthErrorPage() {
               </div>
 
               {error === 'AccessDenied' && (
-                <div className="bg-blue-50 border-blue-200 text-blue-700 mt-4 rounded-md border p-3 text-sm">
+                <div className="mt-4 rounded-md border border-blue-200 bg-blue-50 p-3 text-sm text-blue-700">
                   <p className="font-medium">Need help?</p>
                   <p className="mt-1">
-                    If you continue to experience issues, please ensure you're using a valid Google account
-                    and have allowed our application to access your basic profile information.
+                    If you continue to experience issues, please ensure you&apos;re using a valid
+                    Google account and have allowed our application to access your basic profile
+                    information.
                   </p>
                 </div>
               )}
@@ -143,7 +144,7 @@ export default function AuthErrorPage() {
           </Card>
 
           <div className="text-center">
-            <p className="text-on-surface-variant text-xs">
+            <p className="text-xs text-on-surface-variant">
               Error Code: {error} | Need support?{' '}
               <Link href="/contact" className="text-primary-600 hover:text-primary-500">
                 Contact us
