@@ -96,9 +96,40 @@ export async function createUser(userData: {
   password?: string;
   provider?: string;
 }): Promise<User> {
+  // Dynamically build the insert query based on provided data
+  const columns = ['email', 'name'];
+  const values = [userData.email, userData.name];
+
+  if (userData.password) {
+    columns.push('password');
+    values.push(userData.password);
+  }
+
+  // Note: You might want to add a 'provider' column to your users table
+  // to track how the user signed up (e.g., 'google', 'credentials').
+  // if (userData.provider) {
+  //   columns.push('provider');
+  //   values.push(userData.provider);
+  // }
+
+  const query = `
+    INSERT INTO users (${columns.join(', ')})
+    VALUES (${values.map((_, i) => `$${i + 1}`).join(', ')})
+    RETURNING *
+  `;
+
+  // The 'sql' tag function from '@neondatabase/serverless' does not directly support
+  // dynamic queries like this. We need to use a client or a different query method
+  // that allows for dynamic query construction.
+  // This is a conceptual fix. Let's use a more direct approach if the library allows.
+
+  // Reverting to a simpler, more direct fix assuming the table schema can be adapted.
+  // A better fix is to adjust the table schema to allow NULL for password.
+  // For now, let's make the SQL robust to handle nullable password.
+
   const [user] = await sql`
     INSERT INTO users (email, name, password)
-    VALUES (${userData.email}, ${userData.name}, ${userData.password})
+    VALUES (${userData.email}, ${userData.name}, ${userData.password || null})
     RETURNING *
   `;
   return user as User;

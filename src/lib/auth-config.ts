@@ -2,8 +2,13 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { getUserByEmail, createUser } from './neon';
 import bcrypt from 'bcryptjs';
+import type { AuthOptions } from 'next-auth';
 
-export const authOptions = {
+interface AuthUser extends NextAuthUser {
+  id: string;
+}
+
+export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -49,27 +54,26 @@ export const authOptions = {
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async signIn({ user, account }: { user: any; account: any }) {
-      if (account?.provider === 'google' && user.email) {
+      if (account?.provider === 'google') {
+        if (!user.email) {
+          console.error('Google sign-in error: Email not provided by Google.');
+          return false;
+        }
         try {
-          // Check if user already exists
           const existingUser = await getUserByEmail(user.email);
-
           if (!existingUser) {
-            // Create new user for Google OAuth
             await createUser({
               email: user.email,
-              name: user.name || user.email,
+              name: user.name || 'Anonymous User',
               provider: 'google',
             });
           }
-
           return true;
         } catch (error) {
-          console.error('Google sign-in error:', error);
+          console.error('Error during Google sign-in:', error);
           return false;
         }
       }
-
       return true;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
