@@ -24,11 +24,11 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="button-hover-lift">
-                Login
+              <Button variant="ghost" size="sm" className="button-hover-lift" asChild>
+                <Link href="/login">Login</Link>
               </Button>
-              <Button variant="primary" size="sm" className="button-hover-lift">
-                Sign Up
+              <Button variant="primary" size="sm" className="button-hover-lift" asChild>
+                <Link href="/register">Sign Up</Link>
               </Button>
             </div>
           </div>
@@ -80,16 +80,18 @@ export default function HomePage() {
                 size="lg"
                 className="button-hover-lift w-full sm:w-auto"
                 leftIcon={<span className="text-xl">🚀</span>}
+                asChild
               >
-                Start Creating Free
+                <Link href="/dashboard/generate">Start Creating Free</Link>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 className="button-hover-lift w-full sm:w-auto"
                 leftIcon={<span className="text-xl">📄</span>}
+                asChild
               >
-                View Examples
+                <Link href="/examples">View Examples</Link>
               </Button>
             </div>
 
@@ -207,8 +209,9 @@ export default function HomePage() {
             size="xl"
             className="button-hover-lift animate-bounce-in delay-300"
             leftIcon={<span className="text-2xl">🚀</span>}
+            asChild
           >
-            Start Creating Your Cover Letter
+            <Link href="/dashboard/generate">Start Creating Your Cover Letter</Link>
           </Button>
         </div>
       </section>
