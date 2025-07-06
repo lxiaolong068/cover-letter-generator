@@ -34,6 +34,13 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
     }),
     CredentialsProvider({
       name: 'credentials',
@@ -80,23 +87,43 @@ export const authOptions = {
       user: AuthUser & { email: string };
       account: AuthAccount | null;
     }) {
+      console.log('SignIn callback triggered:', {
+        provider: account?.provider,
+        userEmail: user.email,
+        userName: user.name
+      });
+
       if (account?.provider === 'google') {
         if (!user.email) {
           console.error('Google sign-in error: Email not provided by Google.');
           return false;
         }
+
         try {
+          console.log('Attempting to find/create user:', user.email);
           const existingUser = await getUserByEmail(user.email);
+
           if (!existingUser) {
+            console.log('Creating new user for:', user.email);
             await createUser({
               email: user.email,
               name: user.name || 'Anonymous User',
               provider: 'google',
             });
+            console.log('User created successfully');
+          } else {
+            console.log('Existing user found:', existingUser.id);
           }
+
           return true;
         } catch (error) {
           console.error('Error during Google sign-in:', error);
+          console.error('Error details:', {
+            message: error instanceof Error ? error.message : 'Unknown error',
+            stack: error instanceof Error ? error.stack : undefined
+          });
+
+          // Return false to trigger AccessDenied, but with better logging
           return false;
         }
       }
@@ -123,7 +150,21 @@ export const authOptions = {
   },
   pages: {
     signIn: '/login',
-    error: '/login',
+    error: '/auth-error',
   },
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
+  logger: {
+    error(code: any, metadata: any) {
+      console.error('NextAuth Error:', code, metadata);
+    },
+    warn(code: any) {
+      console.warn('NextAuth Warning:', code);
+    },
+    debug(code: any, metadata: any) {
+      if (process.env.NODE_ENV === 'development') {
+        console.log('NextAuth Debug:', code, metadata);
+      }
+    },
+  },
 };
