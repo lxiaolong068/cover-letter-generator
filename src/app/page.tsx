@@ -68,7 +68,7 @@ export default function HomePage() {
             </h1>
 
             {/* Subtitle */}
-            <p className="mx-auto mt-6 max-w-2xl animate-slide-up text-lg leading-8 text-on-surface-variant delay-500 sm:text-xl">
+            <p className="mx-auto mt-6 max-w-2xl animate-slide-up text-lg font-medium leading-8 text-on-surface delay-500 sm:text-xl">
               Generate ATS-optimized cover letters instantly. Our advanced AI creates personalized,
               professional cover letters that help you stand out and land your dream job.
             </p>
@@ -122,7 +122,7 @@ export default function HomePage() {
             <h2 className="animate-slide-up text-3xl font-bold text-on-background sm:text-4xl">
               Why Choose Our AI Cover Letter Generator?
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl animate-slide-up text-lg text-on-surface-variant delay-150">
+            <p className="mx-auto mt-4 max-w-2xl animate-slide-up text-lg font-medium text-on-surface delay-150">
               Join thousands of job seekers who have successfully landed interviews with our
               AI-powered cover letters.
             </p>
@@ -136,7 +136,7 @@ export default function HomePage() {
                 <span className="animate-bounce text-2xl">🤖</span>
               </div>
               <h3 className="mb-3 text-xl font-bold text-on-surface">AI-Powered Generation</h3>
-              <p className="leading-relaxed text-on-surface-variant">
+              <p className="font-medium leading-relaxed text-on-surface">
                 Advanced AI analyzes job descriptions and creates personalized cover letters
                 tailored to each position with professional language and industry-specific keywords.
               </p>
@@ -148,7 +148,7 @@ export default function HomePage() {
                 <span className="animate-bounce text-2xl delay-150">⚡</span>
               </div>
               <h3 className="mb-3 text-xl font-bold text-on-surface">Instant Results</h3>
-              <p className="leading-relaxed text-on-surface-variant">
+              <p className="font-medium leading-relaxed text-on-surface">
                 Generate professional cover letters in seconds, not hours. Save time and apply to
                 more jobs with our lightning-fast AI technology.
               </p>
@@ -160,7 +160,7 @@ export default function HomePage() {
                 <span className="animate-bounce text-2xl delay-300">🎯</span>
               </div>
               <h3 className="mb-3 text-xl font-bold text-on-surface">ATS-Optimized</h3>
-              <p className="leading-relaxed text-on-surface-variant">
+              <p className="font-medium leading-relaxed text-on-surface">
                 All templates are designed to pass Applicant Tracking Systems and reach human
                 recruiters with proper formatting and keyword optimization.
               </p>
@@ -175,19 +175,19 @@ export default function HomePage() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="animate-scale-in p-6 text-center surface-elevated">
               <div className="mb-2 text-3xl font-bold text-primary-600">50K+</div>
-              <div className="text-sm text-on-surface-variant">Cover Letters Generated</div>
+              <div className="text-sm font-medium text-on-surface">Cover Letters Generated</div>
             </div>
             <div className="animate-scale-in p-6 text-center delay-150 surface-elevated">
               <div className="mb-2 text-3xl font-bold text-secondary-600">95%</div>
-              <div className="text-sm text-on-surface-variant">Success Rate</div>
+              <div className="text-sm font-medium text-on-surface">Success Rate</div>
             </div>
             <div className="animate-scale-in p-6 text-center delay-300 surface-elevated">
               <div className="mb-2 text-3xl font-bold text-accent-600">24/7</div>
-              <div className="text-sm text-on-surface-variant">Available</div>
+              <div className="text-sm font-medium text-on-surface">Available</div>
             </div>
             <div className="animate-scale-in p-6 text-center delay-500 surface-elevated">
               <div className="mb-2 text-3xl font-bold text-success-600">15+</div>
-              <div className="text-sm text-on-surface-variant">Industries Covered</div>
+              <div className="text-sm font-medium text-on-surface">Industries Covered</div>
             </div>
           </div>
         </div>

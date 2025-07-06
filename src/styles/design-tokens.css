@@ -108,7 +108,7 @@
 
   /* Typography Colors */
   --color-on-surface: #1e293b;
-  --color-on-surface-variant: #64748b;
+  --color-on-surface-variant: #475569;
   --color-on-primary: #ffffff;
   --color-on-primary-container: var(--color-primary-900);
   --color-on-secondary: #ffffff;
@@ -154,7 +154,7 @@
 
     /* Typography Colors - Dark */
     --color-on-surface: #f8fafc;
-    --color-on-surface-variant: #cbd5e1;
+    --color-on-surface-variant: #e2e8f0;
     --color-on-primary: #0c4a6e;
     --color-on-primary-container: var(--color-primary-100);
     --color-on-secondary: #042f2e;
