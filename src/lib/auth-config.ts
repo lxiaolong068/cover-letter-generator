@@ -2,13 +2,34 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { getUserByEmail, createUser } from './neon';
 import bcrypt from 'bcryptjs';
-import type { AuthOptions } from 'next-auth';
 
-interface AuthUser extends NextAuthUser {
+// Define interfaces to avoid import issues
+interface AuthUser {
   id: string;
+  email?: string | null;
+  name?: string | null;
 }
 
-export const authOptions: AuthOptions = {
+interface AuthAccount {
+  provider: string;
+  type: string;
+}
+
+interface AuthSession {
+  user: {
+    id?: string;
+    email?: string | null;
+    name?: string | null;
+  };
+}
+
+interface AuthToken {
+  id?: string;
+  email?: string | null;
+  name?: string | null;
+}
+
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -52,8 +73,13 @@ export const authOptions: AuthOptions = {
     strategy: 'jwt' as const,
   },
   callbacks: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async signIn({ user, account }: { user: any; account: any }) {
+    async signIn({
+      user,
+      account,
+    }: {
+      user: AuthUser & { email: string };
+      account: AuthAccount | null;
+    }) {
       if (account?.provider === 'google') {
         if (!user.email) {
           console.error('Google sign-in error: Email not provided by Google.');
@@ -76,15 +102,19 @@ export const authOptions: AuthOptions = {
       }
       return true;
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async jwt({ token, user }: { token: any; user?: any }) {
+    async jwt({ token, user }: { token: AuthToken; user?: AuthUser }) {
       if (user) {
         token.id = user.id;
       }
       return token;
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async session({ session, token }: { session: any; token: any }) {
+    async session({
+      session,
+      token,
+    }: {
+      session: AuthSession;
+      token: AuthToken & { id?: string };
+    }) {
       if (token && session.user) {
         session.user.id = token.id as string;
       }
