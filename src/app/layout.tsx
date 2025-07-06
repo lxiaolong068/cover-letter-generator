@@ -117,13 +117,131 @@ export default function RootLayout({
             {children}
           </main>
 
-          {/* Simple Footer */}
+          {/* Enhanced Footer */}
           <footer className="border-t border-gray-200 bg-gray-50">
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-              <div className="text-center">
-                <p className="text-sm text-gray-600">
-                  &copy; 2024 AI Cover Letter Generator. All rights reserved.
-                </p>
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+                {/* Brand */}
+                <div className="md:col-span-2">
+                  <h3 className="mb-4 text-lg font-bold text-gray-900">
+                    AI Cover Letter Generator
+                  </h3>
+                  <p className="max-w-md text-sm text-gray-600">
+                    Create professional, ATS-optimized cover letters instantly with our AI-powered
+                    platform. Join thousands of job seekers who have successfully landed interviews.
+                  </p>
+                </div>
+
+                {/* Quick Links */}
+                <div>
+                  <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-900">
+                    Quick Links
+                  </h4>
+                  <ul className="space-y-2">
+                    <li>
+                      <a
+                        href="/templates"
+                        className="text-sm text-gray-600 transition-colors hover:text-gray-900"
+                      >
+                        Templates
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/examples"
+                        className="text-sm text-gray-600 transition-colors hover:text-gray-900"
+                      >
+                        Examples
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/pricing"
+                        className="text-sm text-gray-600 transition-colors hover:text-gray-900"
+                      >
+                        Pricing
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/dashboard"
+                        className="text-sm text-gray-600 transition-colors hover:text-gray-900"
+                      >
+                        Dashboard
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Legal */}
+                <div>
+                  <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-900">
+                    Legal
+                  </h4>
+                  <ul className="space-y-2">
+                    <li>
+                      <a
+                        href="/privacy"
+                        className="text-sm text-gray-600 transition-colors hover:text-gray-900"
+                      >
+                        Privacy Policy
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/terms"
+                        className="text-sm text-gray-600 transition-colors hover:text-gray-900"
+                      >
+                        Terms of Service
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="mailto:support@ai-coverletter-generator.com"
+                        className="text-sm text-gray-600 transition-colors hover:text-gray-900"
+                      >
+                        Contact Support
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/.well-known/security.txt"
+                        className="text-sm text-gray-600 transition-colors hover:text-gray-900"
+                      >
+                        Security
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Bottom Bar */}
+              <div className="mt-8 border-t border-gray-200 pt-8">
+                <div className="flex flex-col items-center justify-between md:flex-row">
+                  <p className="text-sm text-gray-600">
+                    &copy; 2024 AI Cover Letter Generator. All rights reserved.
+                  </p>
+                  <div className="mt-4 flex space-x-6 md:mt-0">
+                    <a
+                      href="/privacy"
+                      className="text-xs text-gray-500 transition-colors hover:text-gray-700"
+                    >
+                      Privacy
+                    </a>
+                    <a
+                      href="/terms"
+                      className="text-xs text-gray-500 transition-colors hover:text-gray-700"
+                    >
+                      Terms
+                    </a>
+                    <a
+                      href="mailto:support@ai-coverletter-generator.com"
+                      className="text-xs text-gray-500 transition-colors hover:text-gray-700"
+                    >
+                      Support
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </footer>

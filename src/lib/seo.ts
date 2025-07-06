@@ -45,6 +45,18 @@ export const pageConfigs = {
       'Create your free AI Cover Letter Generator account today. Generate professional cover letters and boost your job search success.',
     path: '/register',
   },
+  privacy: {
+    title: 'Privacy Policy - AI Cover Letter Generator Data Protection',
+    description:
+      'Learn how AI Cover Letter Generator protects your privacy and personal data. Comprehensive privacy policy covering data collection, usage, and your rights.',
+    path: '/privacy',
+  },
+  terms: {
+    title: 'Terms of Service - AI Cover Letter Generator Legal Terms',
+    description:
+      'Read the terms of service for AI Cover Letter Generator. Legal terms and conditions for using our AI-powered cover letter generation service.',
+    path: '/terms',
+  },
 };
 
 export function generateMetadata(pageKey: keyof typeof pageConfigs): Metadata {
