@@ -1,9 +1,13 @@
 import { Metadata } from 'next';
 import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Input } from '@/components/ui/Input';
-import { Textarea } from '@/components/ui/Textarea';
-import { Container, Grid, Flex, Stack } from '@/components/ui/Container';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardActions,
+} from '@/components/ui/Card';
 
 export const metadata: Metadata = {
   title: 'Component Showcase - Cover Letter Generator',
@@ -13,334 +17,312 @@ export const metadata: Metadata = {
 
 export default function ComponentsPage() {
   return (
-    <Container size="xl" padding="lg" className="py-12">
-      <div className="mb-12 text-center">
-        <h1 className="text-on-surface mb-4 text-4xl font-bold">UI Component Showcase</h1>
-        <p className="text-on-surface-variant mx-auto max-w-2xl text-lg">
-          This showcases all UI components used in the Cover Letter Generator project, including
-          different variants and states.
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background-variant to-background py-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 text-center">
+          <h1 className="mb-4 text-4xl font-bold gradient-text">Design System Demo</h1>
+          <p className="text-lg text-on-surface-variant">
+            Showcasing the new Material Design 3.0 components and color system
+          </p>
+        </div>
 
-      <Stack spacing="2xl">
-        {/* Buttons Section */}
-        <section>
-          <h2 className="text-on-surface mb-6 text-2xl font-bold">Button Components</h2>
-          <Grid cols={1} gap="lg">
-            <Card>
+        {/* Button Showcase */}
+        <section className="mb-16">
+          <h2 className="mb-8 text-2xl font-bold text-on-surface">Button Variants</h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <Card variant="elevated" className="animate-slide-up">
               <CardHeader>
-                <CardTitle>Button Variants</CardTitle>
-                <CardDescription>Different styles of button components</CardDescription>
+                <CardTitle>Primary Buttons</CardTitle>
+                <CardDescription>Main action buttons with gradient backgrounds</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Flex wrap gap="md">
-                  <Button variant="primary">Primary Button</Button>
-                  <Button variant="secondary">Secondary Button</Button>
-                  <Button variant="outline">Outline Button</Button>
-                  <Button variant="ghost">Ghost Button</Button>
-                  <Button variant="destructive">Destructive Button</Button>
-                  <Button variant="link">Link Button</Button>
-                </Flex>
+              <CardContent className="space-y-4">
+                <Button variant="primary" size="sm">
+                  Small Primary
+                </Button>
+                <Button variant="primary" size="md">
+                  Medium Primary
+                </Button>
+                <Button variant="primary" size="lg">
+                  Large Primary
+                </Button>
+                <Button variant="primary" size="xl">
+                  Extra Large Primary
+                </Button>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card variant="elevated" className="animate-slide-up delay-150">
               <CardHeader>
-                <CardTitle>Button Sizes</CardTitle>
-                <CardDescription>Different sizes of buttons</CardDescription>
+                <CardTitle>Secondary & Accent</CardTitle>
+                <CardDescription>Alternative action buttons with modern styling</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Flex align="center" gap="md">
-                  <Button size="sm">Small Button</Button>
-                  <Button size="md">Medium Button</Button>
-                  <Button size="lg">Large Button</Button>
-                  <Button size="xl">Extra Large Button</Button>
-                </Flex>
+              <CardContent className="space-y-4">
+                <Button variant="secondary" size="md">
+                  Secondary
+                </Button>
+                <Button variant="accent" size="md">
+                  Accent
+                </Button>
+                <Button variant="outline" size="md">
+                  Outline
+                </Button>
+                <Button variant="ghost" size="md">
+                  Ghost
+                </Button>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card variant="elevated" className="animate-slide-up delay-300">
               <CardHeader>
-                <CardTitle>Button States</CardTitle>
-                <CardDescription>Different states of buttons</CardDescription>
+                <CardTitle>Special Variants</CardTitle>
+                <CardDescription>Material Design 3.0 specific button styles</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Flex wrap gap="md">
-                  <Button>Normal State</Button>
-                  <Button loading>Loading</Button>
-                  <Button disabled>Disabled State</Button>
-                  <Button fullWidth>Full Width Button</Button>
-                </Flex>
+              <CardContent className="space-y-4">
+                <Button variant="filled" size="md">
+                  Filled
+                </Button>
+                <Button variant="filled-tonal" size="md">
+                  Filled Tonal
+                </Button>
+                <Button variant="elevated" size="md">
+                  Elevated
+                </Button>
+                <Button variant="destructive" size="md">
+                  Destructive
+                </Button>
               </CardContent>
             </Card>
-          </Grid>
+          </div>
         </section>
 
-        {/* Cards Section */}
-        <section>
-          <h2 className="text-on-surface mb-6 text-2xl font-bold">Card Components</h2>
-          <Grid cols={1} responsive={{ md: 2, lg: 3 }} gap="lg">
-            <Card variant="default">
+        {/* Card Showcase */}
+        <section className="mb-16">
+          <h2 className="mb-8 text-2xl font-bold text-on-surface">Card Variants</h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <Card variant="default" className="animate-slide-up">
               <CardHeader>
-                <CardTitle>默认卡片</CardTitle>
-                <CardDescription>标准的卡片样式</CardDescription>
+                <CardTitle>Default Card</CardTitle>
+                <CardDescription>Standard card with subtle elevation</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-on-surface-variant">
-                  这是一个默认样式的卡片组件，适用于大多数场景。
+                  This is a default card with standard styling and hover effects.
+                </p>
+              </CardContent>
+              <CardActions>
+                <Button variant="ghost" size="sm">
+                  Cancel
+                </Button>
+                <Button variant="primary" size="sm">
+                  Action
+                </Button>
+              </CardActions>
+            </Card>
+
+            <Card variant="elevated" className="animate-slide-up delay-150">
+              <CardHeader>
+                <CardTitle>Elevated Card</CardTitle>
+                <CardDescription>Card with enhanced elevation and shadow</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-on-surface-variant">
+                  This card has more prominent elevation and enhanced hover effects.
+                </p>
+              </CardContent>
+              <CardActions>
+                <Button variant="outline" size="sm">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+
+            <Card variant="filled" className="animate-slide-up delay-300">
+              <CardHeader>
+                <CardTitle>Filled Card</CardTitle>
+                <CardDescription>Card with filled background container</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-on-surface-variant">
+                  This card uses a filled container background for enhanced visibility.
+                </p>
+              </CardContent>
+              <CardActions>
+                <Button variant="secondary" size="sm">
+                  Explore
+                </Button>
+              </CardActions>
+            </Card>
+
+            <Card variant="outlined" className="animate-slide-up delay-500">
+              <CardHeader>
+                <CardTitle>Outlined Card</CardTitle>
+                <CardDescription>Card with prominent border styling</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-on-surface-variant">
+                  This card emphasizes borders and has clean, minimal styling.
                 </p>
               </CardContent>
             </Card>
 
-            <Card variant="elevated">
+            <Card variant="tonal" className="animate-slide-up delay-700">
               <CardHeader>
-                <CardTitle>悬浮卡片</CardTitle>
-                <CardDescription>带有阴影效果的卡片</CardDescription>
+                <CardTitle>Tonal Card</CardTitle>
+                <CardDescription>Card with subtle tonal background</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-on-surface-variant">
-                  这是一个悬浮样式的卡片，具有更明显的阴影效果。
+                  This card uses a tonal background that adapts to the theme.
                 </p>
               </CardContent>
             </Card>
 
-            <Card variant="outlined">
+            <Card variant="glass" className="animate-slide-up delay-1000">
               <CardHeader>
-                <CardTitle>轮廓卡片</CardTitle>
-                <CardDescription>带有边框的卡片</CardDescription>
+                <CardTitle>Glass Card</CardTitle>
+                <CardDescription>Card with glass morphism effect</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-on-surface-variant">
-                  这是一个轮廓样式的卡片，使用边框而不是阴影。
+                  This card features a modern glass effect with backdrop blur.
                 </p>
               </CardContent>
             </Card>
-
-            <Card variant="filled">
-              <CardHeader>
-                <CardTitle>填充卡片</CardTitle>
-                <CardDescription>带有背景色的卡片</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-on-surface-variant">
-                  这是一个填充样式的卡片，具有不同的背景色。
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card interactive>
-              <CardHeader>
-                <CardTitle>交互卡片</CardTitle>
-                <CardDescription>可点击的卡片</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-on-surface-variant">
-                  这是一个交互式卡片，鼠标悬停时会有缩放效果。
-                </p>
-              </CardContent>
-            </Card>
-          </Grid>
+          </div>
         </section>
 
-        {/* Form Components Section */}
-        <section>
-          <h2 className="text-on-surface mb-6 text-2xl font-bold">表单组件</h2>
-          <Grid cols={1} responsive={{ lg: 2 }} gap="lg">
-            <Card>
+        {/* Color System Showcase */}
+        <section className="mb-16">
+          <h2 className="mb-8 text-2xl font-bold text-on-surface">Color System</h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <Card variant="elevated" className="animate-slide-up">
               <CardHeader>
-                <CardTitle>Input Components</CardTitle>
-                <CardDescription>Various styles of input fields</CardDescription>
+                <CardTitle>Primary Colors</CardTitle>
+                <CardDescription>Professional deep blue palette</CardDescription>
               </CardHeader>
               <CardContent>
-                <Stack spacing="md">
-                  <Input label="Default Input" placeholder="Enter content..." />
-                  <Input
-                    label="Input with Icon"
-                    placeholder="Search..."
-                    leftIcon={
-                      <svg
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                    }
-                  />
-                  <Input
-                    label="Error State"
-                    placeholder="Enter content..."
-                    error="This is an error message"
-                  />
-                  <Input
-                    label="With Helper Text"
-                    placeholder="Enter content..."
-                    helperText="This is helper text to explain input requirements"
-                  />
-                </Stack>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Textarea Components</CardTitle>
-                <CardDescription>Multi-line text input</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Stack spacing="md">
-                  <Textarea label="Default Textarea" placeholder="Enter multi-line content..." />
-                  <Textarea
-                    label="With Character Count"
-                    placeholder="Enter content..."
-                    maxLength={200}
-                    showCount
-                  />
-                  <Textarea
-                    label="Error State"
-                    placeholder="Enter content..."
-                    error="Content cannot be empty"
-                  />
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
-        </section>
-
-        {/* Layout Components Section */}
-        <section>
-          <h2 className="text-on-surface mb-6 text-2xl font-bold">Layout Components</h2>
-          <Stack spacing="lg">
-            <Card>
-              <CardHeader>
-                <CardTitle>Grid Layout</CardTitle>
-                <CardDescription>Responsive grid system</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Grid cols={1} responsive={{ sm: 2, md: 3, lg: 4 }} gap="md">
-                  {Array.from({ length: 8 }, (_, i) => (
+                <div className="grid grid-cols-5 gap-2">
+                  {[100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => (
                     <div
-                      key={i}
-                      className="bg-primary-100 text-primary-700 flex h-20 items-center justify-center rounded-lg font-medium"
+                      key={shade}
+                      className={`h-12 w-12 rounded-lg shadow-sm bg-primary-${shade} flex items-center justify-center text-xs font-medium`}
+                      style={{ backgroundColor: `var(--color-primary-${shade})` }}
                     >
-                      项目 {i + 1}
+                      {shade}
                     </div>
                   ))}
-                </Grid>
+                </div>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card variant="elevated" className="animate-slide-up delay-150">
               <CardHeader>
-                <CardTitle>弹性布局</CardTitle>
-                <CardDescription>Flexbox布局工具</CardDescription>
+                <CardTitle>Secondary Colors</CardTitle>
+                <CardDescription>Elegant teal accent palette</CardDescription>
               </CardHeader>
               <CardContent>
-                <Stack spacing="md">
-                  <div>
-                    <h4 className="mb-2 font-medium">水平排列</h4>
-                    <Flex gap="md">
-                      <div className="bg-secondary-100 text-secondary-700 flex h-12 w-20 items-center justify-center rounded text-sm">
-                        项目1
-                      </div>
-                      <div className="bg-secondary-100 text-secondary-700 flex h-12 w-20 items-center justify-center rounded text-sm">
-                        项目2
-                      </div>
-                      <div className="bg-secondary-100 text-secondary-700 flex h-12 w-20 items-center justify-center rounded text-sm">
-                        项目3
-                      </div>
-                    </Flex>
-                  </div>
-
-                  <div>
-                    <h4 className="mb-2 font-medium">居中对齐</h4>
-                    <Flex
-                      justify="center"
-                      align="center"
-                      className="bg-surface-container h-20 rounded"
+                <div className="grid grid-cols-5 gap-2">
+                  {[100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => (
+                    <div
+                      key={shade}
+                      className={`h-12 w-12 rounded-lg shadow-sm bg-secondary-${shade} flex items-center justify-center text-xs font-medium`}
+                      style={{ backgroundColor: `var(--color-secondary-${shade})` }}
                     >
-                      <div className="bg-success-100 text-success-700 rounded px-4 py-2">
-                        居中内容
-                      </div>
-                    </Flex>
-                  </div>
-                </Stack>
+                      {shade}
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
-          </Stack>
+
+            <Card variant="elevated" className="animate-slide-up delay-300">
+              <CardHeader>
+                <CardTitle>Accent Colors</CardTitle>
+                <CardDescription>Vibrant orange highlight palette</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-5 gap-2">
+                  {[100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => (
+                    <div
+                      key={shade}
+                      className={`h-12 w-12 rounded-lg shadow-sm bg-accent-${shade} flex items-center justify-center text-xs font-medium`}
+                      style={{ backgroundColor: `var(--color-accent-${shade})` }}
+                    >
+                      {shade}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
-        {/* Color Palette Section */}
-        <section>
-          <h2 className="text-on-surface mb-6 text-2xl font-bold">色彩系统</h2>
-          <Grid cols={1} responsive={{ md: 2, lg: 3 }} gap="lg">
-            <Card>
+        {/* Interactive Elements */}
+        <section className="mb-16">
+          <h2 className="mb-8 text-2xl font-bold text-on-surface">Interactive Elements</h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <Card variant="elevated" interactive className="animate-slide-up cursor-pointer">
               <CardHeader>
-                <CardTitle>主色调</CardTitle>
-                <CardDescription>Primary Colors</CardDescription>
+                <CardTitle>Interactive Card</CardTitle>
+                <CardDescription>This card responds to hover and click</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-5 gap-2">
-                  {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => (
-                    <div key={shade} className="text-center">
-                      <div
-                        className={`mb-1 h-12 w-full rounded`}
-                        style={{ backgroundColor: `var(--color-primary-${shade})` }}
-                      />
-                      <span className="text-on-surface-variant text-xs">{shade}</span>
-                    </div>
-                  ))}
-                </div>
+                <p className="text-on-surface-variant">
+                  Click or hover over this card to see the interactive effects in action.
+                </p>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card variant="outlined" className="animate-slide-up delay-150">
               <CardHeader>
-                <CardTitle>次要色调</CardTitle>
-                <CardDescription>Secondary Colors</CardDescription>
+                <CardTitle>Button Combinations</CardTitle>
+                <CardDescription>Various button styles working together</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-5 gap-2">
-                  {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => (
-                    <div key={shade} className="text-center">
-                      <div
-                        className={`mb-1 h-12 w-full rounded`}
-                        style={{ backgroundColor: `var(--color-secondary-${shade})` }}
-                      />
-                      <span className="text-on-surface-variant text-xs">{shade}</span>
-                    </div>
-                  ))}
+              <CardContent className="space-y-4">
+                <div className="flex gap-2">
+                  <Button variant="primary" size="sm" leftIcon={<span>✨</span>}>
+                    Primary
+                  </Button>
+                  <Button variant="secondary" size="sm" rightIcon={<span>→</span>}>
+                    Secondary
+                  </Button>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" loading>
+                    Loading
+                  </Button>
+                  <Button variant="ghost" size="sm" disabled>
+                    Disabled
+                  </Button>
                 </div>
               </CardContent>
             </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>中性色调</CardTitle>
-                <CardDescription>Neutral Colors</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-5 gap-2">
-                  {[50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => (
-                    <div key={shade} className="text-center">
-                      <div
-                        className={`border-outline-variant mb-1 h-12 w-full rounded border`}
-                        style={{ backgroundColor: `var(--color-neutral-${shade})` }}
-                      />
-                      <span className="text-on-surface-variant text-xs">{shade}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
+          </div>
         </section>
-      </Stack>
-    </Container>
+
+        {/* Final CTA */}
+        <section className="text-center">
+          <Card variant="glass" className="animate-bounce-in p-12">
+            <CardHeader>
+              <CardTitle className="text-3xl">Ready to Experience the New Design?</CardTitle>
+              <CardDescription className="text-lg">
+                The new Material Design 3.0 system provides better contrast, modern aesthetics, and
+                enhanced user experience.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                <Button variant="primary" size="lg" className="button-hover-lift">
+                  Get Started
+                </Button>
+                <Button variant="outline" size="lg" className="button-hover-lift">
+                  Learn More
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+      </div>
+    </div>
   );
 }
