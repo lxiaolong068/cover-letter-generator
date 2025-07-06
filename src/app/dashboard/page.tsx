@@ -3,41 +3,40 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
 import { ContextualNav } from '@/components/seo/InternalLinks';
+import { dashboardNavigation, createBreadcrumbs } from '@/lib/navigation';
 
-const navigationItems = [
-  { href: '/dashboard', label: 'Dashboard' },
-  { href: '/dashboard/generate', label: 'Generate Cover Letter' },
-  { href: '/dashboard/templates', label: 'My Templates' },
-  { href: '/dashboard/history', label: 'History' },
-];
-
-const breadcrumbItems = [{ href: '/', label: 'Home' }, { label: 'Dashboard' }];
+const navigationItems = dashboardNavigation;
+const breadcrumbItems = createBreadcrumbs('/dashboard');
 
 const quickActions = [
   {
     title: 'Generate AI Cover Letter',
-    description: 'Create professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator',
+    description:
+      'Create professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator',
     href: '/dashboard/generate',
     icon: '✨',
     color: 'bg-primary-500',
   },
   {
     title: 'Browse Cover Letter Templates',
-    description: 'Select from professional cover letter templates designed for different industries and roles',
+    description:
+      'Select from professional cover letter templates designed for different industries and roles',
     href: '/dashboard/templates',
     icon: '📄',
     color: 'bg-secondary-500',
   },
   {
     title: 'View Cover Letter History',
-    description: 'Manage and edit your AI-generated cover letters, download PDFs, and track applications',
+    description:
+      'Manage and edit your AI-generated cover letters, download PDFs, and track applications',
     href: '/dashboard/history',
     icon: '📚',
     color: 'bg-success-500',
   },
   {
     title: 'Profile & Preferences',
-    description: 'Update personal information, job preferences, and AI Cover Letter Generator settings',
+    description:
+      'Update personal information, job preferences, and AI Cover Letter Generator settings',
     href: '/dashboard/settings',
     icon: '⚙️',
     color: 'bg-warning-500',
@@ -110,16 +109,17 @@ export default function DashboardPage() {
         }
       />
 
-      <div className="bg-surface-variant min-h-screen">
+      <div className="min-h-screen bg-surface-variant">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
           <Breadcrumb items={breadcrumbItems} className="mb-8" />
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-on-surface text-3xl font-bold">AI Cover Letter Dashboard</h1>
-            <p className="text-on-surface-variant mt-2">
-              Welcome back! Manage your AI-generated cover letters, view statistics, and create new professional cover letters.
+            <h1 className="text-3xl font-bold text-on-surface">AI Cover Letter Dashboard</h1>
+            <p className="mt-2 text-on-surface-variant">
+              Welcome back! Manage your AI-generated cover letters, view statistics, and create new
+              professional cover letters.
             </p>
           </div>
 
@@ -130,8 +130,8 @@ export default function DashboardPage() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-on-surface-variant text-sm font-medium">{stat.label}</p>
-                      <p className="text-on-surface text-2xl font-bold">{stat.value}</p>
+                      <p className="text-sm font-medium text-on-surface-variant">{stat.label}</p>
+                      <p className="text-2xl font-bold text-on-surface">{stat.value}</p>
                     </div>
                     <div className="flex items-center text-sm">
                       <span
@@ -166,7 +166,7 @@ export default function DashboardPage() {
                       <Link
                         key={index}
                         href={action.href}
-                        className="group border-outline-variant hover:border-primary-300 relative overflow-hidden rounded-lg border p-6 transition-all hover:shadow-md"
+                        className="group relative overflow-hidden rounded-lg border border-outline-variant p-6 transition-all hover:border-primary-300 hover:shadow-md"
                       >
                         <div className="flex items-start space-x-4">
                           <div
@@ -175,10 +175,10 @@ export default function DashboardPage() {
                             <span className="text-xl">{action.icon}</span>
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-on-surface group-hover:text-primary-600 font-semibold">
+                            <h3 className="font-semibold text-on-surface group-hover:text-primary-600">
                               {action.title}
                             </h3>
-                            <p className="text-on-surface-variant mt-1 text-sm">
+                            <p className="mt-1 text-sm text-on-surface-variant">
                               {action.description}
                             </p>
                           </div>
@@ -194,24 +194,24 @@ export default function DashboardPage() {
             <div>
               <Card>
                 <CardHeader>
-                  <CardTitle>最近的求职信</CardTitle>
-                  <CardDescription>您最近创建的求职信</CardDescription>
+                  <CardTitle>Recent Cover Letters</CardTitle>
+                  <CardDescription>Your recently created cover letters</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {recentCoverLetters.map(letter => (
                       <div
                         key={letter.id}
-                        className="border-outline-variant flex items-center justify-between rounded-lg border p-4"
+                        className="flex items-center justify-between rounded-lg border border-outline-variant p-4"
                       >
                         <div className="flex-1">
-                          <h4 className="text-on-surface font-medium">{letter.title}</h4>
-                          <p className="text-on-surface-variant text-sm">{letter.createdAt}</p>
+                          <h4 className="font-medium text-on-surface">{letter.title}</h4>
+                          <p className="text-sm text-on-surface-variant">{letter.createdAt}</p>
                         </div>
                         <div className="flex items-center space-x-2">
                           <span
                             className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                              letter.status === '已完成'
+                              letter.status === 'Completed'
                                 ? 'bg-success-100 text-success-800'
                                 : 'bg-warning-100 text-warning-800'
                             }`}
@@ -224,7 +224,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="mt-6">
                     <Button variant="outline" fullWidth asChild>
-                      <Link href="/dashboard/history">查看全部</Link>
+                      <Link href="/dashboard/history">View All</Link>
                     </Button>
                   </div>
                 </CardContent>
