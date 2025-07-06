@@ -112,6 +112,7 @@ export async function createUser(userData: {
   //   values.push(userData.provider);
   // }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const query = `
     INSERT INTO users (${columns.join(', ')})
     VALUES (${values.map((_, i) => `$${i + 1}`).join(', ')})
