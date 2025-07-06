@@ -1,25 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
-  // Only allow in development or with a debug token
+  // Allow basic diagnostics in production, detailed info only with debug token
   const isDevelopment = process.env.NODE_ENV === 'development';
   const debugToken = request.nextUrl.searchParams.get('token');
   const validDebugToken = process.env.DEBUG_TOKEN;
+  const hasValidToken = debugToken && validDebugToken && debugToken === validDebugToken;
+  const showDetailedInfo = isDevelopment || hasValidToken;
 
-  if (!isDevelopment && (!debugToken || debugToken !== validDebugToken)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const diagnostics = {
+  const basicDiagnostics = {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-    url: request.url,
-    headers: {
-      host: request.headers.get('host'),
-      'user-agent': request.headers.get('user-agent'),
-      origin: request.headers.get('origin'),
-      referer: request.headers.get('referer'),
-    },
+    status: 'Configuration Check',
     environmentVariables: {
       NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'NOT_SET',
       NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET ? 'SET' : 'NOT_SET',
@@ -36,6 +28,7 @@ export async function GET(request: NextRequest) {
         description: 'NEXTAUTH_URL must match your production domain exactly',
         currentValue: process.env.NEXTAUTH_URL,
         expectedValue: 'https://www.coverlettergen.cc',
+        status: process.env.NEXTAUTH_URL === 'https://www.coverlettergen.cc' ? 'OK' : 'NEEDS_FIX',
       },
       {
         issue: 'Google OAuth redirect URI',
@@ -50,6 +43,19 @@ export async function GET(request: NextRequest) {
     ],
   };
 
+  const detailedDiagnostics = {
+    ...basicDiagnostics,
+    url: request.url,
+    headers: {
+      host: request.headers.get('host'),
+      'user-agent': request.headers.get('user-agent'),
+      origin: request.headers.get('origin'),
+      referer: request.headers.get('referer'),
+    },
+  };
+
+  const diagnostics = showDetailedInfo ? detailedDiagnostics : basicDiagnostics;
+
   return NextResponse.json(diagnostics, {
     headers: {
       'Content-Type': 'application/json',
@@ -59,13 +65,13 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  // Test database connection
+  // Test database connection - require debug token for this
   const isDevelopment = process.env.NODE_ENV === 'development';
   const debugToken = request.nextUrl.searchParams.get('token');
   const validDebugToken = process.env.DEBUG_TOKEN;
 
   if (!isDevelopment && (!debugToken || debugToken !== validDebugToken)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: 'Database testing requires debug token' }, { status: 401 });
   }
 
   try {
