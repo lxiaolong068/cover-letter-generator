@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { FeatureCard, StatsCard } from '@/components/ui/Card';
 
 export const metadata: Metadata = {
   title: 'AI Cover Letter Generator - Professional & ATS-Optimized',
@@ -10,24 +11,24 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen animate-fade-in bg-gradient-to-br from-background via-background-variant to-background">
+    <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="nav-modern sticky top-0 z-50">
+      <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <Link
                 href="/"
-                className="text-xl font-bold transition-all duration-200 gradient-text hover:scale-105"
+                className="text-xl font-bold text-foreground hover:text-primary transition-colors"
               >
                 AI Cover Letter Generator
               </Link>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="button-hover-lift" asChild>
+              <Button variant="ghost" size="sm" asChild>
                 <Link href="/login">Login</Link>
               </Button>
-              <Button variant="primary" size="sm" className="button-hover-lift" asChild>
+              <Button variant="default" size="sm" asChild>
                 <Link href="/register">Sign Up</Link>
               </Button>
             </div>
@@ -36,49 +37,49 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <section className="relative overflow-hidden">
         {/* Enhanced Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-50/30 via-secondary-50/20 to-accent-50/30"></div>
-        <div className="bg-dot-pattern absolute inset-0 opacity-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgb(148_163_184_/_0.15)_1px,transparent_0)] bg-[length:24px_24px]"></div>
 
         {/* Floating Elements */}
-        <div className="absolute left-10 top-20 h-20 w-20 animate-float rounded-full bg-gradient-to-br from-primary-400 to-primary-600 opacity-20"></div>
-        <div className="absolute right-20 top-40 h-12 w-12 animate-float rounded-full bg-gradient-to-br from-secondary-400 to-secondary-600 opacity-20 delay-1000"></div>
-        <div className="delay-2000 absolute bottom-20 left-20 h-16 w-16 animate-float rounded-full bg-gradient-to-br from-accent-400 to-accent-600 opacity-20"></div>
+        <div className="absolute left-10 top-20 h-20 w-20 animate-float rounded-full bg-gradient-to-br from-primary/20 to-primary/30 blur-xl"></div>
+        <div className="absolute right-20 top-40 h-12 w-12 animate-float rounded-full bg-gradient-to-br from-secondary/20 to-secondary/30 blur-xl delay-1000"></div>
+        <div className="delay-2000 absolute bottom-20 left-20 h-16 w-16 animate-float rounded-full bg-gradient-to-br from-accent/20 to-accent/30 blur-xl"></div>
 
         <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-32 lg:px-8">
           <div className="text-center">
             {/* Badge */}
-            <div className="mb-8 animate-bounce-in">
-              <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-100 to-secondary-100 px-4 py-2 text-sm font-semibold text-primary-800 shadow-soft ring-1 ring-primary-200/50">
+            <div className="mb-8">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-card-foreground shadow-sm">
                 <span className="animate-pulse">✨</span>
                 AI-Powered • Professional • ATS-Optimized
               </span>
             </div>
 
-            {/* Main Heading - Fluid Responsive Typography */}
-            <h1 className="text-fluid-4xl animate-slide-up font-bold leading-tight tracking-tight text-on-background">
+            {/* Main Heading */}
+            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
               Create Professional
-              <span className="mt-2 block animate-slide-up bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text font-extrabold text-transparent delay-150">
+              <span className="mt-2 block bg-gradient-to-r from-primary to-secondary bg-clip-text font-extrabold text-transparent">
                 Cover Letters
               </span>
-              <span className="animate-slide-up bg-gradient-to-r from-secondary-600 to-accent-600 bg-clip-text font-extrabold text-transparent delay-300">
+              <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text font-extrabold text-transparent">
                 with AI
               </span>
             </h1>
 
-            {/* Subtitle - Responsive and Readable */}
-            <p className="text-readable mx-auto mt-8 max-w-2xl animate-slide-up text-on-surface-variant delay-500">
+            {/* Subtitle */}
+            <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-muted-foreground">
               Generate ATS-optimized cover letters instantly. Our advanced AI creates personalized,
               professional cover letters that help you stand out and land your dream job.
             </p>
 
             {/* CTA Buttons */}
-            <div className="mt-10 flex animate-slide-up flex-col items-center justify-center gap-4 delay-700 sm:flex-row sm:gap-6">
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
               <Button
                 variant="primary"
                 size="lg"
-                className="button-hover-lift w-full sm:w-auto"
+                className="w-full sm:w-auto"
                 leftIcon={<span className="text-xl">🚀</span>}
                 asChild
               >
@@ -87,7 +88,7 @@ export default function HomePage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="button-hover-lift w-full sm:w-auto"
+                className="w-full sm:w-auto"
                 leftIcon={<span className="text-xl">📄</span>}
                 asChild
               >
@@ -96,33 +97,33 @@ export default function HomePage() {
             </div>
 
             {/* Trust Indicators */}
-            <div className="mt-12 flex animate-slide-up flex-col items-center justify-center gap-6 text-sm text-on-surface-variant delay-1000 sm:flex-row">
-              <div className="flex items-center gap-2 rounded-full px-4 py-2 surface-container">
-                <span className="text-success-500">✓</span>
+            <div className="mt-12 flex flex-col items-center justify-center gap-6 text-sm text-muted-foreground sm:flex-row">
+              <div className="flex items-center gap-2 rounded-full bg-card px-4 py-2 shadow-sm border border-border">
+                <span className="text-green-500">✓</span>
                 <span>100% Free to Start</span>
               </div>
-              <div className="flex items-center gap-2 rounded-full px-4 py-2 surface-container">
-                <span className="text-success-500">✓</span>
+              <div className="flex items-center gap-2 rounded-full bg-card px-4 py-2 shadow-sm border border-border">
+                <span className="text-green-500">✓</span>
                 <span>No Credit Card Required</span>
               </div>
-              <div className="flex items-center gap-2 rounded-full px-4 py-2 surface-container">
-                <span className="text-success-500">✓</span>
+              <div className="flex items-center gap-2 rounded-full bg-card px-4 py-2 shadow-sm border border-border">
+                <span className="text-green-500">✓</span>
                 <span>ATS-Optimized Templates</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Features Section */}
-      <section className="relative py-16 sm:py-24">
+      <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="mb-16 text-center">
-            <h2 className="animate-slide-up text-3xl font-bold leading-tight text-on-surface sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Why Choose Our AI Cover Letter Generator?
             </h2>
-            <p className="mx-auto mt-6 max-w-2xl animate-slide-up text-lg leading-relaxed text-on-surface-variant delay-150">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
               Join thousands of job seekers who have successfully landed interviews with our
               AI-powered cover letters.
             </p>
@@ -130,97 +131,162 @@ export default function HomePage() {
 
           {/* Features Grid */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {/* Feature 1 - Enhanced Readability */}
-            <div className="card-modern group animate-slide-up bg-surface p-8 delay-300 hover:bg-surface-container">
-              <div className="group-hover:shadow-glow-primary/50 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-glow-primary transition-all duration-300">
-                <span className="animate-bounce text-2xl text-white">🤖</span>
-              </div>
-              <h3 className="mb-4 text-xl font-bold leading-tight text-on-surface">
-                AI-Powered Generation
-              </h3>
-              <p className="text-base leading-relaxed text-on-surface-variant">
-                Advanced AI analyzes job descriptions and creates personalized cover letters
-                tailored to each position with professional language and industry-specific keywords.
-              </p>
-            </div>
-
-            {/* Feature 2 - Enhanced Readability */}
-            <div className="card-modern group animate-slide-up bg-surface p-8 delay-500 hover:bg-surface-container">
-              <div className="group-hover:shadow-glow-secondary/50 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-secondary-500 to-secondary-600 shadow-glow-secondary transition-all duration-300">
-                <span className="animate-bounce text-2xl text-white delay-150">⚡</span>
-              </div>
-              <h3 className="mb-4 text-xl font-bold leading-tight text-on-surface">
-                Instant Results
-              </h3>
-              <p className="text-base leading-relaxed text-on-surface-variant">
-                Generate professional cover letters in seconds, not hours. Save time and apply to
-                more jobs with our lightning-fast AI technology.
-              </p>
-            </div>
-
-            {/* Feature 3 - Enhanced Readability */}
-            <div className="card-modern group animate-slide-up bg-surface p-8 delay-700 hover:bg-surface-container">
-              <div className="group-hover:shadow-glow-accent/50 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-accent-500 to-accent-600 shadow-glow-accent transition-all duration-300">
-                <span className="animate-bounce text-2xl text-white delay-300">🎯</span>
-              </div>
-              <h3 className="mb-4 text-xl font-bold leading-tight text-on-surface">
-                ATS-Optimized
-              </h3>
-              <p className="text-base leading-relaxed text-on-surface-variant">
-                All templates are designed to pass Applicant Tracking Systems and reach human
-                recruiters with proper formatting and keyword optimization.
-              </p>
-            </div>
+            <FeatureCard
+              icon={<span className="text-2xl">🤖</span>}
+              title="AI-Powered Generation"
+              description="Advanced AI analyzes job descriptions and creates personalized cover letters tailored to each position with professional language and industry-specific keywords."
+              gradient
+            />
+            
+            <FeatureCard
+              icon={<span className="text-2xl">⚡</span>}
+              title="Instant Results"
+              description="Generate professional cover letters in seconds, not hours. Save time and apply to more jobs with our lightning-fast AI technology."
+              gradient
+            />
+            
+            <FeatureCard
+              icon={<span className="text-2xl">🎯</span>}
+              title="ATS-Optimized"
+              description="All templates are designed to pass Applicant Tracking Systems and reach human recruiters with proper formatting and keyword optimization."
+              gradient
+            />
           </div>
         </div>
       </section>
 
       {/* Statistics Section */}
-      <section className="bg-gradient-to-r from-surface-container to-surface-variant py-16 sm:py-24">
+      <section className="bg-muted/30 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="animate-scale-in p-6 text-center surface-elevated">
-              <div className="mb-2 text-3xl font-bold text-primary-600">50K+</div>
-              <div className="text-sm font-medium text-on-surface">Cover Letters Generated</div>
+            <StatsCard
+              value="50K+"
+              label="Cover Letters Generated"
+              icon={<span className="text-xl">📄</span>}
+              trend="up"
+              trendValue="+15% this month"
+            />
+            <StatsCard
+              value="95%"
+              label="Success Rate"
+              icon={<span className="text-xl">✅</span>}
+              trend="up"
+              trendValue="+2% vs last quarter"
+            />
+            <StatsCard
+              value="24/7"
+              label="Available"
+              icon={<span className="text-xl">🕒</span>}
+              trend="neutral"
+              trendValue="Always online"
+            />
+            <StatsCard
+              value="15+"
+              label="Industries Covered"
+              icon={<span className="text-xl">🏢</span>}
+              trend="up"
+              trendValue="+3 new industries"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              How It Works
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+              Get your perfect cover letter in just three simple steps
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <span className="text-2xl font-bold">1</span>
+              </div>
+              <h3 className="mt-6 text-xl font-semibold text-foreground">Upload Job Description</h3>
+              <p className="mt-2 text-muted-foreground">
+                Paste the job posting or upload the job description you&apos;re applying for.
+              </p>
             </div>
-            <div className="animate-scale-in p-6 text-center delay-150 surface-elevated">
-              <div className="mb-2 text-3xl font-bold text-secondary-600">95%</div>
-              <div className="text-sm font-medium text-on-surface">Success Rate</div>
+
+            <div className="text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <span className="text-2xl font-bold">2</span>
+              </div>
+              <h3 className="mt-6 text-xl font-semibold text-foreground">AI Generates Content</h3>
+              <p className="mt-2 text-muted-foreground">
+                Our AI analyzes the job requirements and creates a tailored cover letter for you.
+              </p>
             </div>
-            <div className="animate-scale-in p-6 text-center delay-300 surface-elevated">
-              <div className="mb-2 text-3xl font-bold text-accent-600">24/7</div>
-              <div className="text-sm font-medium text-on-surface">Available</div>
-            </div>
-            <div className="animate-scale-in p-6 text-center delay-500 surface-elevated">
-              <div className="mb-2 text-3xl font-bold text-success-600">15+</div>
-              <div className="text-sm font-medium text-on-surface">Industries Covered</div>
+
+            <div className="text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <span className="text-2xl font-bold">3</span>
+              </div>
+              <h3 className="mt-6 text-xl font-semibold text-foreground">Download & Apply</h3>
+              <p className="mt-2 text-muted-foreground">
+                Review, customize if needed, and download your professional cover letter.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-600 to-secondary-600 py-16 text-white sm:py-24">
-        <div className="bg-grid-pattern absolute inset-0 opacity-10"></div>
-        <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="mb-6 animate-slide-up text-3xl font-bold sm:text-4xl">
-            Ready to Land Your Dream Job?
-          </h2>
-          <p className="mb-8 animate-slide-up text-xl opacity-90 delay-150">
-            Join thousands of successful job seekers who used our AI-powered cover letter generator
-            to get more interviews and job offers.
-          </p>
-          <Button
-            variant="accent"
-            size="xl"
-            className="button-hover-lift animate-bounce-in delay-300"
-            leftIcon={<span className="text-2xl">🚀</span>}
-            asChild
-          >
-            <Link href="/dashboard/generate">Start Creating Your Cover Letter</Link>
-          </Button>
+      <section className="bg-card border-t border-border">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-card-foreground sm:text-4xl">
+              Ready to Get Started?
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+              Join thousands of successful job seekers and create your first cover letter today.
+            </p>
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+              <Button
+                variant="primary"
+                size="lg"
+                className="w-full sm:w-auto"
+                asChild
+              >
+                <Link href="/dashboard/generate">Start Creating Now</Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto"
+                asChild
+              >
+                <Link href="/pricing">View Pricing</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              © 2024 AI Cover Letter Generator. All rights reserved.
+            </p>
+            <div className="mt-4 flex justify-center space-x-6">
+              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Terms of Service
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,216 +1,217 @@
 'use client';
 
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import Image from 'next/image';
+import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-const cardVariants = cva(
-  [
-    'rounded-2xl bg-surface border border-outline-variant',
-    'transition-all duration-200 ease-out',
-    'relative overflow-hidden',
-    'before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-primary-50/30 before:to-secondary-50/20 before:opacity-0 before:transition-opacity before:duration-300',
-    'hover:before:opacity-100',
-  ],
-  {
-    variants: {
-      variant: {
-        default: [
-          'shadow-elevation-1 hover:shadow-elevation-2',
-          'hover:border-primary-200',
-          'hover:-translate-y-1',
-        ],
-        elevated: [
-          'shadow-elevation-3 hover:shadow-elevation-4',
-          'hover:border-primary-300',
-          'hover:-translate-y-2',
-        ],
-        outlined: [
-          'border-2 shadow-none hover:shadow-elevation-1',
-          'hover:border-primary-400',
-          'hover:bg-surface-container',
-        ],
-        filled: [
-          'bg-surface-container border-none shadow-elevation-1',
-          'hover:bg-surface-container-high hover:shadow-elevation-2',
-        ],
-        tonal: [
-          'bg-primary-50 border-primary-200 shadow-elevation-1',
-          'hover:bg-primary-100 hover:shadow-elevation-2',
-          'dark:bg-primary-900/20 dark:border-primary-800',
-        ],
-        glass: [
-          'backdrop-blur-md bg-surface/80 border-outline-variant/50',
-          'shadow-lg hover:shadow-xl',
-          'hover:bg-surface/90',
-        ],
-      },
-      padding: {
-        none: 'p-0',
-        sm: 'p-4',
-        md: 'p-6',
-        lg: 'p-8',
-        xl: 'p-10',
-      },
-      interactive: {
-        true: [
-          'cursor-pointer',
-          'active:scale-[0.98] active:transition-transform active:duration-75',
-          'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-        ],
-        false: '',
-      },
-      size: {
-        sm: 'max-w-sm',
-        md: 'max-w-md',
-        lg: 'max-w-lg',
-        xl: 'max-w-xl',
-        full: 'w-full',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-      padding: 'md',
-      interactive: false,
-      size: 'full',
-    },
-  }
-);
-
-export interface CardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {}
-
-const Card = React.memo(
-  React.forwardRef<HTMLDivElement, CardProps>(
-    ({ className, variant, padding, interactive, size, ...props }, ref) => {
-      return (
-        <div
-          ref={ref}
-          className={cn(cardVariants({ variant, padding, interactive, size, className }))}
-          {...props}
-        />
-      );
-    }
-  )
-);
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      'rounded-lg border bg-card text-card-foreground shadow-sm',
+      'transition-all duration-200 hover:shadow-md',
+      'border-border/50 hover:border-border',
+      className
+    )}
+    {...props}
+  />
+));
 Card.displayName = 'Card';
 
-const CardHeader = React.memo(
-  React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-    ({ className, ...props }, ref) => (
-      <div
-        ref={ref}
-        className={cn('relative z-10 flex flex-col space-y-2', className)}
-        {...props}
-      />
-    )
-  )
-);
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('flex flex-col space-y-1.5 p-6', className)}
+    {...props}
+  />
+));
 CardHeader.displayName = 'CardHeader';
 
-const CardTitle = React.memo(
-  React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-    ({ className, ...props }, ref) => (
-      <h3
-        ref={ref}
-        className={cn(
-          'text-fluid-xl font-bold leading-tight tracking-tight text-on-surface',
-          'relative z-10',
-          className
-        )}
-        {...props}
-      />
-    )
-  )
-);
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(
+      'text-2xl font-semibold leading-none tracking-tight',
+      'text-card-foreground',
+      className
+    )}
+    {...props}
+  />
+));
 CardTitle.displayName = 'CardTitle';
 
-const CardDescription = React.memo(
-  React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-    ({ className, ...props }, ref) => (
-      <p
-        ref={ref}
-        className={cn('text-readable-sm text-on-surface-variant', 'relative z-10', className)}
-        {...props}
-      />
-    )
-  )
-);
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn(
+      'text-sm text-muted-foreground',
+      'leading-relaxed',
+      className
+    )}
+    {...props}
+  />
+));
 CardDescription.displayName = 'CardDescription';
 
-const CardContent = React.memo(
-  React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-    ({ className, ...props }, ref) => (
-      <div ref={ref} className={cn('relative z-10 pt-0', className)} {...props} />
-    )
-  )
-);
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('p-6 pt-0', className)}
+    {...props}
+  />
+));
 CardContent.displayName = 'CardContent';
 
-const CardFooter = React.memo(
-  React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-    ({ className, ...props }, ref) => (
-      <div ref={ref} className={cn('relative z-10 flex items-center pt-6', className)} {...props} />
-    )
-  )
-);
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('flex items-center p-6 pt-0', className)}
+    {...props}
+  />
+));
 CardFooter.displayName = 'CardFooter';
 
-// Additional Card Components for Material Design 3.0
-const CardMedia = React.memo(
-  React.forwardRef<
-    HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement> & {
-      src?: string;
-      alt?: string;
-      aspectRatio?: 'square' | 'video' | 'wide' | 'tall';
-    }
-  >(({ className, src, alt, aspectRatio = 'video', ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        'relative overflow-hidden bg-surface-container',
-        {
-          'aspect-square': aspectRatio === 'square',
-          'aspect-video': aspectRatio === 'video',
-          'aspect-[21/9]': aspectRatio === 'wide',
-          'aspect-[3/4]': aspectRatio === 'tall',
-        },
-        className
+// Enhanced Card variants for specific use cases
+const FeatureCard = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & {
+    icon?: React.ReactNode;
+    title: string;
+    description: string;
+    gradient?: boolean;
+  }
+>(({ className, icon, title, description, gradient = false, ...props }, ref) => (
+  <Card
+    ref={ref}
+    className={cn(
+      'group cursor-pointer transition-all duration-300',
+      'hover:shadow-xl hover:shadow-primary/10',
+      'hover:border-primary/20',
+      gradient && 'bg-gradient-to-br from-card to-muted/20',
+      'relative overflow-hidden',
+      className
+    )}
+    {...props}
+  >
+    {/* Background gradient overlay */}
+    {gradient && (
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    )}
+    
+    <CardHeader className="relative z-10">
+      {icon && (
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary/20">
+          {icon}
+        </div>
       )}
-      {...props}
-    >
-      {src && (
-        <Image
-          src={src}
-          alt={alt || ''}
-          fill
-          className="object-cover transition-transform duration-300 hover:scale-105"
-        />
-      )}
-    </div>
-  ))
-);
-CardMedia.displayName = 'CardMedia';
+      <CardTitle className="text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-300">
+        {title}
+      </CardTitle>
+      <CardDescription className="text-base leading-relaxed">
+        {description}
+      </CardDescription>
+    </CardHeader>
+  </Card>
+));
+FeatureCard.displayName = 'FeatureCard';
 
-const CardActions = React.memo(
-  React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-    ({ className, ...props }, ref) => (
-      <div
-        ref={ref}
-        className={cn(
-          'flex items-center gap-2 border-t border-outline-variant/50 pt-4',
-          'relative z-10',
-          className
+const StatsCard = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & {
+    value: string;
+    label: string;
+    icon?: React.ReactNode;
+    trend?: 'up' | 'down' | 'neutral';
+    trendValue?: string;
+  }
+>(({ className, value, label, icon, trend, trendValue, ...props }, ref) => (
+  <Card
+    ref={ref}
+    className={cn(
+      'group transition-all duration-300',
+      'hover:shadow-lg hover:shadow-primary/10',
+      'border-border/50 hover:border-primary/20',
+      'bg-gradient-to-br from-card to-muted/10',
+      className
+    )}
+    {...props}
+  >
+    <CardContent className="p-6">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <p className="text-3xl font-bold text-card-foreground group-hover:text-primary transition-colors duration-300">
+            {value}
+          </p>
+          <p className="text-sm font-medium text-muted-foreground">
+            {label}
+          </p>
+          {trend && trendValue && (
+            <div className={cn(
+              'flex items-center text-xs font-medium',
+              trend === 'up' && 'text-green-600',
+              trend === 'down' && 'text-red-600',
+              trend === 'neutral' && 'text-muted-foreground'
+            )}>
+              <span className="mr-1">
+                {trend === 'up' && '↗'}
+                {trend === 'down' && '↘'}
+                {trend === 'neutral' && '→'}
+              </span>
+              {trendValue}
+            </div>
+          )}
+        </div>
+        {icon && (
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary/20">
+            {icon}
+          </div>
         )}
-        {...props}
-      />
-    )
-  )
-);
-CardActions.displayName = 'CardActions';
+      </div>
+    </CardContent>
+  </Card>
+));
+StatsCard.displayName = 'StatsCard';
+
+const InteractiveCard = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & {
+    hoverable?: boolean;
+    clickable?: boolean;
+    selected?: boolean;
+  }
+>(({ className, hoverable = true, clickable = false, selected = false, ...props }, ref) => (
+  <Card
+    ref={ref}
+    className={cn(
+      'transition-all duration-300',
+      hoverable && 'hover:shadow-lg hover:shadow-primary/10',
+      clickable && 'cursor-pointer active:scale-[0.98]',
+      selected && 'ring-2 ring-primary ring-offset-2 ring-offset-background',
+      'border-border/50',
+      hoverable && 'hover:border-primary/20',
+      className
+    )}
+    {...props}
+  />
+));
+InteractiveCard.displayName = 'InteractiveCard';
 
 export {
   Card,
@@ -219,6 +220,7 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
-  CardMedia,
-  CardActions,
+  FeatureCard,
+  StatsCard,
+  InteractiveCard,
 };

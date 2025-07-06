@@ -1,104 +1,175 @@
 'use client';
 
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-const textareaVariants = cva(
-  [
-    'flex min-h-[80px] w-full rounded-lg border bg-surface px-3 py-2',
-    'text-base text-on-surface placeholder:text-on-surface-variant',
-    'transition-all duration-200 resize-vertical',
-    'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
-    'disabled:cursor-not-allowed disabled:opacity-50',
-  ],
-  {
-    variants: {
-      variant: {
-        default: 'border-outline hover:border-outline-variant',
-        filled: 'border-transparent bg-surface-container hover:bg-surface-container-high',
-        error: 'border-error-500 focus:ring-error-500',
-        success: 'border-success-500 focus:ring-success-500',
-      },
-      size: {
-        sm: 'min-h-[60px] px-2 py-1 text-sm',
-        md: 'min-h-[80px] px-3 py-2 text-base',
-        lg: 'min-h-[100px] px-4 py-3 text-lg',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-      size: 'md',
-    },
-  }
-);
-
 export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    VariantProps<typeof textareaVariants> {
-  error?: string;
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  error?: boolean;
   helperText?: string;
-  label?: string;
-  maxLength?: number;
-  showCount?: boolean;
+  resize?: 'none' | 'vertical' | 'horizontal' | 'both';
+  autoResize?: boolean;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      error,
-      helperText,
-      label,
-      id,
-      maxLength,
-      showCount = false,
-      value,
-      ...props
-    },
-    ref
-  ) => {
-    const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
-    const hasError = !!error;
-    const finalVariant = hasError ? 'error' : variant;
-    const currentLength = typeof value === 'string' ? value.length : 0;
+  ({ className, error, helperText, resize = 'vertical', autoResize = false, ...props }, ref) => {
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    
+    // Auto-resize functionality
+    React.useEffect(() => {
+      if (autoResize && textareaRef.current) {
+        const textarea = textareaRef.current;
+        const adjustHeight = () => {
+          textarea.style.height = 'auto';
+          textarea.style.height = `${textarea.scrollHeight}px`;
+        };
+        
+        adjustHeight();
+        textarea.addEventListener('input', adjustHeight);
+        
+        return () => textarea.removeEventListener('input', adjustHeight);
+      }
+    }, [autoResize, props.value]);
+
+    // Combine refs
+    React.useImperativeHandle(ref, () => textareaRef.current!);
 
     return (
-      <div className="w-full">
-        {label && (
-          <label htmlFor={textareaId} className="text-on-surface mb-2 block text-sm font-medium">
-            {label}
-          </label>
-        )}
-        <div className="relative">
-          <textarea
-            id={textareaId}
-            className={cn(textareaVariants({ variant: finalVariant, size, className }))}
-            ref={ref}
-            maxLength={maxLength}
-            value={value}
-            {...props}
-          />
-          {showCount && maxLength && (
-            <div className="text-on-surface-variant absolute right-2 bottom-2 text-xs">
-              {currentLength}/{maxLength}
-            </div>
+      <div className="relative">
+        {/* Textarea Field */}
+        <textarea
+          className={cn(
+            'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
+            'placeholder:text-muted-foreground',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            'disabled:cursor-not-allowed disabled:opacity-50',
+            // Enhanced states
+            'transition-all duration-200',
+            'hover:border-primary/50',
+            'focus:border-primary',
+            // Error state
+            error && 'border-destructive focus:border-destructive focus-visible:ring-destructive',
+            // Resize options
+            resize === 'none' && 'resize-none',
+            resize === 'vertical' && 'resize-y',
+            resize === 'horizontal' && 'resize-x',
+            resize === 'both' && 'resize',
+            className
           )}
-        </div>
-        {(error || helperText) && (
-          <p
-            className={cn('mt-1 text-sm', hasError ? 'text-error-600' : 'text-on-surface-variant')}
-          >
-            {error || helperText}
+          ref={textareaRef}
+          {...props}
+        />
+        
+        {/* Helper Text */}
+        {helperText && (
+          <p className={cn(
+            'mt-1 text-sm',
+            error ? 'text-destructive' : 'text-muted-foreground'
+          )}>
+            {helperText}
           </p>
         )}
       </div>
     );
   }
 );
-
 Textarea.displayName = 'Textarea';
 
-export { Textarea, textareaVariants };
+// Auto-growing Textarea variant
+const AutoGrowTextarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <Textarea
+        ref={ref}
+        autoResize
+        resize="none"
+        className={cn('min-h-[40px]', className)}
+        {...props}
+      />
+    );
+  }
+);
+AutoGrowTextarea.displayName = 'AutoGrowTextarea';
+
+// Code Textarea variant (for code input)
+const CodeTextarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <Textarea
+        ref={ref}
+        className={cn(
+          'font-mono text-sm',
+          'bg-muted/30',
+          'border-border',
+          className
+        )}
+        spellCheck={false}
+        {...props}
+      />
+    );
+  }
+);
+CodeTextarea.displayName = 'CodeTextarea';
+
+// Message Textarea variant (with character count)
+interface MessageTextareaProps extends TextareaProps {
+  maxLength?: number;
+  showCount?: boolean;
+}
+
+const MessageTextarea = React.forwardRef<HTMLTextAreaElement, MessageTextareaProps>(
+  ({ className, maxLength, showCount = true, helperText, ...props }, ref) => {
+    const [charCount, setCharCount] = React.useState(0);
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setCharCount(e.target.value.length);
+      props.onChange?.(e);
+    };
+
+    const isNearLimit = maxLength && charCount > maxLength * 0.8;
+    const isOverLimit = maxLength && charCount > maxLength;
+
+    return (
+      <div className="relative">
+        <Textarea
+          ref={ref}
+          className={cn(
+            'pb-6', // Extra padding for character count
+            className
+          )}
+          maxLength={maxLength}
+          onChange={handleChange}
+          {...props}
+        />
+        
+        {/* Character Count */}
+        {showCount && (
+          <div className="absolute bottom-2 right-3 text-xs text-muted-foreground">
+            <span className={cn(
+              isOverLimit && 'text-destructive',
+              isNearLimit && !isOverLimit && 'text-warning-600'
+            )}>
+              {charCount}
+            </span>
+            {maxLength && (
+              <span className="text-muted-foreground">/{maxLength}</span>
+            )}
+          </div>
+        )}
+        
+        {/* Helper Text */}
+        {helperText && (
+          <p className={cn(
+            'mt-1 text-sm',
+            isOverLimit ? 'text-destructive' : 'text-muted-foreground'
+          )}>
+            {helperText}
+          </p>
+        )}
+      </div>
+    );
+  }
+);
+MessageTextarea.displayName = 'MessageTextarea';
+
+export { Textarea, AutoGrowTextarea, CodeTextarea, MessageTextarea };
