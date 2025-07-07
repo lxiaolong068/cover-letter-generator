@@ -1,0 +1,42 @@
+name: 自动更新 Sitemap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/app/**'
+      - 'src/lib/sitemap-utils.ts'
+  schedule:
+    # 每天凌晨2点自动运行
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-sitemap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 更新 Sitemap
+        run: npm run sitemap:update
+        env:
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+
+      - name: 提交更改
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: '🤖 自动更新 sitemap'
+          file_pattern: 'public/sitemap.xml public/sitemap-report.json'
+          commit_user_name: 'github-actions[bot]'
+          commit_user_email: 'github-actions[bot]@users.noreply.github.com'

@@ -4,6 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
+### Basic requirement
+
+- Always communicate in **Chinese**.
+
 ### Core Development
 
 - `pnpm dev` - Start development server on http://localhost:3000
