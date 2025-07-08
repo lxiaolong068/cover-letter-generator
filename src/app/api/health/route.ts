@@ -86,7 +86,7 @@ class HealthChecker {
         redis: 1000,
       });
       
-      const retrieved = await multiLevelCache.get(testKey);
+      const retrieved = await multiLevelCache.get(testKey) as { timestamp: number } | null;
       await multiLevelCache.delete(testKey);
       
       const duration = Date.now() - startTime;
