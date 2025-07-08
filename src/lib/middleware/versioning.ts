@@ -267,8 +267,6 @@ export const breakingChangeMiddleware: MiddlewareFunction = async (
 // Export all middleware functions
 export {
   versioningMiddleware as default,
-  versionedResponseMiddleware,
-  deprecationWarningMiddleware,
   compatibilityMiddleware,
   createVersionedApiMiddleware,
   versionSpecificMiddleware,

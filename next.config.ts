@@ -13,10 +13,13 @@ const nextConfig: NextConfig = {
     // Enable modern bundling optimizations
     optimizeCss: true,
     // Enable server components optimization
-    serverComponentsExternalPackages: ['winston', 'ioredis', 'nodemailer'],
+    // serverComponentsExternalPackages: ['winston', 'ioredis', 'nodemailer'], // moved to serverExternalPackages
     // Note: ppr (partial prerendering) is only available in canary versions
     // ppr: true,
   },
+
+  // Server external packages (moved from experimental)
+  serverExternalPackages: ['winston', 'ioredis', 'nodemailer', 'next-auth', 'twilio', 'qrcode', 'speakeasy'],
 
   // Turbopack configuration (moved out of experimental)
   turbopack: {

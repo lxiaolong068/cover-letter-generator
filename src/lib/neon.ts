@@ -629,13 +629,3 @@ export async function deleteSession(token: string): Promise<void> {
   `;
 }
 
-// Database health check
-export async function checkDatabaseHealth(): Promise<boolean> {
-  try {
-    await sql`SELECT 1`;
-    return true;
-  } catch (error) {
-    console.error('Database health check failed:', error);
-    return false;
-  }
-}
