@@ -57,7 +57,7 @@ async function getMetricsDashboard(
       try {
         databaseReport = await generateDatabaseReport();
       } catch (error) {
-        logger.error('Failed to generate database report', { error });
+        logger.error('Failed to generate database report', { error: error as Error });
       }
     }
 
@@ -159,7 +159,7 @@ async function getMetricsDashboard(
       includeDatabase,
       healthStatus: healthStatus.overall,
       alertCount: alerts.length,
-    });
+    } as any);
 
     return NextResponse.json(response);
 
@@ -167,7 +167,7 @@ async function getMetricsDashboard(
     logger.error('Failed to fetch metrics dashboard', {
       requestId: context.metrics.requestId,
       userId: context.user?.id,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error as Error,
     });
 
     return NextResponse.json(
@@ -227,7 +227,7 @@ async function triggerAction(
       userId: context.user?.id,
       action,
       parameters,
-    });
+    } as any);
 
     return NextResponse.json({
       success: true,
@@ -240,7 +240,7 @@ async function triggerAction(
     logger.error('Failed to trigger admin action', {
       requestId: context.metrics.requestId,
       userId: context.user?.id,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error as Error,
     });
 
     return NextResponse.json(
