@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSessionByToken, getUserById } from './neon';
+import { getSessionByToken, getUserById, UserTier } from './neon';
 
 export interface AuthenticatedUser {
   id: string;
   email: string;
   name: string;
+  tier: UserTier;
+  subscription_expires_at?: Date;
+  monthly_ai_usage: number;
+  monthly_usage_reset_at: Date;
 }
 
 export async function authenticate(req: NextRequest): Promise<AuthenticatedUser | null> {
@@ -33,6 +37,10 @@ export async function authenticate(req: NextRequest): Promise<AuthenticatedUser 
       id: user.id,
       email: user.email,
       name: user.name,
+      tier: user.tier || 'free',
+      subscription_expires_at: user.subscription_expires_at,
+      monthly_ai_usage: user.monthly_ai_usage || 0,
+      monthly_usage_reset_at: user.monthly_usage_reset_at || new Date(),
     };
   } catch (error) {
     console.error('Authentication error:', error);

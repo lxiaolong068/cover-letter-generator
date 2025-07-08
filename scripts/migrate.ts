@@ -117,6 +117,24 @@ const migrations = [
         EXECUTE FUNCTION update_updated_at_column();
     `,
   },
+  {
+    id: '007_add_user_tier_and_subscription',
+    description: 'Add user tier and subscription fields',
+    sql: `
+      -- Create user tier enum
+      CREATE TYPE user_tier AS ENUM ('free', 'premium', 'enterprise');
+
+      -- Add tier and subscription fields to users table
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS tier user_tier NOT NULL DEFAULT 'free';
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS subscription_expires_at TIMESTAMP WITH TIME ZONE;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS monthly_ai_usage INTEGER NOT NULL DEFAULT 0;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS monthly_usage_reset_at TIMESTAMP WITH TIME ZONE DEFAULT NOW();
+
+      -- Create index for tier-based queries
+      CREATE INDEX IF NOT EXISTS idx_users_tier ON users(tier);
+      CREATE INDEX IF NOT EXISTS idx_users_subscription_expires ON users(subscription_expires_at);
+    `,
+  },
 ];
 
 async function checkMigrationExists(migrationId: string): Promise<boolean> {
