@@ -54,8 +54,6 @@ const nextConfig: NextConfig = {
     } : false,
     // Enable React compiler optimizations
     reactRemoveProperties: process.env.NODE_ENV === 'production',
-    // Remove data-testid attributes in production
-    removeConsole: process.env.NODE_ENV === 'production',
   },
 
   // Output optimization
