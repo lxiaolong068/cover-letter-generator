@@ -41,6 +41,12 @@ export interface MFAConfig {
   lastUsed?: Date;
 }
 
+export interface MFAVerificationData {
+  code: string;
+  attempts: number;
+  timestamp: Date;
+}
+
 // Configuration
 const MFA_CONFIG = {
   totp: {
@@ -84,7 +90,7 @@ class MFAService {
 
     // Initialize email transporter
     if (MFA_CONFIG.email.host && MFA_CONFIG.email.user) {
-      this.emailTransporter = nodemailer.createTransporter({
+      this.emailTransporter = nodemailer.createTransport({
         host: MFA_CONFIG.email.host,
         port: MFA_CONFIG.email.port,
         secure: MFA_CONFIG.email.secure,
@@ -114,14 +120,18 @@ class MFAService {
 
       // Cache the secret temporarily (user needs to verify before saving)
       const cacheKey = cacheKeys.config(`mfa_setup:${userId}`);
-      await multiLevelCache.set(cacheKey, {
-        secret: secret.base32,
-        backupCodes,
-        timestamp: new Date(),
-      }, {
-        memory: 10 * 60 * 1000, // 10 minutes
-        redis: 10 * 60 * 1000,
-      });
+      await multiLevelCache.set(
+        cacheKey,
+        {
+          secret: secret.base32,
+          backupCodes,
+          timestamp: new Date(),
+        },
+        {
+          memory: 10 * 60 * 1000, // 10 minutes
+          redis: 10 * 60 * 1000,
+        }
+      );
 
       logger.info('TOTP secret generated', { userId, userEmail });
 
@@ -147,7 +157,7 @@ class MFAService {
       if (!totpSecret) {
         const user = await getUserById(userId);
         if (!user?.mfa_config) return false;
-        
+
         const mfaConfig = JSON.parse(user.mfa_config) as MFAConfig;
         totpSecret = mfaConfig.totpSecret;
       }
@@ -163,7 +173,7 @@ class MFAService {
 
       if (verified) {
         logger.info('TOTP verification successful', { userId });
-        
+
         // Log security event
         logSecurity({
           type: 'auth_success',
@@ -176,7 +186,7 @@ class MFAService {
         });
       } else {
         logger.warn('TOTP verification failed', { userId });
-        
+
         logSecurity({
           type: 'auth_failure',
           severity: 'medium',
@@ -203,8 +213,8 @@ class MFAService {
     try {
       // Get cached setup data
       const cacheKey = cacheKeys.config(`mfa_setup:${userId}`);
-      const setupData = await multiLevelCache.get(cacheKey);
-      
+      const setupData = await multiLevelCache.get<MFASecret>(cacheKey);
+
       if (!setupData) {
         throw new Error('TOTP setup session expired');
       }
@@ -273,15 +283,19 @@ class MFAService {
       const cacheKey = cacheKeys.config(`mfa_sms:${userId}`);
 
       // Store code in cache
-      await multiLevelCache.set(cacheKey, {
-        code,
-        phoneNumber,
-        attempts: 0,
-        timestamp: new Date(),
-      }, {
-        memory: MFA_CONFIG.verification.expiryMinutes * 60 * 1000,
-        redis: MFA_CONFIG.verification.expiryMinutes * 60 * 1000,
-      });
+      await multiLevelCache.set(
+        cacheKey,
+        {
+          code,
+          phoneNumber,
+          attempts: 0,
+          timestamp: new Date(),
+        },
+        {
+          memory: MFA_CONFIG.verification.expiryMinutes * 60 * 1000,
+          redis: MFA_CONFIG.verification.expiryMinutes * 60 * 1000,
+        }
+      );
 
       // Send SMS
       await this.twilioClient.messages.create({
@@ -313,15 +327,19 @@ class MFAService {
       const cacheKey = cacheKeys.config(`mfa_email:${userId}`);
 
       // Store code in cache
-      await multiLevelCache.set(cacheKey, {
-        code,
-        emailAddress,
-        attempts: 0,
-        timestamp: new Date(),
-      }, {
-        memory: MFA_CONFIG.verification.expiryMinutes * 60 * 1000,
-        redis: MFA_CONFIG.verification.expiryMinutes * 60 * 1000,
-      });
+      await multiLevelCache.set(
+        cacheKey,
+        {
+          code,
+          emailAddress,
+          attempts: 0,
+          timestamp: new Date(),
+        },
+        {
+          memory: MFA_CONFIG.verification.expiryMinutes * 60 * 1000,
+          redis: MFA_CONFIG.verification.expiryMinutes * 60 * 1000,
+        }
+      );
 
       // Send email
       await this.emailTransporter.sendMail({
@@ -348,10 +366,14 @@ class MFAService {
   }
 
   // Verify SMS/Email code
-  async verifyCode(userId: string, method: MFAMethod.SMS | MFAMethod.EMAIL, code: string): Promise<boolean> {
+  async verifyCode(
+    userId: string,
+    method: MFAMethod.SMS | MFAMethod.EMAIL,
+    code: string
+  ): Promise<boolean> {
     try {
       const cacheKey = cacheKeys.config(`mfa_${method}:${userId}`);
-      const storedData = await multiLevelCache.get(cacheKey);
+      const storedData = await multiLevelCache.get<MFAVerificationData>(cacheKey);
 
       if (!storedData) {
         logger.warn('Verification code expired or not found', { userId, method });
@@ -401,7 +423,7 @@ class MFAService {
       const mfaConfig = JSON.parse(user.mfa_config) as MFAConfig;
       return mfaConfig.enabled && mfaConfig.methods.length > 0;
     } catch (error) {
-      logger.error('Failed to check MFA status', { userId, error });
+      logger.error('Failed to check MFA status', { userId, error: error as Error });
       return false;
     }
   }
@@ -414,7 +436,7 @@ class MFAService {
 
       return JSON.parse(user.mfa_config) as MFAConfig;
     } catch (error) {
-      logger.error('Failed to get MFA config', { userId, error });
+      logger.error('Failed to get MFA config', { userId, error: error as Error });
       return null;
     }
   }
@@ -432,7 +454,7 @@ class MFAService {
       logger.info('MFA disabled for user', { userId });
       return true;
     } catch (error) {
-      logger.error('Failed to disable MFA', { userId, error });
+      logger.error('Failed to disable MFA', { userId, error: error as Error });
       return false;
     }
   }
@@ -442,22 +464,22 @@ class MFAService {
 export const mfaService = new MFAService();
 
 // Convenience functions
-export const generateTOTPSecret = (userId: string, userEmail: string) => 
+export const generateTOTPSecret = (userId: string, userEmail: string) =>
   mfaService.generateTOTPSecret(userId, userEmail);
 
-export const verifyTOTP = (userId: string, code: string, secret?: string) => 
+export const verifyTOTP = (userId: string, code: string, secret?: string) =>
   mfaService.verifyTOTP(userId, code, secret);
 
-export const enableTOTP = (userId: string, verificationCode: string) => 
+export const enableTOTP = (userId: string, verificationCode: string) =>
   mfaService.enableTOTP(userId, verificationCode);
 
-export const sendSMSCode = (userId: string, phoneNumber: string) => 
+export const sendSMSCode = (userId: string, phoneNumber: string) =>
   mfaService.sendSMSCode(userId, phoneNumber);
 
-export const sendEmailCode = (userId: string, emailAddress: string) => 
+export const sendEmailCode = (userId: string, emailAddress: string) =>
   mfaService.sendEmailCode(userId, emailAddress);
 
-export const verifyCode = (userId: string, method: MFAMethod.SMS | MFAMethod.EMAIL, code: string) => 
+export const verifyCode = (userId: string, method: MFAMethod.SMS | MFAMethod.EMAIL, code: string) =>
   mfaService.verifyCode(userId, method, code);
 
 export const isMFAEnabled = (userId: string) => mfaService.isMFAEnabled(userId);

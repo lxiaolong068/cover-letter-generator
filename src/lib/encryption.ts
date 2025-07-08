@@ -4,10 +4,9 @@ import { logger } from './logging';
 
 // Encryption configuration
 const ENCRYPTION_CONFIG = {
-  algorithm: 'aes-256-gcm',
+  algorithm: 'aes-256-cbc',
   keyLength: 32, // 256 bits
-  ivLength: 16,  // 128 bits
-  tagLength: 16, // 128 bits
+  ivLength: 16, // 128 bits
   saltLength: 32, // 256 bits
 };
 
@@ -23,7 +22,6 @@ if (!MASTER_KEY || !FIELD_ENCRYPTION_KEY) {
 export interface EncryptedData {
   encrypted: string;
   iv: string;
-  tag: string;
   salt?: string;
 }
 
@@ -90,17 +88,14 @@ class EncryptionService {
 
     try {
       const iv = crypto.randomBytes(ENCRYPTION_CONFIG.ivLength);
-      const cipher = crypto.createCipherGCM(ENCRYPTION_CONFIG.algorithm, this.masterKey, iv);
-      
+      const cipher = crypto.createCipheriv(ENCRYPTION_CONFIG.algorithm, this.masterKey, iv);
+
       let encrypted = cipher.update(data, 'utf8', 'hex');
       encrypted += cipher.final('hex');
-      
-      const tag = cipher.getAuthTag();
 
       return {
         encrypted,
         iv: iv.toString('hex'),
-        tag: tag.toString('hex'),
       };
     } catch (error) {
       logger.error('Encryption with master key failed', {
@@ -119,14 +114,11 @@ class EncryptionService {
 
     try {
       const iv = Buffer.from(encryptedData.iv, 'hex');
-      const tag = Buffer.from(encryptedData.tag, 'hex');
-      const decipher = crypto.createDecipherGCM(ENCRYPTION_CONFIG.algorithm, this.masterKey, iv);
-      
-      decipher.setAuthTag(tag);
-      
+      const decipher = crypto.createDecipheriv(ENCRYPTION_CONFIG.algorithm, this.masterKey, iv);
+
       let decrypted = decipher.update(encryptedData.encrypted, 'hex', 'utf8');
       decrypted += decipher.final('utf8');
-      
+
       return decrypted;
     } catch (error) {
       logger.error('Decryption with master key failed', {
@@ -145,19 +137,16 @@ class EncryptionService {
 
     try {
       const iv = crypto.randomBytes(ENCRYPTION_CONFIG.ivLength);
-      const cipher = crypto.createCipherGCM(ENCRYPTION_CONFIG.algorithm, this.fieldKey, iv);
-      
+      const cipher = crypto.createCipheriv(ENCRYPTION_CONFIG.algorithm, this.fieldKey, iv);
+
       let encrypted = cipher.update(data, 'utf8', 'hex');
       encrypted += cipher.final('hex');
-      
-      const tag = cipher.getAuthTag();
 
       logger.debug('Field encrypted successfully', { fieldName });
 
       return {
         encrypted,
         iv: iv.toString('hex'),
-        tag: tag.toString('hex'),
       };
     } catch (error) {
       logger.error('Field encryption failed', {
@@ -177,16 +166,13 @@ class EncryptionService {
 
     try {
       const iv = Buffer.from(encryptedData.iv, 'hex');
-      const tag = Buffer.from(encryptedData.tag, 'hex');
-      const decipher = crypto.createDecipherGCM(ENCRYPTION_CONFIG.algorithm, this.fieldKey, iv);
-      
-      decipher.setAuthTag(tag);
-      
+      const decipher = crypto.createDecipheriv(ENCRYPTION_CONFIG.algorithm, this.fieldKey, iv);
+
       let decrypted = decipher.update(encryptedData.encrypted, 'hex', 'utf8');
       decrypted += decipher.final('utf8');
-      
+
       logger.debug('Field decrypted successfully', { fieldName });
-      
+
       return decrypted;
     } catch (error) {
       logger.error('Field decryption failed', {
@@ -203,18 +189,15 @@ class EncryptionService {
       const salt = crypto.randomBytes(ENCRYPTION_CONFIG.saltLength);
       const key = this.deriveKey(password, salt);
       const iv = crypto.randomBytes(ENCRYPTION_CONFIG.ivLength);
-      
-      const cipher = crypto.createCipherGCM(ENCRYPTION_CONFIG.algorithm, key, iv);
-      
+
+      const cipher = crypto.createCipheriv(ENCRYPTION_CONFIG.algorithm, key, iv);
+
       let encrypted = cipher.update(data, 'utf8', 'hex');
       encrypted += cipher.final('hex');
-      
-      const tag = cipher.getAuthTag();
 
       return {
         encrypted,
         iv: iv.toString('hex'),
-        tag: tag.toString('hex'),
         salt: salt.toString('hex'),
       };
     } catch (error) {
@@ -236,14 +219,12 @@ class EncryptionService {
       const salt = Buffer.from(encryptedData.salt, 'hex');
       const key = this.deriveKey(password, salt);
       const iv = Buffer.from(encryptedData.iv, 'hex');
-      const tag = Buffer.from(encryptedData.tag, 'hex');
-      
-      const decipher = crypto.createDecipherGCM(ENCRYPTION_CONFIG.algorithm, key, iv);
-      decipher.setAuthTag(tag);
-      
+
+      const decipher = crypto.createDecipheriv(ENCRYPTION_CONFIG.algorithm, key, iv);
+
       let decrypted = decipher.update(encryptedData.encrypted, 'hex', 'utf8');
       decrypted += decipher.final('utf8');
-      
+
       return decrypted;
     } catch (error) {
       logger.error('Password-based decryption failed', {
@@ -255,9 +236,11 @@ class EncryptionService {
 
   // Hash sensitive data (one-way)
   hashData(data: string, salt?: string): { hash: string; salt: string } {
-    const saltBuffer = salt ? Buffer.from(salt, 'hex') : crypto.randomBytes(ENCRYPTION_CONFIG.saltLength);
+    const saltBuffer = salt
+      ? Buffer.from(salt, 'hex')
+      : crypto.randomBytes(ENCRYPTION_CONFIG.saltLength);
     const hash = crypto.pbkdf2Sync(data, saltBuffer, 100000, 64, 'sha256');
-    
+
     return {
       hash: hash.toString('hex'),
       salt: saltBuffer.toString('hex'),
@@ -303,12 +286,18 @@ export const encryptionService = new EncryptionService();
 
 // Convenience functions
 export const encryptWithMasterKey = (data: string) => encryptionService.encryptWithMasterKey(data);
-export const decryptWithMasterKey = (encryptedData: EncryptedData) => encryptionService.decryptWithMasterKey(encryptedData);
-export const encryptField = (data: string, fieldName: string) => encryptionService.encryptField(data, fieldName);
-export const decryptField = (encryptedData: EncryptedData, fieldName: string) => encryptionService.decryptField(encryptedData, fieldName);
-export const encryptWithPassword = (data: string, password: string) => encryptionService.encryptWithPassword(data, password);
-export const decryptWithPassword = (encryptedData: EncryptedData, password: string) => encryptionService.decryptWithPassword(encryptedData, password);
+export const decryptWithMasterKey = (encryptedData: EncryptedData) =>
+  encryptionService.decryptWithMasterKey(encryptedData);
+export const encryptField = (data: string, fieldName: string) =>
+  encryptionService.encryptField(data, fieldName);
+export const decryptField = (encryptedData: EncryptedData, fieldName: string) =>
+  encryptionService.decryptField(encryptedData, fieldName);
+export const encryptWithPassword = (data: string, password: string) =>
+  encryptionService.encryptWithPassword(data, password);
+export const decryptWithPassword = (encryptedData: EncryptedData, password: string) =>
+  encryptionService.decryptWithPassword(encryptedData, password);
 export const hashData = (data: string, salt?: string) => encryptionService.hashData(data, salt);
-export const verifyHash = (data: string, hash: string, salt: string) => encryptionService.verifyHash(data, hash, salt);
+export const verifyHash = (data: string, hash: string, salt: string) =>
+  encryptionService.verifyHash(data, hash, salt);
 export const isEncryptionAvailable = () => encryptionService.isEncryptionAvailable();
 export const getEncryptionStatus = () => encryptionService.getEncryptionStatus();

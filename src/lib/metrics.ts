@@ -195,11 +195,13 @@ class MetricsCollector {
       };
     }
 
-    const responseTimes = relevantMetrics.map(m => 
-      type === 'api' ? (m as ApiMetrics).responseTime : (m as AiGenerationMetrics).generationTime
-    ).sort((a, b) => a - b);
+    const responseTimes = relevantMetrics
+      .map(m =>
+        type === 'api' ? (m as ApiMetrics).responseTime : (m as AiGenerationMetrics).generationTime
+      )
+      .sort((a, b) => a - b);
 
-    const successfulRequests = relevantMetrics.filter(m => 
+    const successfulRequests = relevantMetrics.filter(m =>
       type === 'api' ? (m as ApiMetrics).statusCode < 400 : (m as AiGenerationMetrics).success
     ).length;
 
@@ -249,11 +251,13 @@ class MetricsCollector {
 
     const cacheHits = recentCacheMetrics.filter(m => m.hit).length;
     const totalCacheOps = recentCacheMetrics.length;
-    const avgCacheResponseTime = totalCacheOps > 0 
-      ? recentCacheMetrics.reduce((sum, m) => sum + m.responseTime, 0) / totalCacheOps 
-      : 0;
+    const avgCacheResponseTime =
+      totalCacheOps > 0
+        ? recentCacheMetrics.reduce((sum, m) => sum + m.responseTime, 0) / totalCacheOps
+        : 0;
 
-    const latestSystemHealth = this.metrics.systemHealth[this.metrics.systemHealth.length - 1] || null;
+    const latestSystemHealth =
+      this.metrics.systemHealth[this.metrics.systemHealth.length - 1] || null;
 
     return {
       api: apiMetrics,
@@ -270,27 +274,27 @@ class MetricsCollector {
   // Helper methods
   private trimMetrics(type: keyof typeof this.metrics): void {
     if (this.metrics[type].length > this.MAX_METRICS_IN_MEMORY) {
-      this.metrics[type] = this.metrics[type].slice(-this.MAX_METRICS_IN_MEMORY / 2);
+      this.metrics[type] = this.metrics[type].slice(-this.MAX_METRICS_IN_MEMORY / 2) as any;
     }
   }
 
   private async cacheRecentMetrics(type: string, metrics: any): Promise<void> {
     try {
       const key = cacheKeys.config(`recent_metrics_${type}`);
-      const recentMetrics = await multiLevelCache.get<any[]>(key) || [];
+      const recentMetrics = (await multiLevelCache.get<any[]>(key)) || [];
       recentMetrics.push(metrics);
-      
+
       // Keep only last 100 metrics
       if (recentMetrics.length > 100) {
         recentMetrics.splice(0, recentMetrics.length - 100);
       }
-      
+
       await multiLevelCache.set(key, recentMetrics, {
         memory: 5 * 60 * 1000, // 5 minutes
         redis: 15 * 60 * 1000, // 15 minutes
       });
     } catch (error) {
-      logger.error('Failed to cache recent metrics', { error, type });
+      logger.error('Failed to cache recent metrics', { error: error as Error, type });
     }
   }
 
@@ -313,7 +317,7 @@ class MetricsCollector {
       const dashboard = await this.getDashboardMetrics();
       logger.info('Metrics Summary', { dashboard });
     } catch (error) {
-      logger.error('Failed to flush metrics', { error });
+      logger.error('Failed to flush metrics', { error: error as Error });
     }
   }
 
@@ -321,7 +325,7 @@ class MetricsCollector {
     try {
       const memoryUsage = process.memoryUsage();
       const cacheStats = await multiLevelCache.getStats();
-      
+
       const healthMetrics: SystemHealthMetrics = {
         memoryUsage,
         activeConnections: 0, // Would be populated from connection pool
@@ -331,7 +335,7 @@ class MetricsCollector {
 
       this.recordSystemHealth(healthMetrics);
     } catch (error) {
-      logger.error('Failed to collect system health metrics', { error });
+      logger.error('Failed to collect system health metrics', { error: error as Error });
     }
   }
 
@@ -348,7 +352,10 @@ export const metricsCollector = new MetricsCollector();
 
 // Convenience functions
 export const recordApiCall = (metrics: ApiMetrics) => metricsCollector.recordApiMetrics(metrics);
-export const recordAiGeneration = (metrics: AiGenerationMetrics) => metricsCollector.recordAiGenerationMetrics(metrics);
-export const recordCacheOperation = (metrics: CacheMetrics) => metricsCollector.recordCacheMetrics(metrics);
-export const recordUserActivity = (metrics: UserActivityMetrics) => metricsCollector.recordUserActivity(metrics);
+export const recordAiGeneration = (metrics: AiGenerationMetrics) =>
+  metricsCollector.recordAiGenerationMetrics(metrics);
+export const recordCacheOperation = (metrics: CacheMetrics) =>
+  metricsCollector.recordCacheMetrics(metrics);
+export const recordUserActivity = (metrics: UserActivityMetrics) =>
+  metricsCollector.recordUserActivity(metrics);
 export const getDashboardMetrics = () => metricsCollector.getDashboardMetrics();

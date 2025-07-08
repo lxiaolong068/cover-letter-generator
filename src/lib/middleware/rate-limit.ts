@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { MiddlewareContext, MiddlewareFunction, RateLimitConfig, TieredRateLimitConfig } from './types';
+import {
+  MiddlewareContext,
+  MiddlewareFunction,
+  RateLimitConfig,
+  TieredRateLimitConfig,
+} from './types';
 import { createRateLimitError } from './error-handler';
 import { UserTier } from '@/lib/auth';
 import { redisCache, memoryCache } from '@/lib/cache';
@@ -19,7 +24,9 @@ export class DistributedRateLimiter {
     this.useRedis = redisCache.isConnected();
   }
 
-  async isAllowed(key: string): Promise<{ allowed: boolean; resetTime: number; remaining: number }> {
+  async isAllowed(
+    key: string
+  ): Promise<{ allowed: boolean; resetTime: number; remaining: number }> {
     const rateLimitKey = `rate_limit:${key}`;
 
     try {
@@ -29,13 +36,19 @@ export class DistributedRateLimiter {
         return await this.checkRateLimitMemory(key);
       }
     } catch (error) {
-      logger.error('Rate limit check failed', { key, error });
+      logger.error('Rate limit check failed', { key, error: error as Error });
       // On error, allow the request but log it
-      return { allowed: true, resetTime: Date.now() + this.config.windowMs, remaining: this.config.max };
+      return {
+        allowed: true,
+        resetTime: Date.now() + this.config.windowMs,
+        remaining: this.config.max,
+      };
     }
   }
 
-  private async checkRateLimitRedis(key: string): Promise<{ allowed: boolean; resetTime: number; remaining: number }> {
+  private async checkRateLimitRedis(
+    key: string
+  ): Promise<{ allowed: boolean; resetTime: number; remaining: number }> {
     const now = Date.now();
     const windowStart = now - this.config.windowMs;
     const resetTime = now + this.config.windowMs;
@@ -73,18 +86,20 @@ export class DistributedRateLimiter {
       return {
         allowed: false,
         resetTime,
-        remaining: 0
+        remaining: 0,
       };
     }
 
     return {
       allowed: true,
       resetTime,
-      remaining: this.config.max - currentCount - 1
+      remaining: this.config.max - currentCount - 1,
     };
   }
 
-  private async checkRateLimitMemory(key: string): Promise<{ allowed: boolean; resetTime: number; remaining: number }> {
+  private async checkRateLimitMemory(
+    key: string
+  ): Promise<{ allowed: boolean; resetTime: number; remaining: number }> {
     const now = Date.now();
     const windowStart = now - this.config.windowMs;
 
@@ -112,7 +127,7 @@ export class DistributedRateLimiter {
     return {
       allowed: true,
       resetTime: record.resetTime,
-      remaining: this.config.max - record.count
+      remaining: this.config.max - record.count,
     };
   }
 
@@ -136,7 +151,11 @@ export const rateLimitMiddleware = (config: RateLimitConfig): MiddlewareFunction
 
     try {
       // Use user ID if authenticated, otherwise use IP
-      const key = context.user?.id || context.req.ip || context.req.headers.get('x-forwarded-for') || 'anonymous';
+      const key =
+        context.user?.id ||
+        context.req.ip ||
+        context.req.headers.get('x-forwarded-for') ||
+        'anonymous';
       const { allowed, resetTime, remaining } = await limiter.isAllowed(key);
 
       // Record rate limit metrics
@@ -188,7 +207,7 @@ export const rateLimitMiddleware = (config: RateLimitConfig): MiddlewareFunction
               'X-RateLimit-Remaining': remaining.toString(),
               'X-RateLimit-Reset': new Date(resetTime).toISOString(),
               'Retry-After': Math.ceil((resetTime - Date.now()) / 1000).toString(),
-            }
+            },
           }
         );
       }
@@ -208,7 +227,7 @@ export const rateLimitMiddleware = (config: RateLimitConfig): MiddlewareFunction
       return context;
     } catch (error) {
       logger.error('Rate limit error', {
-        error,
+        error: error as Error,
         key: context.user?.id || 'anonymous',
         duration: Date.now() - startTime,
       });
@@ -220,7 +239,9 @@ export const rateLimitMiddleware = (config: RateLimitConfig): MiddlewareFunction
 };
 
 // Enhanced tiered rate limiting with distributed support
-export const tieredRateLimitMiddleware = (tieredConfig: TieredRateLimitConfig): MiddlewareFunction => {
+export const tieredRateLimitMiddleware = (
+  tieredConfig: TieredRateLimitConfig
+): MiddlewareFunction => {
   const limiters = {
     free: new DistributedRateLimiter(tieredConfig.free),
     premium: new DistributedRateLimiter(tieredConfig.premium),
@@ -237,11 +258,15 @@ export const tieredRateLimitMiddleware = (tieredConfig: TieredRateLimitConfig): 
       // Check if premium/enterprise subscription is still valid
       const effectiveTier = getEffectiveUserTier(context.user);
 
-      const config = tieredConfig[effectiveTier];
-      const limiter = limiters[effectiveTier];
+      const config = tieredConfig[effectiveTier as keyof TieredRateLimitConfig];
+      const limiter = limiters[effectiveTier as keyof typeof limiters];
 
       // Use user ID if authenticated, otherwise use IP
-      const key = context.user?.id || context.req.ip || context.req.headers.get('x-forwarded-for') || 'anonymous';
+      const key =
+        context.user?.id ||
+        context.req.ip ||
+        context.req.headers.get('x-forwarded-for') ||
+        'anonymous';
       const tieredKey = `${effectiveTier}:${key}`;
       const { allowed, resetTime, remaining } = await limiter.isAllowed(tieredKey);
 
@@ -297,7 +322,7 @@ export const tieredRateLimitMiddleware = (tieredConfig: TieredRateLimitConfig): 
               'X-RateLimit-Reset': new Date(resetTime).toISOString(),
               'X-User-Tier': effectiveTier,
               'Retry-After': Math.ceil((resetTime - Date.now()) / 1000).toString(),
-            }
+            },
           }
         );
       }
@@ -318,7 +343,7 @@ export const tieredRateLimitMiddleware = (tieredConfig: TieredRateLimitConfig): 
       return context;
     } catch (error) {
       logger.error('Tiered rate limit error', {
-        error,
+        error: error as Error,
         userTier: context.user?.tier,
         key: context.user?.id || 'anonymous',
         duration: Date.now() - startTime,
@@ -333,19 +358,19 @@ export const tieredRateLimitMiddleware = (tieredConfig: TieredRateLimitConfig): 
 // Helper function to determine effective user tier (considering subscription expiry)
 function getEffectiveUserTier(user?: any): UserTier {
   if (!user) return 'free';
-  
+
   // Check if premium/enterprise subscription is still valid
   if (user.tier === 'premium' || user.tier === 'enterprise') {
     if (user.subscription_expires_at) {
       const now = new Date();
       const expiryDate = new Date(user.subscription_expires_at);
-      
+
       if (now > expiryDate) {
         return 'free'; // Subscription expired, downgrade to free
       }
     }
   }
-  
+
   return user.tier || 'free';
 }
 

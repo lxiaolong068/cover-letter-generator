@@ -26,7 +26,7 @@ export const DATABASE_CONFIG = {
   unpooledConnectionString: process.env.NEON_DATABASE_URL_UNPOOLED || process.env.NEON_DATABASE_URL,
   pool: {
     max: parseInt(process.env.DB_POOL_MAX || '20'), // Maximum connections
-    min: parseInt(process.env.DB_POOL_MIN || '5'),  // Minimum connections
+    min: parseInt(process.env.DB_POOL_MIN || '5'), // Minimum connections
     idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT || '30000'), // 30 seconds
     connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT || '5000'), // 5 seconds
     acquireTimeoutMillis: parseInt(process.env.DB_ACQUIRE_TIMEOUT || '60000'), // 60 seconds
@@ -56,7 +56,7 @@ export function createPool(): Pool {
     });
 
     // Add pool event listeners for monitoring
-    connectionPool.on('connect', (client) => {
+    connectionPool.on('connect', (client: any) => {
       logger.debug('Database pool connection established', {
         totalCount: connectionPool?.totalCount,
         idleCount: connectionPool?.idleCount,
@@ -64,7 +64,7 @@ export function createPool(): Pool {
       });
     });
 
-    connectionPool.on('error', (err) => {
+    connectionPool.on('error', (err: any) => {
       logger.error('Database pool error', { error: err.message });
     });
 
@@ -138,12 +138,12 @@ export async function executeQuery<T = any>(
       const pool = createPool();
       const client = await pool.connect();
       try {
-        result = await client.query(query, params);
+        result = (await client.query(query, params)) as any;
       } finally {
         client.release();
       }
     } else {
-      result = await sql(query, params) as T[];
+      result = (await sql`${query}`) as T[];
     }
 
     const duration = Date.now() - startTime;
@@ -164,7 +164,6 @@ export async function executeQuery<T = any>(
     });
 
     return result;
-
   } catch (error) {
     const duration = Date.now() - startTime;
 
@@ -394,9 +393,15 @@ export async function saveCoverLetter(data: {
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING *`,
       [
-        data.user_id, data.title, data.content, data.job_description,
-        data.user_profile, data.cover_letter_type, data.model_used,
-        data.tokens_used, data.generation_time
+        data.user_id,
+        data.title,
+        data.content,
+        data.job_description,
+        data.user_profile,
+        data.cover_letter_type,
+        data.model_used,
+        data.tokens_used,
+        data.generation_time,
       ],
       { logQuery: true }
     );
@@ -441,12 +446,7 @@ export async function getCoverLettersByUserId(
     orderDirection?: 'ASC' | 'DESC';
   } = {}
 ): Promise<CoverLetter[]> {
-  const {
-    limit = 50,
-    offset = 0,
-    orderBy = 'created_at',
-    orderDirection = 'DESC'
-  } = options;
+  const { limit = 50, offset = 0, orderBy = 'created_at', orderDirection = 'DESC' } = options;
 
   try {
     const coverLetters = await executeQuery<CoverLetter>(
@@ -588,11 +588,9 @@ export async function deleteCoverLetter(id: string): Promise<boolean> {
 // Database health check function
 export async function checkDatabaseHealth(): Promise<boolean> {
   try {
-    const [result] = await executeQuery<{ health: number }>(
-      'SELECT 1 as health',
-      [],
-      { logQuery: false }
-    );
+    const [result] = await executeQuery<{ health: number }>('SELECT 1 as health', [], {
+      logQuery: false,
+    });
     return result?.health === 1;
   } catch (error) {
     logger.error('Database health check failed', {
@@ -628,4 +626,3 @@ export async function deleteSession(token: string): Promise<void> {
     DELETE FROM user_sessions WHERE session_token = ${token}
   `;
 }
-

@@ -44,7 +44,12 @@ export interface PerformanceMetrics {
 
 // Security event interface
 export interface SecurityEvent {
-  type: 'auth_failure' | 'rate_limit_exceeded' | 'suspicious_activity' | 'data_access';
+  type:
+    | 'auth_failure'
+    | 'auth_success'
+    | 'rate_limit_exceeded'
+    | 'suspicious_activity'
+    | 'data_access';
   severity: 'low' | 'medium' | 'high' | 'critical';
   userId?: string;
   ip: string;
@@ -87,58 +92,48 @@ class EnhancedLogger {
       ),
       transports: [
         new transports.Console({
-          format: format.combine(
-            format.colorize(),
-            format.simple()
-          )
+          format: format.combine(format.colorize(), format.simple()),
         }),
         // In production, add file transports or external logging services
-        ...(process.env.NODE_ENV === 'production' ? [
-          new transports.File({ filename: 'logs/error.log', level: 'error' }),
-          new transports.File({ filename: 'logs/combined.log' }),
-        ] : [])
+        ...(process.env.NODE_ENV === 'production'
+          ? [
+              new transports.File({ filename: 'logs/error.log', level: 'error' }),
+              new transports.File({ filename: 'logs/combined.log' }),
+            ]
+          : []),
       ],
     });
 
     // Performance metrics logger
     this.performanceLogger = createLogger({
-      format: format.combine(
-        format.timestamp(),
-        format.json()
-      ),
+      format: format.combine(format.timestamp(), format.json()),
       transports: [
         new transports.Console({ level: 'info' }),
-        ...(process.env.NODE_ENV === 'production' ? [
-          new transports.File({ filename: 'logs/performance.log' }),
-        ] : [])
+        ...(process.env.NODE_ENV === 'production'
+          ? [new transports.File({ filename: 'logs/performance.log' })]
+          : []),
       ],
     });
 
     // Security events logger
     this.securityLogger = createLogger({
-      format: format.combine(
-        format.timestamp(),
-        format.json()
-      ),
+      format: format.combine(format.timestamp(), format.json()),
       transports: [
         new transports.Console({ level: 'warn' }),
-        ...(process.env.NODE_ENV === 'production' ? [
-          new transports.File({ filename: 'logs/security.log' }),
-        ] : [])
+        ...(process.env.NODE_ENV === 'production'
+          ? [new transports.File({ filename: 'logs/security.log' })]
+          : []),
       ],
     });
 
     // Business metrics logger
     this.businessLogger = createLogger({
-      format: format.combine(
-        format.timestamp(),
-        format.json()
-      ),
+      format: format.combine(format.timestamp(), format.json()),
       transports: [
         new transports.Console({ level: 'info' }),
-        ...(process.env.NODE_ENV === 'production' ? [
-          new transports.File({ filename: 'logs/business.log' }),
-        ] : [])
+        ...(process.env.NODE_ENV === 'production'
+          ? [new transports.File({ filename: 'logs/business.log' })]
+          : []),
       ],
     });
   }
@@ -188,7 +183,12 @@ class EnhancedLogger {
     return requestId;
   }
 
-  logResponse(requestId: string, statusCode: number, duration: number, context?: Partial<LogContext>): void {
+  logResponse(
+    requestId: string,
+    statusCode: number,
+    duration: number,
+    context?: Partial<LogContext>
+  ): void {
     this.logger.info('HTTP Response', {
       requestId,
       statusCode,
@@ -281,30 +281,35 @@ class EnhancedLogger {
 export const logger = new EnhancedLogger();
 
 // Convenience functions
-export const logRequest = (req: NextRequest, context?: Partial<LogContext>) => 
+export const logRequest = (req: NextRequest, context?: Partial<LogContext>) =>
   logger.logRequest(req, context);
 
-export const logResponse = (requestId: string, statusCode: number, duration: number, context?: Partial<LogContext>) => 
-  logger.logResponse(requestId, statusCode, duration, context);
+export const logResponse = (
+  requestId: string,
+  statusCode: number,
+  duration: number,
+  context?: Partial<LogContext>
+) => logger.logResponse(requestId, statusCode, duration, context);
 
-export const logError = (message: string, context?: LogContext) => 
-  logger.error(message, context);
+export const logError = (message: string, context?: LogContext) => logger.error(message, context);
 
-export const logInfo = (message: string, context?: LogContext) => 
-  logger.info(message, context);
+export const logInfo = (message: string, context?: LogContext) => logger.info(message, context);
 
-export const logPerformance = (metrics: PerformanceMetrics) => 
+export const logPerformance = (metrics: PerformanceMetrics) =>
   logger.logPerformanceMetrics(metrics);
 
-export const logSecurity = (event: SecurityEvent) => 
-  logger.logSecurityEvent(event);
+export const logSecurity = (event: SecurityEvent) => logger.logSecurityEvent(event);
 
-export const logBusiness = (metrics: BusinessMetrics) =>
-  logger.logBusinessMetrics(metrics);
+export const logBusiness = (metrics: BusinessMetrics) => logger.logBusinessMetrics(metrics);
 
 // Audit logging interfaces and functions
 export interface AuditEvent {
-  eventType: 'data_access' | 'data_modification' | 'user_action' | 'system_action' | 'security_event';
+  eventType:
+    | 'data_access'
+    | 'data_modification'
+    | 'user_action'
+    | 'system_action'
+    | 'security_event';
   action: string;
   userId?: string;
   targetUserId?: string;
@@ -341,15 +346,12 @@ class AuditLogger {
       ),
       transports: [
         new transports.Console({
-          format: format.combine(
-            format.colorize(),
-            format.simple()
-          )
+          format: format.combine(format.colorize(), format.simple()),
         }),
         // In production, add dedicated audit log files or external audit services
-        ...(process.env.NODE_ENV === 'production' ? [
-          new transports.File({ filename: 'logs/audit.log' }),
-        ] : [])
+        ...(process.env.NODE_ENV === 'production'
+          ? [new transports.File({ filename: 'logs/audit.log' })]
+          : []),
       ],
     });
   }
@@ -483,7 +485,11 @@ const auditLogger = new AuditLogger();
 
 // Export audit logging functions
 export const logAuditEvent = (event: AuditEvent) => auditLogger.logAuditEvent(event);
-export const logDataAccess = (data: Parameters<typeof auditLogger.logDataAccess>[0]) => auditLogger.logDataAccess(data);
-export const logDataModification = (data: Parameters<typeof auditLogger.logDataModification>[0]) => auditLogger.logDataModification(data);
-export const logUserAction = (data: Parameters<typeof auditLogger.logUserAction>[0]) => auditLogger.logUserAction(data);
-export const logSystemAction = (data: Parameters<typeof auditLogger.logSystemAction>[0]) => auditLogger.logSystemAction(data);
+export const logDataAccess = (data: Parameters<typeof auditLogger.logDataAccess>[0]) =>
+  auditLogger.logDataAccess(data);
+export const logDataModification = (data: Parameters<typeof auditLogger.logDataModification>[0]) =>
+  auditLogger.logDataModification(data);
+export const logUserAction = (data: Parameters<typeof auditLogger.logUserAction>[0]) =>
+  auditLogger.logUserAction(data);
+export const logSystemAction = (data: Parameters<typeof auditLogger.logSystemAction>[0]) =>
+  auditLogger.logSystemAction(data);

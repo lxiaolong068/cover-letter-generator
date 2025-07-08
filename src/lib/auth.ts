@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSessionByToken, getUserById, UserTier } from './neon';
 
+export type { UserTier };
+
 export interface AuthenticatedUser {
   id: string;
   email: string;

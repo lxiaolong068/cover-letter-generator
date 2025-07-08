@@ -72,9 +72,9 @@ class AlertingSystem {
       {
         type: AlertType.ERROR_RATE_HIGH,
         severity: AlertSeverity.CRITICAL,
-        condition: (metrics) => metrics.api.errorRate > 0.05,
+        condition: metrics => metrics.api.errorRate > 0.05,
         title: 'High Error Rate Detected',
-        messageTemplate: (metrics) => 
+        messageTemplate: metrics =>
           `API error rate is ${(metrics.api.errorRate * 100).toFixed(2)}% (threshold: 5%)`,
         cooldownMinutes: 15,
         enabled: true,
@@ -82,9 +82,9 @@ class AlertingSystem {
       {
         type: AlertType.RESPONSE_TIME_HIGH,
         severity: AlertSeverity.HIGH,
-        condition: (metrics) => metrics.api.averageResponseTime > 2000,
+        condition: metrics => metrics.api.averageResponseTime > 2000,
         title: 'High Response Time',
-        messageTemplate: (metrics) => 
+        messageTemplate: metrics =>
           `Average response time is ${metrics.api.averageResponseTime.toFixed(0)}ms (threshold: 2000ms)`,
         cooldownMinutes: 10,
         enabled: true,
@@ -92,9 +92,9 @@ class AlertingSystem {
       {
         type: AlertType.CACHE_HIT_RATE_LOW,
         severity: AlertSeverity.MEDIUM,
-        condition: (metrics) => metrics.cache.hitRate < 0.3,
+        condition: metrics => metrics.cache.hitRate < 0.3,
         title: 'Low Cache Hit Rate',
-        messageTemplate: (metrics) => 
+        messageTemplate: metrics =>
           `Cache hit rate is ${(metrics.cache.hitRate * 100).toFixed(1)}% (threshold: 30%)`,
         cooldownMinutes: 30,
         enabled: true,
@@ -102,9 +102,9 @@ class AlertingSystem {
       {
         type: AlertType.MEMORY_USAGE_HIGH,
         severity: AlertSeverity.HIGH,
-        condition: (metrics) => {
+        condition: metrics => {
           const memoryUsage = process.memoryUsage();
-          return (memoryUsage.heapUsed / memoryUsage.heapTotal) > 0.85;
+          return memoryUsage.heapUsed / memoryUsage.heapTotal > 0.85;
         },
         title: 'High Memory Usage',
         messageTemplate: () => {
@@ -118,9 +118,9 @@ class AlertingSystem {
       {
         type: AlertType.AI_GENERATION_FAILURE,
         severity: AlertSeverity.HIGH,
-        condition: (metrics) => metrics.aiGeneration.errorRate > 0.1,
+        condition: metrics => metrics.aiGeneration.errorRate > 0.1,
         title: 'AI Generation Failures',
-        messageTemplate: (metrics) => 
+        messageTemplate: metrics =>
           `AI generation error rate is ${(metrics.aiGeneration.errorRate * 100).toFixed(1)}% (threshold: 10%)`,
         cooldownMinutes: 20,
         enabled: true,
@@ -135,7 +135,12 @@ class AlertingSystem {
         type: 'console',
         config: {},
         enabled: true,
-        severityFilter: [AlertSeverity.LOW, AlertSeverity.MEDIUM, AlertSeverity.HIGH, AlertSeverity.CRITICAL],
+        severityFilter: [
+          AlertSeverity.LOW,
+          AlertSeverity.MEDIUM,
+          AlertSeverity.HIGH,
+          AlertSeverity.CRITICAL,
+        ],
       },
       // Add more channels as needed (email, Slack, etc.)
     ];
@@ -147,13 +152,13 @@ class AlertingSystem {
 
   private async isInCooldown(alertType: AlertType, cooldownMinutes: number): Promise<boolean> {
     const cacheKey = cacheKeys.config(`alert_cooldown:${alertType}`);
-    const lastAlert = await multiLevelCache.get(cacheKey);
-    
+    const lastAlert = await multiLevelCache.get<string>(cacheKey);
+
     if (lastAlert) {
-      const cooldownEnd = new Date(lastAlert).getTime() + (cooldownMinutes * 60 * 1000);
+      const cooldownEnd = new Date(lastAlert).getTime() + cooldownMinutes * 60 * 1000;
       return Date.now() < cooldownEnd;
     }
-    
+
     return false;
   }
 
@@ -174,19 +179,21 @@ class AlertingSystem {
       try {
         switch (channel.type) {
           case 'console':
-            console.warn(`🚨 ALERT [${alert.severity.toUpperCase()}]: ${alert.title} - ${alert.message}`);
+            console.warn(
+              `🚨 ALERT [${alert.severity.toUpperCase()}]: ${alert.title} - ${alert.message}`
+            );
             break;
-          
+
           case 'email':
             // Implement email notification
             logger.info('Email alert sent', { alertId: alert.id, channel: channel.name });
             break;
-          
+
           case 'slack':
             // Implement Slack notification
             logger.info('Slack alert sent', { alertId: alert.id, channel: channel.name });
             break;
-          
+
           case 'webhook':
             // Implement webhook notification
             logger.info('Webhook alert sent', { alertId: alert.id, channel: channel.name });
@@ -296,9 +303,12 @@ class AlertingSystem {
       clearInterval(this.monitoringInterval);
     }
 
-    this.monitoringInterval = setInterval(() => {
-      this.checkAlertRules();
-    }, intervalMinutes * 60 * 1000);
+    this.monitoringInterval = setInterval(
+      () => {
+        this.checkAlertRules();
+      },
+      intervalMinutes * 60 * 1000
+    );
 
     logger.info('Alert monitoring started', { intervalMinutes });
   }
@@ -326,15 +336,21 @@ class AlertingSystem {
     bySeverity: Record<AlertSeverity, number>;
     byType: Record<AlertType, number>;
   } {
-    const bySeverity = Object.values(AlertSeverity).reduce((acc, severity) => {
-      acc[severity] = this.alertHistory.filter(a => a.severity === severity).length;
-      return acc;
-    }, {} as Record<AlertSeverity, number>);
+    const bySeverity = Object.values(AlertSeverity).reduce(
+      (acc, severity) => {
+        acc[severity] = this.alertHistory.filter(a => a.severity === severity).length;
+        return acc;
+      },
+      {} as Record<AlertSeverity, number>
+    );
 
-    const byType = Object.values(AlertType).reduce((acc, type) => {
-      acc[type] = this.alertHistory.filter(a => a.type === type).length;
-      return acc;
-    }, {} as Record<AlertType, number>);
+    const byType = Object.values(AlertType).reduce(
+      (acc, type) => {
+        acc[type] = this.alertHistory.filter(a => a.type === type).length;
+        return acc;
+      },
+      {} as Record<AlertType, number>
+    );
 
     return {
       active: this.activeAlerts.size,
@@ -357,10 +373,10 @@ export const createAlert = (
   metadata?: Record<string, any>
 ) => alertingSystem.createAlert(type, severity, title, message, metadata);
 
-export const resolveAlert = (alertId: string, resolvedBy?: string) => 
+export const resolveAlert = (alertId: string, resolvedBy?: string) =>
   alertingSystem.resolveAlert(alertId, resolvedBy);
 
-export const startAlertMonitoring = (intervalMinutes?: number) => 
+export const startAlertMonitoring = (intervalMinutes?: number) =>
   alertingSystem.startMonitoring(intervalMinutes);
 
 export const stopAlertMonitoring = () => alertingSystem.stopMonitoring();

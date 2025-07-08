@@ -56,7 +56,7 @@ export function generateImageSizes(
 ): Array<{ width: number; height: number; breakpoint: string }> {
   return breakpoints.map(bp => ({
     width: Math.min(baseWidth, bp),
-    height: Math.round((Math.min(baseWidth, bp) / aspectRatio)),
+    height: Math.round(Math.min(baseWidth, bp) / aspectRatio),
     breakpoint: `${bp}px`,
   }));
 }
@@ -101,16 +101,16 @@ export class ImagePreloader {
       }
 
       const img = new Image();
-      
+
       img.onload = () => {
         this.preloadedImages.add(src);
         logger.debug('Image preloaded successfully', { src });
         resolve();
       };
 
-      img.onerror = (error) => {
-        logger.error('Image preload failed', { src, error });
-        reject(error);
+      img.onerror = error => {
+        logger.error('Image preload failed', { src, error: error as unknown as Error });
+        reject(error as unknown as Error);
       };
 
       // Set optimal format
@@ -125,7 +125,10 @@ export class ImagePreloader {
     });
   }
 
-  preloadMultiple(sources: string[], options: Partial<ImageOptimizationConfig> = {}): Promise<void[]> {
+  preloadMultiple(
+    sources: string[],
+    options: Partial<ImageOptimizationConfig> = {}
+  ): Promise<void[]> {
     return Promise.all(sources.map(src => this.preload(src, options)));
   }
 
@@ -145,14 +148,11 @@ export class LazyImageLoader {
 
   constructor(options: IntersectionObserverInit = {}) {
     if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
-      this.observer = new IntersectionObserver(
-        this.handleIntersection.bind(this),
-        {
-          rootMargin: '50px',
-          threshold: 0.1,
-          ...options,
-        }
-      );
+      this.observer = new IntersectionObserver(this.handleIntersection.bind(this), {
+        rootMargin: '50px',
+        threshold: 0.1,
+        ...options,
+      });
     }
   }
 
@@ -210,7 +210,7 @@ export class ImageOptimizer {
     // Generate responsive sizes
     const responsiveSizes = generateImageSizes(width, aspectRatio);
     const srcSet = generateSrcSet(src, responsiveSizes, finalConfig.format);
-    
+
     const sizesAttribute = generateSizesAttribute([
       { breakpoint: '640px', width: '100vw' },
       { breakpoint: '768px', width: '50vw' },
@@ -236,16 +236,16 @@ export class ImageOptimizer {
   }
 
   // Preload critical images
-  async preloadCriticalImages(images: Array<{ src: string; config?: Partial<ImageOptimizationConfig> }>): Promise<void> {
-    const preloadPromises = images.map(({ src, config }) => 
-      this.preloader.preload(src, config)
-    );
+  async preloadCriticalImages(
+    images: Array<{ src: string; config?: Partial<ImageOptimizationConfig> }>
+  ): Promise<void> {
+    const preloadPromises = images.map(({ src, config }) => this.preloader.preload(src, config));
 
     try {
       await Promise.all(preloadPromises);
       logger.info('Critical images preloaded', { count: images.length });
     } catch (error) {
-      logger.error('Failed to preload some critical images', { error });
+      logger.error('Failed to preload some critical images', { error: error as Error });
     }
   }
 
@@ -282,15 +282,15 @@ export function useImageOptimization() {
 export function monitorImagePerformance(): void {
   if (typeof window === 'undefined') return;
 
-  const observer = new PerformanceObserver((list) => {
+  const observer = new PerformanceObserver(list => {
     const entries = list.getEntries();
-    
-    entries.forEach((entry) => {
+
+    entries.forEach(entry => {
       const resourceEntry = entry as PerformanceResourceTiming;
-      
+
       if (resourceEntry.initiatorType === 'img' || resourceEntry.name.includes('/_next/image')) {
         const loadTime = resourceEntry.responseEnd - resourceEntry.requestStart;
-        
+
         // Log slow image loads
         if (loadTime > 1000) {
           logger.warn('Slow image load detected', {
@@ -301,8 +301,8 @@ export function monitorImagePerformance(): void {
         }
 
         // Track image performance metrics
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'image_performance', {
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          (window as any).gtag('event', 'image_performance', {
             event_category: 'Performance',
             event_label: resourceEntry.name,
             value: Math.round(loadTime),
@@ -329,8 +329,8 @@ export const generateOptimizedImageProps = (
   config?: Partial<ImageOptimizationConfig>
 ) => imageOptimizer.generateImageProps(src, alt, width, height, config);
 
-export const preloadImage = (src: string, config?: Partial<ImageOptimizationConfig>) => 
+export const preloadImage = (src: string, config?: Partial<ImageOptimizationConfig>) =>
   imagePreloader.preload(src, config);
 
-export const preloadImages = (sources: string[], config?: Partial<ImageOptimizationConfig>) => 
+export const preloadImages = (sources: string[], config?: Partial<ImageOptimizationConfig>) =>
   imagePreloader.preloadMultiple(sources, config);

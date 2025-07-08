@@ -7,19 +7,12 @@ import { createLogger, format, transports } from 'winston';
 // Logger for cache operations
 const cacheLogger = createLogger({
   level: 'info',
-  format: format.combine(
-    format.timestamp(),
-    format.errors({ stack: true }),
-    format.json()
-  ),
+  format: format.combine(format.timestamp(), format.errors({ stack: true }), format.json()),
   transports: [
     new transports.Console({
-      format: format.combine(
-        format.colorize(),
-        format.simple()
-      )
-    })
-  ]
+      format: format.combine(format.colorize(), format.simple()),
+    }),
+  ],
 });
 
 // Cache configuration interface
@@ -76,7 +69,7 @@ class MemoryCache<T> {
       value,
       expiry,
       hits: 0,
-      lastAccess: Date.now()
+      lastAccess: Date.now(),
     });
     this.stats.sets++;
 
@@ -176,7 +169,6 @@ class RedisCache {
           password: config.password,
           db: config.db || 0,
           keyPrefix: config.keyPrefix || 'cover-letter:',
-          retryDelayOnFailover: 100,
           maxRetriesPerRequest: 3,
           lazyConnect: true,
         });
@@ -186,7 +178,7 @@ class RedisCache {
           cacheLogger.info('Redis cache connected');
         });
 
-        this.redis.on('error', (error) => {
+        this.redis.on('error', error => {
           this.connected = false;
           cacheLogger.error('Redis cache error', error);
         });
@@ -495,7 +487,7 @@ export class MultiLevelCacheService {
 
   async get<T>(key: string): Promise<T | null> {
     // L1: Check memory cache first (fastest)
-    let value = this.memoryCache.get<T>(key);
+    let value = this.memoryCache.get(key) as T | null;
     if (value !== null) {
       cacheLogger.debug('Multi-level cache L1 HIT', { key });
       return value;
@@ -549,7 +541,9 @@ export class MultiLevelCacheService {
   }
 
   // Warm up cache with frequently accessed data
-  async warmUp(data: Array<{ key: string; value: any; ttl?: { memory?: number; redis?: number } }>): Promise<void> {
+  async warmUp(
+    data: Array<{ key: string; value: any; ttl?: { memory?: number; redis?: number } }>
+  ): Promise<void> {
     cacheLogger.info('Multi-level cache warm-up started', { items: data.length });
 
     for (const item of data) {
@@ -567,13 +561,15 @@ export class MultiLevelCacheService {
 // Cache instances with configuration from environment
 const cacheConfig: CacheConfig = {
   ...defaultCacheConfig,
-  redis: process.env.REDIS_URL ? {
-    host: process.env.REDIS_HOST || 'localhost',
-    port: parseInt(process.env.REDIS_PORT || '6379'),
-    password: process.env.REDIS_PASSWORD,
-    db: parseInt(process.env.REDIS_DB || '0'),
-    keyPrefix: process.env.REDIS_KEY_PREFIX || 'cover-letter:',
-  } : undefined,
+  redis: process.env.REDIS_URL
+    ? {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: parseInt(process.env.REDIS_PORT || '6379'),
+        password: process.env.REDIS_PASSWORD,
+        db: parseInt(process.env.REDIS_DB || '0'),
+        keyPrefix: process.env.REDIS_KEY_PREFIX || 'cover-letter:',
+      }
+    : undefined,
 };
 
 export const memoryCache = new MemoryCache();
@@ -785,10 +781,12 @@ export const cacheWarmupStrategies = {
       { key: 'template:technical', value: 'technical template data' },
     ];
 
-    await multiLevelCache.warmUp(templates.map(t => ({
-      ...t,
-      ttl: { memory: 60 * 60 * 1000, redis: 24 * 60 * 60 * 1000 } // 1 hour memory, 24 hours redis
-    })));
+    await multiLevelCache.warmUp(
+      templates.map(t => ({
+        ...t,
+        ttl: { memory: 60 * 60 * 1000, redis: 24 * 60 * 60 * 1000 }, // 1 hour memory, 24 hours redis
+      }))
+    );
   },
 
   // Warm up system configuration
@@ -798,10 +796,12 @@ export const cacheWarmupStrategies = {
       { key: 'config:rate-limits', value: 'Rate limit configuration' },
     ];
 
-    await multiLevelCache.warmUp(configs.map(c => ({
-      ...c,
-      ttl: { memory: 30 * 60 * 1000, redis: 60 * 60 * 1000 } // 30 minutes memory, 1 hour redis
-    })));
+    await multiLevelCache.warmUp(
+      configs.map(c => ({
+        ...c,
+        ttl: { memory: 30 * 60 * 1000, redis: 60 * 60 * 1000 }, // 30 minutes memory, 1 hour redis
+      }))
+    );
   },
 };
 

@@ -40,7 +40,7 @@ export class ApiMiddleware {
         const result = await middleware(currentContext);
 
         const middlewareDuration = Date.now() - middlewareStartTime;
-        currentContext.metrics.middlewareTimings.push({
+        currentContext.metrics.middlewareTimings?.push({
           index: i,
           name: middleware.name || `middleware_${i}`,
           duration: middlewareDuration,
@@ -88,10 +88,16 @@ export class ApiMiddleware {
 
       // Add rate limit headers if available
       if (currentContext.metrics.rateLimitRemaining !== undefined) {
-        response.headers.set('X-RateLimit-Remaining', currentContext.metrics.rateLimitRemaining.toString());
+        response.headers.set(
+          'X-RateLimit-Remaining',
+          currentContext.metrics.rateLimitRemaining.toString()
+        );
       }
       if (currentContext.metrics.rateLimitReset !== undefined) {
-        response.headers.set('X-RateLimit-Reset', new Date(currentContext.metrics.rateLimitReset).toISOString());
+        response.headers.set(
+          'X-RateLimit-Reset',
+          new Date(currentContext.metrics.rateLimitReset).toISOString()
+        );
       }
       if (currentContext.metrics.userTier) {
         response.headers.set('X-User-Tier', currentContext.metrics.userTier);
@@ -143,26 +149,24 @@ export * from './rate-limit';
 
 // Enhanced middleware combinations with comprehensive logging
 export const basicApiMiddleware = () =>
-  createApiMiddleware()
-    .use(async (context) => {
-      // Enhanced request logging with context
-      logger.debug('API Request', {
-        requestId: context.metrics.requestId,
-        method: context.req.method,
-        url: context.req.url,
-        userAgent: context.req.headers.get('user-agent'),
-        ip: context.req.headers.get('x-forwarded-for') || context.req.ip,
-        timestamp: new Date().toISOString(),
-      });
-      return context;
+  createApiMiddleware().use(async context => {
+    // Enhanced request logging with context
+    logger.debug('API Request', {
+      requestId: context.metrics.requestId,
+      method: context.req.method,
+      url: context.req.url,
+      userAgent: context.req.headers.get('user-agent') || undefined,
+      ip: context.req.headers.get('x-forwarded-for') || context.req.ip,
+      timestamp: new Date().toISOString(),
     });
+    return context;
+  });
 
 export const authenticatedApiMiddleware = (rateLimit?: any) => {
   const { authMiddleware } = require('./auth');
   const { rateLimitMiddleware, defaultRateLimit } = require('./rate-limit');
 
-  const middleware = createApiMiddleware()
-    .use(authMiddleware);
+  const middleware = createApiMiddleware().use(authMiddleware);
 
   if (rateLimit !== false) {
     middleware.use(rateLimitMiddleware(rateLimit || defaultRateLimit));
@@ -175,8 +179,7 @@ export const validatedApiMiddleware = (schema: any, rateLimit?: any) => {
   const { validationMiddleware } = require('./validation');
   const { rateLimitMiddleware, defaultRateLimit } = require('./rate-limit');
 
-  const middleware = createApiMiddleware()
-    .use(validationMiddleware(schema));
+  const middleware = createApiMiddleware().use(validationMiddleware(schema));
 
   if (rateLimit !== false) {
     middleware.use(rateLimitMiddleware(rateLimit || defaultRateLimit));
@@ -187,23 +190,22 @@ export const validatedApiMiddleware = (schema: any, rateLimit?: any) => {
 
 // New enhanced middleware combinations
 export const monitoredApiMiddleware = () =>
-  createApiMiddleware()
-    .use(async (context) => {
-      // Add monitoring and health check middleware
-      const memoryUsage = process.memoryUsage();
-      context.metrics.memoryUsage = memoryUsage;
+  createApiMiddleware().use(async context => {
+    // Add monitoring and health check middleware
+    const memoryUsage = process.memoryUsage();
+    context.metrics.memoryUsage = memoryUsage;
 
-      logger.debug('API Request with system metrics', {
-        requestId: context.metrics.requestId,
-        memoryUsage: {
-          rss: Math.round(memoryUsage.rss / 1024 / 1024) + 'MB',
-          heapUsed: Math.round(memoryUsage.heapUsed / 1024 / 1024) + 'MB',
-          heapTotal: Math.round(memoryUsage.heapTotal / 1024 / 1024) + 'MB',
-        },
-      });
-
-      return context;
+    logger.debug('API Request with system metrics', {
+      requestId: context.metrics.requestId,
+      memoryUsage: {
+        rss: Math.round(memoryUsage.rss / 1024 / 1024) + 'MB',
+        heapUsed: Math.round(memoryUsage.heapUsed / 1024 / 1024) + 'MB',
+        heapTotal: Math.round(memoryUsage.heapTotal / 1024 / 1024) + 'MB',
+      },
     });
+
+    return context;
+  });
 
 export const fullStackApiMiddleware = (schema?: any, rateLimit?: any) => {
   const { authMiddleware } = require('./auth');
@@ -213,7 +215,7 @@ export const fullStackApiMiddleware = (schema?: any, rateLimit?: any) => {
 
   const middleware = createApiMiddleware()
     .use(versioningMiddleware) // Add API versioning first
-    .use(monitoredApiMiddleware().middlewares[0]) // Add monitoring
+    .use((monitoredApiMiddleware() as any).middlewares[0]) // Add monitoring
     .use(authMiddleware); // Add authentication
 
   if (schema) {

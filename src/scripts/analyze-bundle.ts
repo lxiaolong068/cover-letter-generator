@@ -88,7 +88,7 @@ class BundleAnalyzer {
     const jsDir = path.join(staticDir, 'chunks');
     if (fs.existsSync(jsDir)) {
       const jsFiles = fs.readdirSync(jsDir).filter(file => file.endsWith('.js'));
-      
+
       for (const file of jsFiles) {
         const filePath = path.join(jsDir, file);
         const stats = fs.statSync(filePath);
@@ -108,7 +108,7 @@ class BundleAnalyzer {
     const cssDir = path.join(staticDir, 'css');
     if (fs.existsSync(cssDir)) {
       const cssFiles = fs.readdirSync(cssDir).filter(file => file.endsWith('.css'));
-      
+
       for (const file of cssFiles) {
         const filePath = path.join(cssDir, file);
         const stats = fs.statSync(filePath);
@@ -130,7 +130,7 @@ class BundleAnalyzer {
   private async analyzeDependencies(): Promise<DependencyInfo[]> {
     const packageJsonPath = path.join(process.cwd(), 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-    
+
     const dependencies: DependencyInfo[] = [];
     const allDeps = {
       ...packageJson.dependencies,
@@ -155,7 +155,7 @@ class BundleAnalyzer {
           treeshakeable,
         });
       } catch (error) {
-        logger.warn(`Failed to analyze dependency: ${name}`, { error });
+        logger.warn(`Failed to analyze dependency: ${name}`, { error: error as Error });
       }
     }
 
@@ -167,7 +167,7 @@ class BundleAnalyzer {
       const result = execSync(`gzip -c "${filePath}" | wc -c`, { encoding: 'utf-8' });
       return parseInt(result.trim());
     } catch (error) {
-      logger.warn(`Failed to calculate gzipped size for ${filePath}`, { error });
+      logger.warn(`Failed to calculate gzipped size for ${filePath}`, { error: error as Error });
       return 0;
     }
   }
@@ -252,8 +252,11 @@ class BundleAnalyzer {
 
     // Bundle size recommendations
     const totalSize = chunks.reduce((acc, chunk) => acc + chunk.size, 0);
-    if (totalSize > 1024 * 1024) { // > 1MB
-      recommendations.push('Total bundle size exceeds 1MB. Consider code splitting and lazy loading.');
+    if (totalSize > 1024 * 1024) {
+      // > 1MB
+      recommendations.push(
+        'Total bundle size exceeds 1MB. Consider code splitting and lazy loading.'
+      );
     }
 
     return recommendations;
@@ -301,7 +304,9 @@ class BundleAnalyzer {
             </tr>
         </thead>
         <tbody>
-            ${analysis.chunks.map(chunk => `
+            ${analysis.chunks
+              .map(
+                chunk => `
                 <tr>
                     <td>${chunk.name}</td>
                     <td>${chunk.type}</td>
@@ -309,7 +314,9 @@ class BundleAnalyzer {
                     <td class="size">${(chunk.gzippedSize / 1024).toFixed(2)} KB</td>
                     <td>${((1 - chunk.gzippedSize / chunk.size) * 100).toFixed(1)}%</td>
                 </tr>
-            `).join('')}
+            `
+              )
+              .join('')}
         </tbody>
     </table>
 
@@ -325,7 +332,10 @@ class BundleAnalyzer {
             </tr>
         </thead>
         <tbody>
-            ${analysis.dependencies.slice(0, 20).map(dep => `
+            ${analysis.dependencies
+              .slice(0, 20)
+              .map(
+                dep => `
                 <tr>
                     <td>${dep.name}</td>
                     <td>${dep.version}</td>
@@ -333,14 +343,20 @@ class BundleAnalyzer {
                     <td>${dep.usage}</td>
                     <td>${dep.treeshakeable ? '✅' : '❌'}</td>
                 </tr>
-            `).join('')}
+            `
+              )
+              .join('')}
         </tbody>
     </table>
 
     <h2>Recommendations</h2>
-    ${analysis.recommendations.map(rec => `
+    ${analysis.recommendations
+      .map(
+        rec => `
         <div class="recommendation">${rec}</div>
-    `).join('')}
+    `
+      )
+      .join('')}
 
     <p><em>Generated on ${new Date().toISOString()}</em></p>
 </body>
@@ -356,19 +372,20 @@ class BundleAnalyzer {
 // CLI execution
 if (require.main === module) {
   const analyzer = new BundleAnalyzer();
-  analyzer.analyzeBundles()
-    .then((analysis) => {
+  analyzer
+    .analyzeBundles()
+    .then(analysis => {
       console.log('\n📊 Bundle Analysis Complete!');
       console.log(`📦 Total Size: ${(analysis.totalSize / 1024).toFixed(2)} KB`);
       console.log(`🗜️  Gzipped: ${(analysis.gzippedSize / 1024).toFixed(2)} KB`);
       console.log(`📄 Report: bundle-analysis/bundle-report.html`);
-      
+
       if (analysis.recommendations.length > 0) {
         console.log('\n💡 Recommendations:');
         analysis.recommendations.forEach(rec => console.log(`  • ${rec}`));
       }
     })
-    .catch((error) => {
+    .catch(error => {
       console.error('Bundle analysis failed:', error);
       process.exit(1);
     });

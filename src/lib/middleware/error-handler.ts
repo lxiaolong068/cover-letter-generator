@@ -4,12 +4,7 @@ import { logger, logSecurity } from '@/lib/logging';
 import { recordApiCall } from '@/lib/metrics';
 
 export class ApiErrorHandler {
-  static createError(
-    message: string,
-    code: string,
-    status: number,
-    details?: any
-  ): ApiError {
+  static createError(message: string, code: string, status: number, details?: any): ApiError {
     return {
       message,
       code,
@@ -30,14 +25,17 @@ export class ApiErrorHandler {
       userId: context?.user?.id,
       userTier: context?.user?.tier,
       ip: context?.req.headers.get('x-forwarded-for') || context?.req.ip,
-      userAgent: context?.req.headers.get('user-agent'),
+      userAgent: context?.req.headers.get('user-agent') || undefined,
       timestamp: new Date().toISOString(),
       duration,
-      error: error instanceof Error ? {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      } : error,
+      error:
+        error instanceof Error
+          ? {
+              name: error.name,
+              message: error.message,
+              stack: error.stack,
+            }
+          : (error as Error),
     };
 
     logger.error('API Error occurred', errorContext);
@@ -63,7 +61,10 @@ export class ApiErrorHandler {
       errorDetails = error.message;
     }
     // Handle authentication errors
-    else if (error instanceof Error && (error.message.includes('unauthorized') || error.message.includes('authentication'))) {
+    else if (
+      error instanceof Error &&
+      (error.message.includes('unauthorized') || error.message.includes('authentication'))
+    ) {
       statusCode = 401;
       errorCode = 'AUTH_ERROR';
       errorMessage = 'Authentication failed';
@@ -86,7 +87,10 @@ export class ApiErrorHandler {
       }
     }
     // Handle database errors
-    else if (error instanceof Error && (error.message.includes('database') || error.message.includes('connection'))) {
+    else if (
+      error instanceof Error &&
+      (error.message.includes('database') || error.message.includes('connection'))
+    ) {
       statusCode = 500;
       errorCode = 'DATABASE_ERROR';
       errorMessage = 'Database error occurred';
@@ -102,7 +106,8 @@ export class ApiErrorHandler {
     }
     // Handle generic errors
     else if (error instanceof Error) {
-      errorMessage = process.env.NODE_ENV === 'development' ? error.message : 'Internal server error';
+      errorMessage =
+        process.env.NODE_ENV === 'development' ? error.message : 'Internal server error';
       errorDetails = process.env.NODE_ENV === 'development' ? error.stack : undefined;
     }
 
@@ -137,7 +142,7 @@ export class ApiErrorHandler {
       headers: {
         'X-Error-ID': errorId,
         'X-Response-Time': `${duration}ms`,
-      }
+      },
     });
   }
 }

@@ -21,28 +21,28 @@ const PERFORMANCE_INDEXES: IndexInfo[] = [
     columns: ['email'],
     type: 'btree',
     unique: true,
-    description: 'Unique index on email for fast user lookups and authentication'
+    description: 'Unique index on email for fast user lookups and authentication',
   },
   {
     name: 'idx_users_tier_subscription',
     table: 'users',
     columns: ['tier', 'subscription_expires_at'],
     type: 'btree',
-    description: 'Composite index for tier-based queries and subscription validation'
+    description: 'Composite index for tier-based queries and subscription validation',
   },
   {
     name: 'idx_users_monthly_usage_reset',
     table: 'users',
     columns: ['monthly_usage_reset_at'],
     type: 'btree',
-    description: 'Index for monthly usage reset queries'
+    description: 'Index for monthly usage reset queries',
   },
   {
     name: 'idx_users_created_at',
     table: 'users',
     columns: ['created_at'],
     type: 'btree',
-    description: 'Index for user registration analytics and sorting'
+    description: 'Index for user registration analytics and sorting',
   },
 
   // Cover letters table indexes
@@ -51,42 +51,42 @@ const PERFORMANCE_INDEXES: IndexInfo[] = [
     table: 'cover_letters',
     columns: ['user_id', 'created_at'],
     type: 'btree',
-    description: 'Composite index for user cover letters ordered by creation date'
+    description: 'Composite index for user cover letters ordered by creation date',
   },
   {
     name: 'idx_cover_letters_user_updated',
     table: 'cover_letters',
     columns: ['user_id', 'updated_at'],
     type: 'btree',
-    description: 'Composite index for user cover letters ordered by update date'
+    description: 'Composite index for user cover letters ordered by update date',
   },
   {
     name: 'idx_cover_letters_type',
     table: 'cover_letters',
     columns: ['cover_letter_type'],
     type: 'btree',
-    description: 'Index for filtering by cover letter type'
+    description: 'Index for filtering by cover letter type',
   },
   {
     name: 'idx_cover_letters_model',
     table: 'cover_letters',
     columns: ['model_used'],
     type: 'btree',
-    description: 'Index for analytics on AI model usage'
+    description: 'Index for analytics on AI model usage',
   },
   {
     name: 'idx_cover_letters_generation_time',
     table: 'cover_letters',
     columns: ['generation_time'],
     type: 'btree',
-    description: 'Index for performance analytics on generation times'
+    description: 'Index for performance analytics on generation times',
   },
   {
     name: 'idx_cover_letters_title_search',
     table: 'cover_letters',
     columns: ['title'],
     type: 'gin',
-    description: 'GIN index for full-text search on cover letter titles'
+    description: 'GIN index for full-text search on cover letter titles',
   },
 
   // User sessions table indexes
@@ -96,14 +96,14 @@ const PERFORMANCE_INDEXES: IndexInfo[] = [
     columns: ['session_token'],
     type: 'btree',
     unique: true,
-    description: 'Unique index on session token for fast session lookups'
+    description: 'Unique index on session token for fast session lookups',
   },
   {
     name: 'idx_user_sessions_user_expires',
     table: 'user_sessions',
     columns: ['user_id', 'expires_at'],
     type: 'btree',
-    description: 'Composite index for user session validation'
+    description: 'Composite index for user session validation',
   },
   {
     name: 'idx_user_sessions_expires_active',
@@ -111,7 +111,7 @@ const PERFORMANCE_INDEXES: IndexInfo[] = [
     columns: ['expires_at'],
     type: 'btree',
     partial: 'expires_at > NOW()',
-    description: 'Partial index for active sessions cleanup'
+    description: 'Partial index for active sessions cleanup',
   },
 ];
 
@@ -120,13 +120,13 @@ const OPTIMIZATION_QUERIES = [
   {
     name: 'Update table statistics',
     query: 'ANALYZE;',
-    description: 'Update table statistics for better query planning'
+    description: 'Update table statistics for better query planning',
   },
   {
     name: 'Vacuum tables',
     query: 'VACUUM;',
-    description: 'Reclaim storage and update statistics'
-  }
+    description: 'Reclaim storage and update statistics',
+  },
 ];
 
 class DatabaseOptimizer {
@@ -141,7 +141,7 @@ class DatabaseOptimizer {
       `;
       return result.length > 0;
     } catch (error) {
-      logger.error('Failed to check index existence', { indexName, error });
+      logger.error('Failed to check index existence', { indexName, error: error as Error });
       return false;
     }
   }
@@ -164,36 +164,40 @@ class DatabaseOptimizer {
       }
 
       await sql.unsafe(query);
-      
+
       logger.info('Index created successfully', {
         indexName: indexInfo.name,
         table: indexInfo.table,
         columns: indexInfo.columns,
-        description: indexInfo.description
+        description: indexInfo.description,
       });
 
       return true;
     } catch (error) {
       logger.error('Failed to create index', {
         indexName: indexInfo.name,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       return false;
     }
   }
 
-  async runOptimizationQuery(query: { name: string; query: string; description: string }): Promise<boolean> {
+  async runOptimizationQuery(query: {
+    name: string;
+    query: string;
+    description: string;
+  }): Promise<boolean> {
     try {
       await sql.unsafe(query.query);
       logger.info('Optimization query completed', {
         name: query.name,
-        description: query.description
+        description: query.description,
       });
       return true;
     } catch (error) {
       logger.error('Optimization query failed', {
         name: query.name,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       return false;
     }
@@ -216,7 +220,7 @@ class DatabaseOptimizer {
       `;
       return stats;
     } catch (error) {
-      logger.error('Failed to get table statistics', { error });
+      logger.error('Failed to get table statistics', { error: error as Error });
       return [];
     }
   }
@@ -237,7 +241,7 @@ class DatabaseOptimizer {
       `;
       return stats;
     } catch (error) {
-      logger.error('Failed to get index usage statistics', { error });
+      logger.error('Failed to get index usage statistics', { error: error as Error });
       return [];
     }
   }
@@ -255,7 +259,7 @@ class DatabaseOptimizer {
 
     logger.info('Starting database optimization', {
       totalIndexes: PERFORMANCE_INDEXES.length,
-      totalOptimizations: OPTIMIZATION_QUERIES.length
+      totalOptimizations: OPTIMIZATION_QUERIES.length,
     });
 
     // Create performance indexes
@@ -287,14 +291,14 @@ class DatabaseOptimizer {
       indexesCreated,
       optimizationsRun,
       errors: errors.length,
-      poolStats: getPoolStats()
+      poolStats: getPoolStats(),
     });
 
     return {
       success,
       indexesCreated,
       optimizationsRun,
-      errors
+      errors,
     };
   }
 
@@ -307,13 +311,15 @@ class DatabaseOptimizer {
     const tableStats = await this.getTableStats();
     const indexUsage = await this.getIndexUsageStats();
     const poolStats = getPoolStats();
-    
+
     const recommendations: string[] = [];
 
     // Analyze index usage and provide recommendations
     const unusedIndexes = indexUsage.filter((idx: any) => idx.idx_scan === 0);
     if (unusedIndexes.length > 0) {
-      recommendations.push(`Consider dropping unused indexes: ${unusedIndexes.map((idx: any) => idx.indexname).join(', ')}`);
+      recommendations.push(
+        `Consider dropping unused indexes: ${unusedIndexes.map((idx: any) => idx.indexname).join(', ')}`
+      );
     }
 
     // Check for tables without proper indexes
@@ -327,14 +333,16 @@ class DatabaseOptimizer {
       .filter((table: any) => !indexUsage.find((idx: any) => idx.tablename === table.tablename));
 
     if (tablesWithoutIndexes.length > 0) {
-      recommendations.push(`Tables without indexes: ${tablesWithoutIndexes.map((t: any) => t.tablename).join(', ')}`);
+      recommendations.push(
+        `Tables without indexes: ${tablesWithoutIndexes.map((t: any) => t.tablename).join(', ')}`
+      );
     }
 
     return {
       tableStats,
       indexUsage,
       poolStats,
-      recommendations
+      recommendations,
     };
   }
 }
@@ -353,11 +361,11 @@ export async function generateDatabaseReport() {
 // CLI execution
 if (require.main === module) {
   optimizeDatabase()
-    .then((result) => {
+    .then(result => {
       console.log('Database optimization result:', result);
       process.exit(result.success ? 0 : 1);
     })
-    .catch((error) => {
+    .catch(error => {
       console.error('Database optimization failed:', error);
       process.exit(1);
     });
