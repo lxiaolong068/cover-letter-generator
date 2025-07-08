@@ -21,8 +21,9 @@ export interface LogContext {
   url?: string;
   statusCode?: number;
   duration?: number;
-  error?: Error;
+  error?: Error | string;
   metadata?: Record<string, any>;
+  [key: string]: any;
 }
 
 // Performance metrics interface
