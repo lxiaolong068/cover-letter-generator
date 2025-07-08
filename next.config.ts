@@ -14,8 +14,8 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
     // Enable server components optimization
     serverComponentsExternalPackages: ['winston', 'ioredis', 'nodemailer'],
-    // Enable partial prerendering for better performance
-    ppr: true,
+    // Note: ppr (partial prerendering) is only available in canary versions
+    // ppr: true,
   },
 
   // Turbopack configuration (moved out of experimental)

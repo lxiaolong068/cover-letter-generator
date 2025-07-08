@@ -585,6 +585,23 @@ export async function deleteCoverLetter(id: string): Promise<boolean> {
   }
 }
 
+// Database health check function
+export async function checkDatabaseHealth(): Promise<boolean> {
+  try {
+    const [result] = await executeQuery<{ health: number }>(
+      'SELECT 1 as health',
+      [],
+      { logQuery: false }
+    );
+    return result?.health === 1;
+  } catch (error) {
+    logger.error('Database health check failed', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+    return false;
+  }
+}
+
 // Session management functions
 export async function createSession(userId: string): Promise<UserSession> {
   const sessionToken = crypto.randomUUID();

@@ -1,4 +1,5 @@
 // Image optimization utilities for better performance
+import React from 'react';
 import { logger } from './logging';
 
 // Image optimization configuration

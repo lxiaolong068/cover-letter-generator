@@ -8,7 +8,7 @@ import {
   AuthenticatedRequest,
   MiddlewareContext
 } from '@/lib/middleware';
-import { multiLevelCache, cacheKeys } from '@/lib/cache';
+// import { multiLevelCache, cacheKeys } from '@/lib/cache';
 import { logger } from '@/lib/logging';
 import { recordAiGeneration } from '@/lib/metrics';
 import crypto from 'crypto';
@@ -28,13 +28,13 @@ async function generateCoverLetter(
   const { jobDescription, userProfile, coverLetterType = 'professional' } = req.parsedBody || await req.json();
 
   // Create cache key based on input hash for potential caching of similar requests
-  const inputHash = crypto
-    .createHash('sha256')
-    .update(`${jobDescription}:${userProfile}:${coverLetterType}`)
-    .digest('hex')
-    .substring(0, 16);
+  // const inputHash = crypto
+  //   .createHash('sha256')
+  //   .update(`${jobDescription}:${userProfile}:${coverLetterType}`)
+  //   .digest('hex')
+  //   .substring(0, 16);
 
-  const cacheKey = cacheKeys.config(`ai_generation:${inputHash}`);
+  // const cacheKey = cacheKeys.config(`ai_generation:${inputHash}`);
 
   try {
     // Check cache for similar generation (optional, can be disabled for uniqueness)

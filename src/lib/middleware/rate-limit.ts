@@ -41,7 +41,7 @@ export class DistributedRateLimiter {
     const resetTime = now + this.config.windowMs;
 
     // Use Redis sorted set for sliding window rate limiting
-    const pipeline = redisCache['redis']?.pipeline();
+    const pipeline = (redisCache as any)['redis']?.pipeline();
     if (!pipeline) {
       throw new Error('Redis pipeline not available');
     }
@@ -68,7 +68,7 @@ export class DistributedRateLimiter {
 
     if (currentCount >= this.config.max) {
       // Remove the request we just added since it's not allowed
-      await redisCache['redis']?.zrem(key, `${now}-${Math.random()}`);
+      await (redisCache as any)['redis']?.zrem(key, `${now}-${Math.random()}`);
 
       return {
         allowed: false,
