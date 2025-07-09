@@ -19,7 +19,15 @@ const nextConfig: NextConfig = {
   },
 
   // Server external packages (moved from experimental)
-  serverExternalPackages: ['winston', 'ioredis', 'nodemailer', 'next-auth', 'twilio', 'qrcode', 'speakeasy'],
+  serverExternalPackages: [
+    'winston',
+    'ioredis',
+    'nodemailer',
+    'next-auth',
+    'twilio',
+    'qrcode',
+    'speakeasy',
+  ],
 
   // Turbopack configuration (moved out of experimental)
   turbopack: {
@@ -49,15 +57,18 @@ const nextConfig: NextConfig = {
   // Enhanced compiler optimizations
   compiler: {
     // Remove console logs in production
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn'],
-    } : false,
+    removeConsole:
+      process.env.NODE_ENV === 'production'
+        ? {
+            exclude: ['error', 'warn'],
+          }
+        : false,
     // Enable React compiler optimizations
     reactRemoveProperties: process.env.NODE_ENV === 'production',
   },
 
-  // Output optimization
-  output: 'standalone',
+  // Output optimization - remove standalone for Vercel deployment
+  // output: 'standalone',
 
   // Bundle analysis
   bundlePagesRouterDependencies: true,
@@ -73,45 +84,19 @@ const nextConfig: NextConfig = {
 
   // Enhanced Webpack optimizations
   webpack: (config, { dev, isServer }) => {
-    // Enhanced bundle splitting strategy
+    // Simplified bundle splitting strategy for Vercel compatibility
     config.optimization.splitChunks = {
       chunks: 'all',
-      minSize: 20000,
-      maxSize: 244000,
       cacheGroups: {
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-        // Separate vendor chunks for better caching
-        react: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: 'react',
-          priority: 20,
-          chunks: 'all',
-        },
-        ui: {
-          test: /[\\/]node_modules[\\/](@radix-ui|lucide-react|framer-motion)[\\/]/,
-          name: 'ui',
-          priority: 15,
-          chunks: 'all',
-        },
-        utils: {
-          test: /[\\/]node_modules[\\/](date-fns|lodash|clsx|tailwind-merge)[\\/]/,
-          name: 'utils',
-          priority: 10,
-          chunks: 'all',
-        },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          priority: -10,
+          priority: 10,
           chunks: 'all',
         },
         common: {
           minChunks: 2,
-          priority: -5,
+          priority: -10,
           reuseExistingChunk: true,
         },
       },
@@ -134,14 +119,10 @@ const nextConfig: NextConfig = {
       'react/jsx-dev-runtime': require.resolve('react/jsx-dev-runtime'),
     };
 
-    // Add performance hints
-    if (!dev && !isServer) {
-      config.performance = {
-        hints: 'warning',
-        maxEntrypointSize: 512000,
-        maxAssetSize: 512000,
-      };
-    }
+    // Disable performance hints for deployment compatibility
+    config.performance = {
+      hints: false,
+    };
 
     // Optimize module resolution
     config.resolve.modules = ['node_modules'];
