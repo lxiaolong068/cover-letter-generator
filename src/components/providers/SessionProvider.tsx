@@ -8,5 +8,8 @@ interface SessionProviderProps {
 }
 
 export function SessionProvider({ children }: SessionProviderProps) {
-  return <NextAuthSessionProvider>{children}</NextAuthSessionProvider>;
+  // During build time, session might not be available, so we provide a fallback
+  const session = typeof window !== 'undefined' ? undefined : null;
+
+  return <NextAuthSessionProvider session={session}>{children}</NextAuthSessionProvider>;
 }

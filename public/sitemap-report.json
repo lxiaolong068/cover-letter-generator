@@ -1,0 +1,126 @@
+{
+  "updatedAt": "2025-07-09T05:27:15.956Z",
+  "routeCount": 15,
+  "routes": [
+    {
+      "route": "/",
+      "url": "http://localhost:3000",
+      "config": {
+        "changeFrequency": "daily",
+        "priority": 1
+      }
+    },
+    {
+      "route": "/auth-error",
+      "url": "http://localhost:3000/auth-error",
+      "config": {
+        "changeFrequency": "monthly",
+        "priority": 0.2
+      }
+    },
+    {
+      "route": "/components",
+      "url": "http://localhost:3000/components",
+      "config": {
+        "changeFrequency": "weekly",
+        "priority": 0.3
+      }
+    },
+    {
+      "route": "/dashboard",
+      "url": "http://localhost:3000/dashboard",
+      "config": {
+        "changeFrequency": "daily",
+        "priority": 0.5
+      }
+    },
+    {
+      "route": "/dashboard/generate",
+      "url": "http://localhost:3000/dashboard/generate",
+      "config": {
+        "changeFrequency": "daily",
+        "priority": 0.5
+      }
+    },
+    {
+      "route": "/dashboard/history",
+      "url": "http://localhost:3000/dashboard/history",
+      "config": {
+        "changeFrequency": "daily",
+        "priority": 0.4
+      }
+    },
+    {
+      "route": "/dashboard/templates",
+      "url": "http://localhost:3000/dashboard/templates",
+      "config": {
+        "changeFrequency": "weekly",
+        "priority": 0.4
+      }
+    },
+    {
+      "route": "/examples",
+      "url": "http://localhost:3000/examples",
+      "config": {
+        "changeFrequency": "weekly",
+        "priority": 0.9
+      }
+    },
+    {
+      "route": "/login",
+      "url": "http://localhost:3000/login",
+      "config": {
+        "changeFrequency": "monthly",
+        "priority": 0.6
+      }
+    },
+    {
+      "route": "/offline",
+      "url": "http://localhost:3000/offline",
+      "config": {
+        "changeFrequency": "yearly",
+        "priority": 0.1
+      }
+    },
+    {
+      "route": "/pricing",
+      "url": "http://localhost:3000/pricing",
+      "config": {
+        "changeFrequency": "monthly",
+        "priority": 0.8
+      }
+    },
+    {
+      "route": "/privacy",
+      "url": "http://localhost:3000/privacy",
+      "config": {
+        "changeFrequency": "yearly",
+        "priority": 0.4
+      }
+    },
+    {
+      "route": "/register",
+      "url": "http://localhost:3000/register",
+      "config": {
+        "changeFrequency": "monthly",
+        "priority": 0.6
+      }
+    },
+    {
+      "route": "/templates",
+      "url": "http://localhost:3000/templates",
+      "config": {
+        "changeFrequency": "weekly",
+        "priority": 0.9
+      }
+    },
+    {
+      "route": "/terms",
+      "url": "http://localhost:3000/terms",
+      "config": {
+        "changeFrequency": "yearly",
+        "priority": 0.4
+      }
+    }
+  ]
+}
