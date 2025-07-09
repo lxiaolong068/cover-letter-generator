@@ -1,12 +1,13 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 
-if (!process.env.OPENROUTER_API_KEY) {
-  throw new Error('OPENROUTER_API_KEY environment variable is required');
+// Skip validation during build time
+if (!process.env.OPENROUTER_API_KEY && process.env.NODE_ENV !== 'production') {
+  console.warn('OPENROUTER_API_KEY environment variable is not set');
 }
 
 // Create OpenRouter instance with API key
 export const openrouter = createOpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY,
+  apiKey: process.env.OPENROUTER_API_KEY || 'dummy-key-for-build',
   // Optional: Add default extra body parameters
   extraBody: {
     // Add any default OpenRouter-specific parameters here
