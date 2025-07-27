@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Navigation, Breadcrumb } from '@/components/ui/Navigation';
 import { ContextualNav } from '@/components/seo/InternalLinks';
+import { BreadcrumbStructuredData } from '@/components/seo/StructuredData';
 import { dashboardNavigation, createBreadcrumbs } from '@/lib/navigation';
 
 const navigationItems = dashboardNavigation;
@@ -92,8 +93,17 @@ const stats = [
 ];
 
 export default function DashboardPage() {
+  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+
+  const breadcrumbStructuredData = [
+    { name: 'Home', url: baseUrl },
+    { name: 'Dashboard', url: `${baseUrl}/dashboard` },
+  ];
+
   return (
     <>
+      <BreadcrumbStructuredData items={breadcrumbStructuredData} />
+
       {/* Navigation */}
       <Navigation
         items={navigationItems}

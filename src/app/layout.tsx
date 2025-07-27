@@ -2,17 +2,20 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { HeaderNavigation } from '@/components/ui/HeaderNavigation';
+import { ImagePreloader } from '@/components/performance/ImagePreloader';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
-  display: 'swap',
+  display: 'optional',
+  preload: true,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
-  display: 'swap',
+  display: 'optional',
+  preload: false, // Only preload primary font
 });
 
 export const metadata: Metadata = {
@@ -22,6 +25,8 @@ export const metadata: Metadata = {
   },
   description:
     'Generate professional, ATS-optimized cover letters instantly with our AI Cover Letter Generator. Free templates, multiple formats, and expert-quality results to help you land your dream job.',
+  keywords:
+    'AI Cover Letter Generator, cover letter generator, ATS optimized cover letters, professional cover letters, job application letters, AI writing assistant, cover letter templates',
   authors: [{ name: 'AI Cover Letter Generator Team' }],
   creator: 'AI Cover Letter Generator',
   publisher: 'AI Cover Letter Generator',
@@ -99,6 +104,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
+        <ImagePreloader />
         <div id="root" className="relative flex min-h-screen flex-col">
           <HeaderNavigation />
           <main id="main-content" className="flex-1">

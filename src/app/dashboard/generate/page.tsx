@@ -54,6 +54,7 @@ export default function GeneratePage() {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedContent, setGeneratedContent] = useState('');
+  const [statusMessage, setStatusMessage] = useState<string>('');
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -64,6 +65,8 @@ export default function GeneratePage() {
 
   const handleGenerate = async () => {
     setIsGenerating(true);
+    setStatusMessage('Starting cover letter generation...');
+    setGeneratedContent('');
 
     try {
       const response = await fetch('/api/generate', {
@@ -89,6 +92,7 @@ export default function GeneratePage() {
       const decoder = new TextDecoder();
 
       if (reader) {
+        setStatusMessage('Generating your personalized cover letter...');
         let content = '';
         while (true) {
           const { done, value } = await reader.read();
@@ -98,12 +102,15 @@ export default function GeneratePage() {
           content += chunk;
           setGeneratedContent(content);
         }
+        setStatusMessage('Cover letter generated successfully!');
       }
     } catch (error) {
       console.error('Error generating cover letter:', error);
-      // Handle error state
+      setStatusMessage('Error generating cover letter. Please try again.');
     } finally {
       setIsGenerating(false);
+      // Clear status message after a delay
+      setTimeout(() => setStatusMessage(''), 3000);
     }
   };
 
@@ -124,13 +131,15 @@ export default function GeneratePage() {
         }
       />
 
-      <div className="min-h-screen bg-surface-variant">
+      <main className="min-h-screen bg-surface-variant">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
-          <Breadcrumb items={breadcrumbItems} className="mb-8" />
+          <nav aria-label="Breadcrumb">
+            <Breadcrumb items={breadcrumbItems} className="mb-8" />
+          </nav>
 
           {/* Page Header */}
-          <div className="mb-8">
+          <header className="mb-8">
             <h1 className="text-3xl font-bold text-on-surface">
               Generate Professional Cover Letter with AI
             </h1>
@@ -138,11 +147,16 @@ export default function GeneratePage() {
               Fill in your job details and our AI Cover Letter Generator will create a personalized,
               ATS-optimized cover letter tailored to your target position.
             </p>
+          </header>
+
+          {/* Status Announcements for Screen Readers */}
+          <div aria-live="polite" aria-atomic="true" className="sr-only" role="status">
+            {statusMessage}
           </div>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* Form Section */}
-            <div className="space-y-6 lg:col-span-2">
+            <section className="space-y-6 lg:col-span-2" aria-label="Cover letter generation form">
               {/* Template Selection */}
               <Card>
                 <CardHeader>
@@ -285,10 +299,10 @@ export default function GeneratePage() {
                   {isGenerating ? 'Generating...' : 'Generate Cover Letter'}
                 </Button>
               </div>
-            </div>
+            </section>
 
             {/* Preview Section */}
-            <div>
+            <aside aria-label="Cover letter preview">
               <Card className="sticky top-8">
                 <CardHeader>
                   <CardTitle>Preview</CardTitle>
@@ -390,13 +404,13 @@ export default function GeneratePage() {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </aside>
           </div>
 
           {/* Contextual Navigation */}
           <ContextualNav currentPage="generate" />
         </div>
-      </div>
+      </main>
     </>
   );
 }

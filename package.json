@@ -21,6 +21,8 @@
     "db:health": "tsx -e \"import { checkDatabaseHealth } from './src/lib/neon'; checkDatabaseHealth().then(r => console.log('DB Health:', r ? 'OK' : 'FAIL')).catch(console.error)\"",
     "sitemap:update": "tsx src/scripts/update-sitemap.ts",
     "postbuild": "npm run sitemap:update",
+    "seo:test": "node scripts/test-seo.js",
+    "seo:validate": "npm run seo:test && echo 'SEO validation complete'",
     "prepare": "husky install"
   },
   "dependencies": {

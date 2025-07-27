@@ -174,6 +174,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={isDisabled}
         onClick={handleClick}
+        aria-busy={loading}
+        aria-disabled={isDisabled}
         {...props}
       >
         {/* Ripple Effect */}

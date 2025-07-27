@@ -104,7 +104,34 @@ Generate JSON‑LD via helper in `lib/seo.ts` for:
 - Route‑based code‑splitting; lazy import Editor.
 - Use `next/script` to defer 3rd‑party.
 
-### 6.6 Content Plan
+### 6.6 Enhanced SEO Implementation (2025 Update)
+
+**Keywords Strategy:**
+
+- Primary target: "AI Cover Letter Generator"
+- All pages include relevant keywords meta tags
+- SEO configuration in `lib/seo.ts` with keyword mapping
+
+**Structured Data Enhancements:**
+
+- `FAQStructuredData` on templates page with cover letter FAQs
+- `HowToStructuredData` on generator page with step-by-step guide
+- Enhanced `BreadcrumbStructuredData` across all pages
+
+**Internal Linking Optimization:**
+
+- `ContextualNav` component with keyword-rich anchor text
+- Strategic cross-linking using "AI Cover Letter Generator" variations
+- Page-specific contextual recommendations
+
+**Accessibility & Performance:**
+
+- ARIA live regions for generator progress updates
+- Semantic HTML5 landmarks (`main`, `section`, `aside`)
+- Image preloading system with performance monitoring
+- Font loading optimization with `display: 'optional'`
+
+### 6.7 Content Plan
 
 - **Pillar page**: "How to write a cover letter in 2025".
 - 30+ MDX posts targeting `{role} cover letter examples`.

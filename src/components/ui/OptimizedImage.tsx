@@ -18,6 +18,9 @@ interface OptimizedImageProps {
   sizes?: string;
   fill?: boolean;
   style?: React.CSSProperties;
+  preload?: boolean; // Add explicit preload option
+  onLoad?: () => void;
+  onError?: () => void;
 }
 
 export const OptimizedImage = React.memo(
@@ -34,6 +37,9 @@ export const OptimizedImage = React.memo(
     sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
     fill = false,
     style,
+    preload = false,
+    onLoad,
+    onError,
     ...props
   }: OptimizedImageProps) => {
     // Generate a simple blur placeholder if none provided
@@ -44,16 +50,33 @@ export const OptimizedImage = React.memo(
       return blurDataURL;
     }, [placeholder, blurDataURL]);
 
+    // Handle preloading
+    React.useEffect(() => {
+      if (preload && src) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
+
+        return () => {
+          document.head.removeChild(link);
+        };
+      }
+    }, [preload, src]);
+
     const imageProps = {
       src,
       alt,
       className: cn('transition-opacity duration-300', className),
-      priority,
+      priority: priority || preload, // Preloaded images should have priority
       quality,
       placeholder,
       ...(defaultBlurDataURL && { blurDataURL: defaultBlurDataURL }),
       sizes,
       style,
+      onLoad,
+      onError,
       ...props,
     };
 

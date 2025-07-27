@@ -3,6 +3,7 @@ import Head from 'next/head';
 interface SEOHeadProps {
   title: string;
   description: string;
+  keywords?: string;
   canonical?: string;
   ogImage?: string;
   ogType?: 'website' | 'article' | 'product';
@@ -21,6 +22,7 @@ interface SEOHeadProps {
 export function SEOHead({
   title,
   description,
+  keywords,
   canonical,
   ogImage,
   ogType = 'website',
@@ -46,6 +48,7 @@ export function SEOHead({
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
+      {keywords && <meta name="keywords" content={keywords} />}
       {author && <meta name="author" content={author} />}
       <meta name="robots" content={robotsContent} />
       <meta name="googlebot" content={robotsContent} />

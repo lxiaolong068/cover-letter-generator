@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Breadcrumb } from '@/components/ui/Navigation';
 import { ContextualNav } from '@/components/seo/InternalLinks';
-import { BreadcrumbStructuredData } from '@/components/seo/StructuredData';
+import { BreadcrumbStructuredData, FAQStructuredData } from '@/components/seo/StructuredData';
 
 const breadcrumbItems = [{ href: '/', label: 'Home' }, { label: 'Cover Letter Templates' }];
 
@@ -68,6 +68,34 @@ const templates = [
   },
 ];
 
+const templateFAQs = [
+  {
+    question: 'What AI cover letter templates are available?',
+    answer:
+      'We offer professional, creative, technical, executive, entry-level, sales, marketing, healthcare, and finance AI cover letter templates. Each template is ATS-optimized and designed for specific industries and career levels.',
+  },
+  {
+    question: 'Are the AI cover letter templates free to use?',
+    answer:
+      'Yes, our basic AI cover letter templates are free to use. Premium users get access to additional advanced templates, unlimited customization options, and priority support.',
+  },
+  {
+    question: 'How do I customize an AI cover letter template?',
+    answer:
+      'Simply select your preferred template, input your job details and personal information, and our AI will automatically customize the template content to match your specific role and company requirements.',
+  },
+  {
+    question: 'Are these templates compatible with ATS systems?',
+    answer:
+      'Absolutely! All our AI cover letter templates are specifically designed to be ATS-friendly, using proper formatting, keywords, and structure that applicant tracking systems can easily parse.',
+  },
+  {
+    question: 'Can I edit the AI-generated cover letter after using a template?',
+    answer:
+      'Yes, you can fully edit and customize your AI-generated cover letter. Our templates provide a strong foundation that you can modify to perfectly match your needs and personal style.',
+  },
+];
+
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = generateSEOMetadata('templates');
@@ -83,6 +111,7 @@ export default function TemplatesPage() {
   return (
     <>
       <BreadcrumbStructuredData items={breadcrumbStructuredData} />
+      <FAQStructuredData faqs={templateFAQs} />
 
       {/* Breadcrumb */}
       <div className="border-b border-border bg-muted/50 py-4">
@@ -169,6 +198,29 @@ export default function TemplatesPage() {
                   </div>
                 </CardContent>
               </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold text-on-surface">
+              Frequently Asked Questions About AI Cover Letter Templates
+            </h2>
+            <p className="mt-4 text-lg text-on-surface-variant">
+              Everything you need to know about our professional cover letter templates
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            {templateFAQs.map((faq, index) => (
+              <div key={index} className="border-b border-outline-variant pb-6">
+                <h3 className="mb-3 text-lg font-semibold text-on-surface">{faq.question}</h3>
+                <p className="text-on-surface-variant">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </div>
